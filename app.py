@@ -727,8 +727,8 @@ def show_calculator_page():
                     # ---------------------------------------------------------
                     # KRİTİK NOKTA: TÜRKÇE FONTU SİSTEME 'uni=True' İLE GÖMME
                     # ---------------------------------------------------------
-                    font_regular = r"C:\Windows\Fonts\arial.ttf"
-                    font_bold = r"C:\Windows\Fonts\arialbd.ttf"
+                    font_regular = "fonts/arial.ttf"
+                    font_bold = "fonts/arialbd.ttf"
                     
                     if os.path.exists(font_regular) and os.path.exists(font_bold):
                         # uni=True parametresi Türkçe karakterlerin silinmesini %100 engeller!
