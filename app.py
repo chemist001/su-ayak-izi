@@ -1121,27 +1121,30 @@ def show_calculator_page():
 
                     pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
 
-                    # --- PDF İÇİN MODERN, GÖLGELİ VE PASTEL DONUT GRAFİĞİ OLUŞTURMA ---
+                               # --- PDF İÇİN TEMİZ VE MODERN DONUT GRAFİĞİ OLUŞTURMA ---
                     etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
                     degerler = [res_blue, res_green, res_grey] 
                     renkler = ['#678B99', '#8A9A70', '#C25946'] # Puslu Çini Mavisi, Mat Zeytin Yeşili, Klasik Kiremit
             
                     # Eğer herhangi bir veri girilmişse grafiği çiz
                     if sum(degerler) > 0:
+                        # Temiz, düz zemin. shadow=False yaparak beğenmediğiniz efekti kaldırıyoruz.
                         fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
                         
+                        # width=0.3 ile ortasını boşaltıp "Halka" yapıyoruz
                         wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', 
-                                                         shadow=True, 
+                                                         shadow=False, # Gölge yok, düz tasarım
                                                          startangle=90, 
                                                          colors=renkler, 
                                                          textprops={'fontsize': 10, 'weight': 'bold'}, 
                                                          pctdistance=0.85, 
-                                                         wedgeprops=dict(width=0.4, edgecolor='w')) 
+                                                         wedgeprops=dict(width=0.3, edgecolor='w')) 
             
-                        ax.axis('equal') 
+                        ax.axis('equal') # Grafiğin tam yuvarlak olmasını sağlar
                         ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
                         
                         total = sum(degerler)
+                        # Rakamı en basit ve garantili yöntemle tam ortaya yerleştiriyoruz
                         ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
             
                         # Grafik dosyası olarak kaydetme (Hafıza hatasını çözer)
@@ -1153,6 +1156,7 @@ def show_calculator_page():
                         pdf.set_font(f_isim, size=12, style='B')
                         pdf.cell(0, 10, txt="Grafiksel Dagilim (Veri Analizi)", ln=True, align='L')
                         
+                        # FPDF'e doğrudan dosya yolunu veriyoruz ki rfind hatası vermesin
                         pdf.image(grafik_yolu, x=35, y=pdf.get_y(), w=140) 
                         pdf.ln(100) # Grafiğin boyu kadar aşağı in
                     
