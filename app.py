@@ -1160,7 +1160,7 @@ def show_calculator_page():
                     gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
                     
                     if len(gecerli_hedefler) > 0:
-                        pdf.ln(10)
+                        pdf.add_page()
                         pdf.set_fill_color(0, 150, 136) 
                         pdf.set_text_color(255, 255, 255) 
                         pdf.set_font(f_isim, size=14, style='B')
