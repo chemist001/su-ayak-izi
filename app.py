@@ -517,7 +517,7 @@ def show_calculator_page():
 
     # Sekmeli Yapı (Senin tasarımın)
     tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "Veri Kalitesi", "📊 Raporlama"
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama"
     ])
 
     # --- 1. FIRMA PROFILI ---
@@ -612,9 +612,9 @@ def show_calculator_page():
         # 1. Aşama: Tablonun varsayılan (ilk açıldığında görünen) hali
         baslangic_verisi = pd.DataFrame(
             [
-                {"Bileşen": "Mavi Su", "Kaynak": "Şebeke", "Veri Kaynağı": "Sayaç ve Fatura", "Veri Doğrulama": "Tüketim Kayıtları"},
-                {"Bileşen": "Mavi Su", "Kaynak": "Kuyu", "Veri Kaynağı": "Sayaç ve Fatura", "Veri Doğrulama": "Fatura Kontrolü"},
-                {"Bileşen": "Gri Su", "Kaynak": "Endüstriyel Atıksu", "Veri Kaynağı": "Analiz Raporları", "Veri Doğrulama": "Laboratuvar Beyanı"}
+                {"Bileşen": "", "": "", "": "", "": ""},
+                {"Bileşen": "", "": "", "": "", "": ""},
+                {"Bileşen": "", "": "", "": "", "": ""}
             ]
         )
     
