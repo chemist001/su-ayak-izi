@@ -975,13 +975,13 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=14, style='B')
                     pdf.cell(190, 10, txt="3. METODOLOJİ", ln=True, align='L', fill=True)
                     pdf.set_text_color(0, 0, 0)
-                    pdf.ln(4)
+                    pdf.ln(3)
                     
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="3.1. Veri Kalitesi", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanılan şebeke ve kuyu suyu verisi sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.")
-                    pdf.ln(4)
+                    pdf.ln(3)
                     
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="3.2. Kabuller", ln=True)
