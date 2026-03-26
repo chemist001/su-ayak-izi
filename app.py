@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime
 import base64
+import matplotlib.pyplot as plt
 import io
 
 # --- KÜTÜPHANE KONTROLLERİ ---
