@@ -1119,7 +1119,7 @@ def show_calculator_page():
                     pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
                     pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
 
-                   pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
+                    pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
 
                     # --- PDF İÇİN MODERN VE PASTEL DONUT GRAFİĞİ OLUŞTURMA ---
                     etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] # Türkçe karakter hatası olmaması için ş ve i'siz yazdık
