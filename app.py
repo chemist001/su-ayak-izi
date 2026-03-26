@@ -969,7 +969,7 @@ def show_calculator_page():
                     # ==========================================
                     # --- BÖLÜM 3: METODOLOJİ ---
                     # ==========================================
-                    pdf.ln(4)
+                    pdf.add_page()
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
@@ -1074,7 +1074,7 @@ def show_calculator_page():
                     # ==========================================
                     # --- BÖLÜM 5: SONUÇ VE TAVSİYELER ---
                     # ==========================================
-                    pdf.ln(6)
+                    pdf.add_page()
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
