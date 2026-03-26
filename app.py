@@ -1120,31 +1120,31 @@ def show_calculator_page():
                     pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
 
                     pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
-                    
-                            # --- PDF İÇİN HESAPLAMA SONUÇLARI GRAFİĞİ (PIE CHART) OLUŞTURMA ---
-                            etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] # Türkçe karakter hatası olmaması için ş ve i'siz yazdık
-                            degerler = [res_blue, res_green, res_grey] # Senin değişkenlerini tam buraya bağladım!
-                            renkler = ['#29ABE2', '#39B54A', '#B3B3B3']
-                    
-                            # Eğer herhangi bir veri girilmişse grafiği çiz
-                            if sum(degerler) > 0:
-                                fig, ax = plt.subplots(figsize=(6, 4))
-                                
-                                ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', startangle=90, colors=renkler, textprops={'fontsize': 10})
-                                ax.axis('equal')  
-                                ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold')
-                    
-                                # Fotoğrafı hafızaya al
-                                img_buf = io.BytesIO()
-                                plt.savefig(img_buf, format='png', dpi=300, bbox_inches='tight')
-                                plt.close(fig)
-                                img_buf.seek(0)
-                    
-                                # Başlığı at ve grafiği PDF'e yapıştır
-                                pdf.set_font(f_isim, size=12, style='B')
-                                pdf.cell(0, 10, txt="Grafiksel Dagilim", ln=True, align='L')
-                                pdf.image(img_buf, x=40, y=pdf.get_y(), w=130) # w=130 genişlik, x=40 sağa kaydırma
-                                pdf.ln(100) # Grafiğin boyu kadar aşağı in ki, altındaki yazılar grafiğin üstüne binmesin
+
+                    # --- PDF İÇİN HESAPLAMA SONUÇLARI GRAFİĞİ (PIE CHART) OLUŞTURMA ---
+                    etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] # Türkçe karakter hatası olmaması için ş ve i'siz yazdık
+                    degerler = [res_blue, res_green, res_grey] # Senin değişkenlerini tam buraya bağladım!
+                    renkler = ['#29ABE2', '#39B54A', '#B3B3B3']
+            
+                    # Eğer herhangi bir veri girilmişse grafiği çiz
+                    if sum(degerler) > 0:
+                        fig, ax = plt.subplots(figsize=(6, 4))
+                        
+                        ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', startangle=90, colors=renkler, textprops={'fontsize': 10})
+                        ax.axis('equal')  
+                        ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold')
+            
+                        # Fotoğrafı hafızaya al
+                        img_buf = io.BytesIO()
+                        plt.savefig(img_buf, format='png', dpi=300, bbox_inches='tight')
+                        plt.close(fig)
+                        img_buf.seek(0)
+            
+                        # Başlığı at ve grafiği PDF'e yapıştır
+                        pdf.set_font(f_isim, size=12, style='B')
+                        pdf.cell(0, 10, txt="Grafiksel Dagilim", ln=True, align='L')
+                        pdf.image(img_buf, x=40, y=pdf.get_y(), w=130) # w=130 genişlik, x=40 sağa kaydırma
+                        pdf.ln(100) # Grafiğin boyu kadar aşağı in ki, altındaki yazılar grafiğin üstüne binmesin
                     
                     # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
                     gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
