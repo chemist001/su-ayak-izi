@@ -893,7 +893,7 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="1.2. Tanımlar", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Mavi Su Ayak İzi: Bir ürünün tedarik zinciri boyunca mavi su kaynaklarının (yüzey ve yeraltı suyu) tüketimini ifade eder. 'Tüketim', su buharlaştığında, başka bir toplama alanına veya denize döndüğünde mevcut yerüstü su kütlesinden su kaybını ifade eder.\nYeşil Su Ayak İzi: Bir faaliyette kullanım için ihtiyaç duyulan yağmur suyudur.\nGri Su Ayak İzi: Kirliliği ifade eder ve mevcut çevre su kalitesi standartlarına dayanarak kirletici yükünü asimile etmek için gereken tatlı su hacmi olarak tanımlanır.")
+                    pdf.multi_cell(190, 6, txt="Mavi Su Ayak İzi: Bir ürünün tedarik zinciri boyunca mavi su kaynaklarının (yüzey ve yeraltı suyu) tüketimini ifade eder. 'Tüketim', su buharlaştığında, başka bir toplama alanına veya denize döndüğünde mevcut yerüstü su kütlesinden su kaybını ifade eder.\n\nYeşil Su Ayak İzi: Bir faaliyette kullanım için ihtiyaç duyulan yağmur suyudur.\n\nGri Su Ayak İzi: Kirliliği ifade eder ve mevcut çevre su kalitesi standartlarına dayanarak kirletici yükünü asimile etmek için gereken tatlı su hacmi olarak tanımlanır.")
 
                     pdf.ln(8)
                     pdf.set_font(f_isim, size=12, style='B')
@@ -935,13 +935,13 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt=f"{str(company_name)} bünyesinde su kullanımı ve su güvenliğini sağlamak için oluşturulan hedeflere ulaşmak amacıyla kuruluş bazında bu rapor hazırlanmıştır.\nRaporun amacı; {current_year} yılı su kullanımı ve deşarjına dair hesaplamalardan elde edilen miktarların doğrulanması ve şeffaf bir süreç oluşturulmasıdır.")
                     
-                    pdf.ln(6)
+                    pdf.ln(4)
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="1.5. Hedef Kullanıcı", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt="Su ayak izi raporu hedef kullanıcıları; Firmamız Üst Yönetimi, Çalışanlar, Tedarikçiler ve Diğer Paydaşlardır.\nRapor, resmi kurumların talebi durumunda, sürdürülebilirlik raporlarına veri talebi durumunda ve küresel organizasyonların talebi durumunda ilgili kitlelere iletilir.")
 
-                    pdf.ln(6)
+                    pdf.ln(4)
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="1.6. Raporun ISO 14046:2014'e Uygunluğuna Dair Açıklama", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
@@ -960,7 +960,7 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt=f"Raporun sahibi {str(company_name)} olup, rapor 01 Ocak {current_year} - 31 Aralık {current_year} tarih aralığı için hazırlanmıştır.")
 
-                    pdf.ln(6)
+                    pdf.ln(4)
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="2.2. Operasyonel Sınırlar", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
@@ -969,26 +969,26 @@ def show_calculator_page():
                     # ==========================================
                     # --- BÖLÜM 3: METODOLOJİ ---
                     # ==========================================
-                    pdf.ln(6)
+                    pdf.ln(4)
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
                     pdf.cell(190, 10, txt="3. METODOLOJİ", ln=True, align='L', fill=True)
                     pdf.set_text_color(0, 0, 0)
-                    pdf.ln(5)
+                    pdf.ln(4)
                     
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="3.1. Veri Kalitesi", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanılan şebeke ve kuyu suyu verisi sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.")
-                    pdf.ln(5)
+                    pdf.ln(4)
                     
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="3.2. Kabuller", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarında, üretim sonucu oluşan atıksuları hesaplarken laboratuvar analiz sonuçlarına göre en yüksek hacmi talep eden 'Kritik Kirletici' baz alınarak birincil veri kullanılmıştır.")
 
-                    pdf.ln(6)
+                    pdf.ln(4)
                     pdf.set_font(f_isim, size=11, style='B')
                     pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
                     
