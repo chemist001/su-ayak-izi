@@ -1150,11 +1150,7 @@ def show_calculator_page():
                         # Grafik dosyası olarak kaydetme (Hafıza hatasını çözer)
                         grafik_yolu = "temp_grafik.png"
                         plt.savefig(grafik_yolu, format='png', dpi=300, bbox_inches='tight') 
-                        plt.close(fig) 
-            
-                        # PDF'e aktarma
-                        pdf.set_font(f_isim, size=12, style='B')
-                        pdf.cell(0, 10, txt="Grafiksel Dagilim (Veri Analizi)", ln=True, align='L')
+                        plt.close(fig)
                         
                         # FPDF'e doğrudan dosya yolunu veriyoruz ki rfind hatası vermesin
                         pdf.image(grafik_yolu, x=35, y=pdf.get_y(), w=140) 
