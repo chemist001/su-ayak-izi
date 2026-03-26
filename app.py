@@ -30,8 +30,8 @@ if 'hedef_tablosu' not in st.session_state:
 # Su Yönetimi Sorumluları Tablosu Hafızası
 if 'sorumlular_tablosu' not in st.session_state:
     st.session_state['sorumlular_tablosu'] = pd.DataFrame([
-        {"Görev": "", "Sorumlu": "", "İletişim": ""},
-        {"Görev": "", "Sorumlu": "", "İletişim": ""}
+        {"Görev": "", "Sorumlu Kişi": "", "İletişim": ""},
+        {"Görev": "", "Sorumlu Kişi": "", "İletişim": ""}
     ])   
     
 # ==========================================
