@@ -1119,29 +1119,48 @@ def show_calculator_page():
                     pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
                     pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
 
-                    pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
+                   pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
 
-                    # --- PDF İÇİN HESAPLAMA SONUÇLARI GRAFİĞİ (PIE CHART) OLUŞTURMA ---
+                    # --- PDF İÇİN MODERN VE PASTEL DONUT GRAFİĞİ OLUŞTURMA ---
                     etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] # Türkçe karakter hatası olmaması için ş ve i'siz yazdık
                     degerler = [res_blue, res_green, res_grey] # Senin değişkenlerini tam buraya bağladım!
-                    renkler = ['#29ABE2', '#39B54A', '#B3B3B3']
+                    
+                    # --- İŞTE O YENİ PASTEL RENKLERİMİZ ---
+                    renkler = ['#6272A4', '#8BE9FD', '#BD93F9'] # Pastel Mavi, Su Yeşili, Mor (Örnek: Pastel palet)
+                    # Eğer daha farklı pastel istersen şunları da deneyebilirsin: 
+                    # renkler = ['#88B04B', '#92A8D1', '#F7CAC9'] (Adaçayı, Taş Mavisi, Pembe)
             
                     # Eğer herhangi bir veri girilmişse grafiği çiz
                     if sum(degerler) > 0:
+                        # Grafiği çizmek için ameliyat masasını (fig, ax) hazırla
+                        # Halka (Donut) grafiği yapmak için autopct='%1.1f%%' ve pctdistance ayarını kullanacağız
                         fig, ax = plt.subplots(figsize=(6, 4))
                         
-                        ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', startangle=90, colors=renkler, textprops={'fontsize': 10})
+                        # Donut'ın dış halkasını çiz
+                        wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', startangle=90, 
+                                                         colors=renkler, textprops={'fontsize': 10}, 
+                                                         pctdistance=0.85, # Yüzdeleri dışarı kaydırır
+                                                         wedgeprops=dict(width=0.3, edgecolor='w')) # width=0.3 ortasını boşaltır
+            
+                        # Donut'ın ortasındaki boşluğa toplam rakamı yazalım
                         ax.axis('equal')  
-                        ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold')
+                        ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
+                        
+                        # Ortadaki boşluğa toplam rakamı ekleme
+                        total = sum(degerler)
+                        ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=14, fontweight='bold')
             
                         # Grafiği anlık bir dosya olarak kaydet
                         grafik_yolu = "temp_grafik.png"
                         plt.savefig(grafik_yolu, format='png', dpi=300, bbox_inches='tight')
-                        plt.close(fig)
+                        plt.close(fig) # Ameliyat masasını temizle (RAM yemesin)
             
                         # Başlığı at ve grafiği PDF'e yapıştır
                         pdf.set_font(f_isim, size=12, style='B')
-                        pdf.image(grafik_yolu, x=40, y=pdf.get_y(), w=130) 
+                        pdf.cell(0, 10, txt="Grafiksel Dagilim", ln=True, align='L')
+                        
+                        # Fotoğrafı PDF'e yapıştır (x, y koordinatları ve genişlik)
+                        pdf.image(grafik_yolu, x=40, y=pdf.get_y(), w=130) # w=130 genişlik, x=40 sağa kaydırma
                         pdf.ln(100) # Grafiğin boyu kadar aşağı in
                     
                     # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
