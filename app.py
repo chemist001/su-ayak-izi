@@ -516,8 +516,8 @@ def show_calculator_page():
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     # Sekmeli Yapı (Senin tasarımın)
-    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_sonuc = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📊 Raporlama"
+    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc = st.tabs([
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "Veri Kalitesi", "📊 Raporlama"
     ])
 
     # --- 1. FIRMA PROFILI ---
@@ -649,7 +649,7 @@ def show_calculator_page():
             hide_index=True 
         )
 
-    # --- 5. RAPORLAMA ---
+    # --- 6. RAPORLAMA ---
     with tab_sonuc:
         st.header("Sonuç ve PDF Çıktısı")
         
