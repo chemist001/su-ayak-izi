@@ -855,7 +855,7 @@ def show_calculator_page():
                     pdf.ln(4)
                     
                     pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="5. SONUÇ VE İYİLEŞTİRME TAVSİYELERİ", ln=True)
+                    pdf.cell(190, 8, txt="5. SONUÇ", ln=True)
                     pdf.cell(190, 8, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True)
                     
                     # ==========================================
