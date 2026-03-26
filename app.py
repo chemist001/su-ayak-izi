@@ -999,22 +999,21 @@ def show_calculator_page():
                     pdf.cell(50, 8, txt="Veri Doğrulama", border=1, ln=True, fill=True, align='C')
                     
                     pdf.set_font(f_isim, size=10, style='')
-                    pdf.cell(40, 16, txt="Mavi Su", border=1, align='C')
-                    pdf.set_xy(pdf.get_x() - 40, pdf.get_y()) # Satır atlamaması için imleci geri al
-                    pdf.cell(40, 8, txt="", border=0) # Boş geçiş
-                    pdf.cell(50, 8, txt="Şebeke / Kuyu / Diğer", border=1, align='C')
-                    pdf.cell(50, 8, txt="Sayaç ve Fatura", border=1, align='C')
-                    pdf.cell(50, 8, txt="Tüketim Kayıtları", border=1, ln=True, align='C')
-                    
-                    pdf.cell(40, 8, txt="", border=0) # Mavi suyun alt kısmı
-                    pdf.cell(50, 8, txt="Şebeke / Kuyu / Diğer", border=1, align='C')
-                    pdf.cell(50, 8, txt="Sayaç ve Fatura", border=1, align='C')
-                    pdf.cell(50, 8, txt="Fatura Kontrolü", border=1, ln=True, align='C')
 
-                    pdf.cell(40, 8, txt="Gri Su", border=1, align='C')
-                    pdf.cell(50, 8, txt="Endüstriyel Atıksu", border=1, align='C')
-                    pdf.cell(50, 8, txt="Analiz Raporları", border=1, align='C')
-                    pdf.cell(50, 8, txt="Laboratuvar Beyanı", border=1, ln=True, align='C')
+                    # Arayüzdeki dinamik tablonun her bir satırını okuyup PDF'e basan döngü
+                    for index, row in sistem_siniri_tablosu.iterrows():
+                        # Eğer kullanıcı hücreyi boş bıraktıysa hata vermemesi için "-" yazdırıyoruz
+                        bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
+                        kaynak = str(row["Kaynak"]) if pd.notna(row["Kaynak"]) else "-"
+                        veri_kaynagi = str(row["Veri Kaynağı"]) if pd.notna(row["Veri Kaynağı"]) else "-"
+                        veri_dogrulama = str(row["Veri Doğrulama"]) if pd.notna(row["Veri Doğrulama"]) else "-"
+                        
+                        # Sadece içi tamamen boş olmayan satırları PDF'e ekle
+                        if bilesen != "-" or kaynak != "-":
+                            pdf.cell(40, 8, txt=bilesen, border=1, align='C')
+                            pdf.cell(50, 8, txt=kaynak, border=1, align='C')
+                            pdf.cell(50, 8, txt=veri_kaynagi, border=1, align='C')
+                            pdf.cell(50, 8, txt=veri_dogrulama, border=1, ln=True, align='C')
 
                     # ==========================================
                     # --- BÖLÜM 4: HESAPLAMALAR ---
