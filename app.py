@@ -1041,7 +1041,7 @@ def show_calculator_page():
                     pdf.cell(95, 8, txt="Tesis Mavi Su Ayak İzi Hacmi", border=1, align='C')
                     pdf.cell(95, 8, txt=f"{format_num(res_blue)}", border=1, ln=True, align='C')
 
-                    pdf.ln(8)
+                    pdf.ln(5)
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="4.2. Yeşil Su Ayak İzi Hesaplamaları", ln=True)
                     pdf.set_font(f_isim, size=10, style='')
@@ -1056,7 +1056,7 @@ def show_calculator_page():
                     pdf.cell(95, 8, txt="Tesis Yeşil Su Ayak İzi Hacmi", border=1, align='C')
                     pdf.cell(95, 8, txt=f"{format_num(res_green)}", border=1, ln=True, align='C')
 
-                    pdf.ln(8)
+                    pdf.ln(5)
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
                     pdf.set_font(f_isim, size=10, style='')
