@@ -611,12 +611,9 @@ def show_calculator_page():
     
         # 1. Aşama: Tablonun varsayılan (ilk açıldığında görünen) hali
         baslangic_verisi = pd.DataFrame(
-            [
-                {"Bileşen": "", "": "", "": "", "": ""},
-                {"Bileşen": "", "": "", "": "", "": ""},
-                {"Bileşen": "", "": "", "": "", "": ""}
-            ]
-        )
+                columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]
+                    ]
+                )
     
         # 2. Aşama: Tabloyu Streamlit'te etkileşimli (Excel gibi) hale getirme
         sistem_siniri_tablosu = st.data_editor(
