@@ -874,7 +874,7 @@ def show_calculator_page():
                     
                     for row in gecerli_sorumlular:
                         # Tabloya sığması için metinleri biraz tıraşlıyoruz (taşıp PDF'i bozmaması için)
-                        sorumlu kişi = str(row["Sorumlu Kişi"])[:30] 
+                        sorumlu = str(row["Sorumlu Kişi"])[:30] 
                         gorev = str(row["Görev"])[:45]
                         iletisim = str(row["İletişim"])[:25]
                         
