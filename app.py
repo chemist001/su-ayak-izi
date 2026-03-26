@@ -1118,10 +1118,6 @@ def show_calculator_page():
                     pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
                     pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
 
-                    pdf.ln(10)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt=f"Rapora girdi olan faaliyet verileri, su kullanım alanları ve türleri, kirletici parametreler ve yapılan kabuller değerlendirildiğinde aşağıda belirtilen iyileştirme tavsiyelerine ulaşılmıştır:\n\n1. Atıksuda gri su ayak izinin hesaplanması için atıksu miktarının (deşarj) sayaçlarla kontrol edilmesi gerektiği,\n2. Endüstriyel atıksuda gri su ayak izinin hesaplanması için aylık bazda analizlerin akredite bir laboratuvarda yaptırılması gerektiği,\n3. Su kullanım ekipmanlarının ömrü tamamlandığında tasarruflu ve teknolojik ekipmanlar ile değiştirilmesi,\n4. Su yönetiminin takibinin artırılması gerektiği tespit edilmiştir.")
-
                     # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
                     gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
                     
