@@ -878,7 +878,7 @@ def show_calculator_page():
                         gorev = str(row["Görev"])[:45]
                         iletisim = str(row["İletişim"])[:25]
                         
-                        pdf.cell(70, 8, txt=sorumlu kisi, border=1, align='C')
+                        pdf.cell(70, 8, txt=sorumlu, border=1, align='C')
                         pdf.cell(70, 8, txt=gorev, border=1, align='C')
                         pdf.cell(50, 8, txt=iletisim, border=1, ln=True, align='C')
                         
