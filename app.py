@@ -947,7 +947,7 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt="Su Ayakizi Raporu 'ISO 14046:2014 Water Footprint - Principles, Requirements and Guidelines' gereklerine uygun olarak yazılımımız tarafından otomatik hazırlanmıştır.")
 
-                    pdf.ln(10)
+                    pdf.ln(6)
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
@@ -969,7 +969,7 @@ def show_calculator_page():
                     # ==========================================
                     # --- BÖLÜM 3: METODOLOJİ ---
                     # ==========================================
-                    pdf.add_page()
+                    pdf.ln(6)
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
@@ -988,7 +988,7 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=11, style='')
                     pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarında, üretim sonucu oluşan atıksuları hesaplarken laboratuvar analiz sonuçlarına göre en yüksek hacmi talep eden 'Kritik Kirletici' baz alınarak birincil veri kullanılmıştır.")
 
-                    pdf.ln(8)
+                    pdf.ln(6)
                     pdf.set_font(f_isim, size=11, style='B')
                     pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
                     
@@ -1019,7 +1019,7 @@ def show_calculator_page():
                     # ==========================================
                     # --- BÖLÜM 4: HESAPLAMALAR ---
                     # ==========================================
-                    pdf.add_page()
+                    pdf.ln(6)
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
@@ -1074,7 +1074,7 @@ def show_calculator_page():
                     # ==========================================
                     # --- BÖLÜM 5: SONUÇ VE TAVSİYELER ---
                     # ==========================================
-                    pdf.add_page()
+                    pdf.ln(6)
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
@@ -1160,7 +1160,7 @@ def show_calculator_page():
                     gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
                     
                     if len(gecerli_hedefler) > 0:
-                        pdf.add_page()
+                        pdf.ln(6)
                         pdf.set_fill_color(0, 150, 136) 
                         pdf.set_text_color(255, 255, 255) 
                         pdf.set_font(f_isim, size=14, style='B')
