@@ -1077,7 +1077,7 @@ def show_calculator_page():
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
-                    pdf.cell(190, 10, txt="5. SONUÇ VE İYİLEŞTİRME TAVSİYELERİ", ln=True, align='L', fill=True)
+                    pdf.cell(190, 10, txt="5. SONUÇ", ln=True, align='L', fill=True)
                     pdf.set_text_color(0, 0, 0)
                     pdf.ln(5)
 
