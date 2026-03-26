@@ -1152,7 +1152,7 @@ def show_calculator_page():
                         
                         # Ortadaki boşluğa toplam rakamı ekleme
                         total = sum(degerler)
-                        ax.text(0, 0, 0.1, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
+                        ax.text2D(0.5, 0.5, f"TOPLAM:\n{total:,.0f} m³", transform=ax.transAxes, ha='center', va='center', fontsize=12, fontweight='bold')
             
                         # 2. Sihirli kısım: Grafiği bir "fotoğraf" olarak hafızaya (RAM) kaydedelim
                         img_buf = io.BytesIO()
