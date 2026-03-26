@@ -1080,7 +1080,7 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=14, style='B')
                     pdf.cell(190, 10, txt="5. SONUÇ", ln=True, align='L', fill=True)
                     pdf.set_text_color(0, 0, 0)
-                    pdf.ln(5)
+                    pdf.ln(3)
 
                     total_vol = res_blue + res_green + res_grey
                     
@@ -1119,7 +1119,7 @@ def show_calculator_page():
                     pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
                     pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
 
-                    pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
+                    pdf.ln(6) # Tablo ile grafik arasına biraz boşluk bırakalım
 
                                # --- PDF İÇİN TEMİZ VE MODERN DONUT GRAFİĞİ OLUŞTURMA ---
                     etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
