@@ -1141,7 +1141,6 @@ def show_calculator_page():
             
                         # Başlığı at ve grafiği PDF'e yapıştır
                         pdf.set_font(f_isim, size=12, style='B')
-                        pdf.cell(0, 10, txt="Grafiksel Dagilim", ln=True, align='L')
                         pdf.image(grafik_yolu, x=40, y=pdf.get_y(), w=130) 
                         pdf.ln(100) # Grafiğin boyu kadar aşağı in
                     
