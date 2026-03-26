@@ -807,7 +807,7 @@ def show_calculator_page():
                     
                     pdf.set_text_color(0, 0, 0)
                     pdf.set_font(f_isim, size=10, style='')
-                    pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından ADASu Platformu Kullanılarak Hazırlanmıştır.", align='C')
+                    pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından MaviRota Platformu Kullanılarak Hazırlanmıştır.", align='C')
 
                     # ==========================================
                     # --- BÖLÜM 1: GİRİŞ VE KAPSAM ---
