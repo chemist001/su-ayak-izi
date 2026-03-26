@@ -604,6 +604,51 @@ def show_calculator_page():
         # Tabloyu doğrudan kalıcı hafızadan çağırıyor ve değişiklikleri kasaya kilitliyoruz
         duzenlenmis_df = st.data_editor(st.session_state['gri_tablo'], num_rows="dynamic", use_container_width=True)
 
+    # --- 5. VERİ KALİTESİ VE SİSTEM SINIRI ---
+    with tab_veri:
+        st.header("Veri Kalitesi ve Sistem Sınırı")
+        st.info("Lütfen tesisinize ait su bileşenlerini, kaynaklarını ve veri doğrulama yöntemlerini aşağıdaki tablodan seçiniz veya düzenleyiniz.")
+    
+        # 1. Aşama: Tablonun varsayılan (ilk açıldığında görünen) hali
+        baslangic_verisi = pd.DataFrame(
+            [
+                {"Bileşen": "Mavi Su", "Kaynak": "Şebeke", "Veri Kaynağı": "Sayaç ve Fatura", "Veri Doğrulama": "Tüketim Kayıtları"},
+                {"Bileşen": "Mavi Su", "Kaynak": "Kuyu", "Veri Kaynağı": "Sayaç ve Fatura", "Veri Doğrulama": "Fatura Kontrolü"},
+                {"Bileşen": "Gri Su", "Kaynak": "Endüstriyel Atıksu", "Veri Kaynağı": "Analiz Raporları", "Veri Doğrulama": "Laboratuvar Beyanı"}
+            ]
+        )
+    
+        # 2. Aşama: Tabloyu Streamlit'te etkileşimli (Excel gibi) hale getirme
+        sistem_siniri_tablosu = st.data_editor(
+            baslangic_verisi,
+            column_config={
+                "Bileşen": st.column_config.SelectboxColumn(
+                    "Bileşen",
+                    help="Suyun kategorisini seçin",
+                    options=["Mavi Su", "Gri Su", "Yeşil Su"],
+                    required=True
+                ),
+                "Kaynak": st.column_config.SelectboxColumn(
+                    "Kaynak",
+                    options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu"],
+                    required=True
+                ),
+                "Veri Kaynağı": st.column_config.SelectboxColumn(
+                    "Veri Kaynağı",
+                    options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan"],
+                    required=True
+                ),
+                "Veri Doğrulama": st.column_config.SelectboxColumn(
+                    "Veri Doğrulama",
+                    options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar"],
+                    required=True
+                )
+            },
+            num_rows="dynamic", 
+            use_container_width=True, 
+            hide_index=True 
+        )
+
     # --- 5. RAPORLAMA ---
     with tab_sonuc:
         st.header("Sonuç ve PDF Çıktısı")
