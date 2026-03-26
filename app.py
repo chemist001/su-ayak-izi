@@ -1126,7 +1126,7 @@ def show_calculator_page():
                     degerler = [res_blue, res_green, res_grey] # Senin değişkenlerini tam buraya bağladım!
                     
                     # --- İŞTE O YENİ PASTEL RENKLERİMİZ ---
-                    renkler = ['#678B99', '#8A9A70', '#C25946'] # Pastel Mavi, Su Yeşili, Mor (Örnek: Pastel palet)
+                    renkler = ['#B04A3E', '#D27360', '#F0A793'] # Pastel Mavi, Su Yeşili, Mor (Örnek: Pastel palet)
                     # Eğer daha farklı pastel istersen şunları da deneyebilirsin: 
                     # renkler = ['#88B04B', '#92A8D1', '#F7CAC9'] (Adaçayı, Taş Mavisi, Pembe)
             
