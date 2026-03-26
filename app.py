@@ -1134,17 +1134,16 @@ def show_calculator_page():
                         ax.axis('equal')  
                         ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold')
             
-                        # Fotoğrafı hafızaya al
-                        img_buf = io.BytesIO()
-                        plt.savefig(img_buf, format='png', dpi=300, bbox_inches='tight')
+                        # Grafiği anlık bir dosya olarak kaydet
+                        grafik_yolu = "temp_grafik.png"
+                        plt.savefig(grafik_yolu, format='png', dpi=300, bbox_inches='tight')
                         plt.close(fig)
-                        img_buf.seek(0)
             
                         # Başlığı at ve grafiği PDF'e yapıştır
                         pdf.set_font(f_isim, size=12, style='B')
                         pdf.cell(0, 10, txt="Grafiksel Dagilim", ln=True, align='L')
-                        pdf.image(img_buf, x=40, y=pdf.get_y(), w=130) # w=130 genişlik, x=40 sağa kaydırma
-                        pdf.ln(100) # Grafiğin boyu kadar aşağı in ki, altındaki yazılar grafiğin üstüne binmesin
+                        pdf.image(grafik_yolu, x=40, y=pdf.get_y(), w=130) 
+                        pdf.ln(100) # Grafiğin boyu kadar aşağı in
                     
                     # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
                     gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
