@@ -1121,52 +1121,43 @@ def show_calculator_page():
 
                     pdf.ln(10) # Tablo ile grafik arasına biraz boşluk bırakalım
 
-                    # --- PDF İÇİN MODERN, PASTEL VE 3D DONUT GRAFİĞİ OLUŞTURMA ---
-                    etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] # Türkçe karakter hatası olmaması için ş ve i'siz yazdık
-                    degerler = [res_blue, res_green, res_grey] # Senin değişkenlerini tam buraya bağladım!
-                    
-                    # --- İŞTE O YENİ PASTEL KİREMİT TONLARIMIZ VE DOĞA RENKLERİMİZ ---
+                                # --- PDF İÇİN MODERN, GÖLGELİ VE PASTEL DONUT GRAFİĞİ OLUŞTURMA ---
+                    etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
+                    degerler = [res_blue, res_green, res_grey] 
                     renkler = ['#678B99', '#8A9A70', '#C25946'] # Puslu Çini Mavisi, Mat Zeytin Yeşili, Klasik Kiremit
             
                     # Eğer herhangi bir veri girilmişse grafiği çiz
                     if sum(degerler) > 0:
-                        # 1. Grafiği çizmek için ameliyat masasını (fig, ax) hazırla
-                        # 3D efekt eklemek için subplot_kw={'projection': '3d'} kullanıyoruz
-                        fig = plt.figure(figsize=(6, 4), dpi=100)
-                        ax = fig.add_subplot(111, projection='3d')
+                        # 3D zorlaması yok (Hata vermez). Temiz ve düz çizim alanı hazırlıyoruz:
+                        fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
                         
-                        # Donut'ın dış halkasını çiz. 3D efekt için depth, width ve startangle kullanacağız
-                        # wedgeprops içindeki width halkanın kalınlığını belirler (0.3=halka, 1=pasta)
+                        # shadow=True ile 3 boyut (derinlik) hissi veriyoruz
                         wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', 
-                                                         shadow=True, # 3D gölge efekti
-                                                         startangle=90, # Başlangıç açısı
+                                                         shadow=True, 
+                                                         startangle=90, 
                                                          colors=renkler, 
-                                                         textprops={'fontsize': 10}, 
-                                                         pctdistance=0.85, # Yüzdeleri dışarı kaydırır
-                                                         wedgeprops=dict(width=0.4, edgecolor='w')) # Donut boşluğu ve beyaz kenar
+                                                         textprops={'fontsize': 10, 'weight': 'bold'}, 
+                                                         pctdistance=0.85, 
+                                                         wedgeprops=dict(width=0.4, edgecolor='w')) 
             
-                        # Donut'ın ortasındaki boşluğa toplam rakamı yazalım
-                        # ax.axis('equal') 3D grafiklerde çalışmaz, onun yerine aspect ratio'yu ayarlayacağız
-                        ax.set_box_aspect([1, 1, 0.5]) # 3D grafiğin basık olmasını sağlar (Z aksı 0.5)
+                        ax.axis('equal') # Grafiğin tam yuvarlak olmasını sağlar
                         ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
                         
-                        # Ortadaki boşluğa toplam rakamı ekleme
                         total = sum(degerler)
-                        ax.text2D(0.5, 0.5, f"TOPLAM:\n{total:,.0f} m³", transform=ax.transAxes, ha='center', va='center', fontsize=12, fontweight='bold')
+                        # TOPLAM yazısını tam ortaya basıyoruz (text2D veya argüman hatası yok)
+                        ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
             
-                        # 2. Sihirli kısım: Grafiği bir "fotoğraf" olarak hafızaya (RAM) kaydedelim
+                        # Fotoğraf olarak hafızaya (RAM) kaydetme
                         img_buf = io.BytesIO()
-                        plt.savefig(img_buf, format='png', dpi=300, bbox_inches='tight') #bbox_inches tight kenar boşluklarını siler
-                        plt.close(fig) # Ameliyat masasını temizle (RAM yemesin)
-                        img_buf.seek(0) # Hafızadaki fotoğrafın başına dön (okumaya hazırla)
+                        plt.savefig(img_buf, format='png', dpi=300, bbox_inches='tight') 
+                        plt.close(fig) 
+                        img_buf.seek(0) 
             
-                        # 3. Grafiği PDF'e ekleme
+                        # PDF'e aktarma
                         pdf.set_font(f_isim, size=12, style='B')
-                        pdf.cell(0, 10, txt="Grafiksel Dagilim (3D Veri Analizi)", ln=True, align='L')
+                        pdf.cell(0, 10, txt="Grafiksel Dagilim (Veri Analizi)", ln=True, align='L')
                         
-                        # Fotoğrafı PDF'e yapıştır (x, y koordinatları ve genişlik)
-                        # Hafızadaki o BytesIO dosyasını doğrudan pdf.image() içine verebiliriz
-                        pdf.image(img_buf, x=35, y=pdf.get_y(), w=140) # w=140 genişlik, x=35 sağa kaydırma
+                        pdf.image(img_buf, x=35, y=pdf.get_y(), w=140) 
                         pdf.ln(100) # Grafiğin boyu kadar aşağı in
                     
                     # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
