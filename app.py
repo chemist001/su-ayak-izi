@@ -527,33 +527,36 @@ def show_calculator_page():
         st.header("Firma Bilgileri")
         col1, col2 = st.columns(2)
         with col1:
-            company_name = st.text_input("Firma Ünvanı", value=st.session_state['firma_adi'])
+            company_name = st.text_input("Firma Ünvanı", value=st.session_state.get('firma_adi', ''))
             st.session_state['firma_adi'] = company_name
             
-            sector = st.text_input("Firma Sektörü", value=st.session_state['sektor'])
+            sector = st.text_input("Firma Sektörü", value=st.session_state.get('sektor', ''))
             st.session_state['sektor'] = sector
             
-            address = st.text_input("Firma Adresi", value=st.session_state['adres'])
+            address = st.text_input("Firma Adresi", value=st.session_state.get('adres', ''))
             st.session_state['adres'] = address
 
-            # YENİ: Raporlama Yılı (Sol Kolon)
-            # Hata vermemesi için .get() ile çağırıyoruz
+            # YENİ VE ŞIK: Raporlama Yılı (Açılır Menü / Selectbox)
+            yillar = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"]
+            varsayilan_yil = st.session_state.get('rapor_yili', "2026") # Hafızada yoksa 2026 seçili gelsin
+            
+            # Eğer hafızadaki yıl bizim listemizde varsa onu bul, yoksa 2026'nın sırasını (2) seç
             secili_index = yillar.index(varsayilan_yil) if varsayilan_yil in yillar else 2
             
             rapor_yili = st.selectbox("Raporlama Yılı", options=yillar, index=secili_index)
             st.session_state['rapor_yili'] = rapor_yili
 
         with col2:
-            contact_person = st.text_input("Yetkili Kişi Adı Soyadı", value=st.session_state['yetkili'])
+            contact_person = st.text_input("Yetkili Kişi Adı Soyadı", value=st.session_state.get('yetkili', ''))
             st.session_state['yetkili'] = contact_person
             
-            email = st.text_input("Yetkili E-posta", value=st.session_state['email'])
+            email = st.text_input("Yetkili E-posta", value=st.session_state.get('email', ''))
             st.session_state['email'] = email
             
-            c_phone = st.text_input("Telefon", value=st.session_state['telefon'])
+            c_phone = st.text_input("Telefon", value=st.session_state.get('telefon', ''))
             st.session_state['telefon'] = c_phone
 
-            # YENİ: Rapor Tarihi (Sağ Kolon - Takvim Formatında)
+            # Rapor Tarihi (Takvim Formatında)
             rapor_tarihi = st.date_input("Rapor Tarihi", value=st.session_state.get('rapor_tarihi', None))
             st.session_state['rapor_tarihi'] = rapor_tarihi
             
