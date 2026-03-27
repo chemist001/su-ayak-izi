@@ -492,6 +492,8 @@ def show_calculator_page():
     if 'yetkili' not in st.session_state: st.session_state['yetkili'] = ""
     if 'email' not in st.session_state: st.session_state['email'] = ""
     if 'telefon' not in st.session_state: st.session_state['telefon'] = ""
+    if 'rapor_yili' not in st.session_state: st.session_state['rapor_yili'] = ""
+    if 'rapor_tarihi' not in st.session_state: st.session_state['rapor_tarihi'] = None
         
 
     # Mavi Su
@@ -888,6 +890,14 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="1.1. Kuruluş Bilgileri", ln=True)
                     pdf.set_font(f_isim, size=10, style='')
+
+                    rapor_yili = st.session_state.get('rapor_yili', '2026')
+                    rapor_tarihi = st.session_state.get('rapor_tarihi', None)
+
+                    if rapor_tarihi:
+                        rapor_tarihi_str = rapor_tarihi.strftime("%d.%m.%Y")
+                    else:
+                        rapor_tarihi_str = "Belirtilmedi"
                     
                     # Detaylı Kuruluş Tablosu
                     pdf.set_fill_color(240, 240, 240) 
@@ -902,8 +912,10 @@ def show_calculator_page():
                     pdf.cell(130, 8, txt=f"{str(c_phone)} / {str(email)}", border=1, ln=True)
                     pdf.cell(60, 8, txt="Rapordan Sorumlu Kişi", border=1, fill=True)
                     pdf.cell(130, 8, txt=f"{str(contact_person)}", border=1, ln=True)
-                    pdf.cell(60, 8, txt="Raporlama Yılı", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{current_year}", border=1, ln=True)
+                    pdf.cell(60, 8, txt="Raporlama Yili", border=1, fill=True)
+                    pdf.cell(130, 8, txt=f"{rapor_yili}", border=1, ln=True)
+                    pdf.cell(60, 8, txt="Rapor Tarihi", border=1, fill=True)
+                    pdf.cell(130, 8, txt=f"{rapor_tarihi_str}", border=1, ln=True)
 
                     pdf.ln(8)
                     pdf.set_font(f_isim, size=12, style='B')
