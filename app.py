@@ -1229,8 +1229,6 @@ def main():
     
     st.sidebar.title("Menü")
     page = st.sidebar.radio("Sayfa Seçiniz:", ["🏠 Ana Sayfa", "🧮 Hesaplama"])
-    
-    st.sidebar.info("Geliştirici: Erdem Polat")
 
     if page == "🏠 Ana Sayfa":
         show_home_page()
