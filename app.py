@@ -538,7 +538,9 @@ def show_calculator_page():
 
             # YENİ: Raporlama Yılı (Sol Kolon)
             # Hata vermemesi için .get() ile çağırıyoruz
-            rapor_yili = st.text_input("Raporlama Yılı (Örn: 2026)", value=st.session_state.get('rapor_yili', ''))
+            secili_index = yillar.index(varsayilan_yil) if varsayilan_yil in yillar else 2
+            
+            rapor_yili = st.selectbox("Raporlama Yılı", options=yillar, index=secili_index)
             st.session_state['rapor_yili'] = rapor_yili
 
         with col2:
