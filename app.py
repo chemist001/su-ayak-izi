@@ -921,7 +921,7 @@ def show_calculator_page():
                     pdf.set_font(f_isim, size=12, style='B')
                     pdf.cell(190, 8, txt="1.2. Tanımlar", ln=True)
                     pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Mavi Su Ayak İzi: Bir ürünün tedarik zinciri boyunca mavi su kaynaklarının (yüzey ve yeraltı suyu) tüketimini ifade eder. 'Tüketim', su buharlaştığında, başka bir toplama alanına veya denize döndüğünde mevcut yerüstü su kütlesinden su kaybını ifade eder.\n\nYeşil Su Ayak İzi: Bir faaliyette kullanım için ihtiyaç duyulan yağmur suyudur.\n\nGri Su Ayak İzi: Kirliliği ifade eder ve mevcut çevre su kalitesi standartlarına dayanarak kirletici yükünü asimile etmek için gereken tatlı su hacmi olarak tanımlanır.")
+                    pdf.multi_cell(190, 6, txt="Mavi Su Ayak İzi: Doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.\n\nYeşil Su Ayak İzi: Bir tesisin faaliyetleri kapsamında doğrudan veya dolaylı olarak kullanılan hammaddelerin üretimi sırasında tüketilen, yağış kaynaklı suyun toplamını ifade eder..\n\nGri Su Ayak İzi: Kirliliği ifade eder ve mevcut çevre su kalitesi standartlarına dayanarak kirletici yükünü asimile etmek için gereken tatlı su hacmi olarak tanımlanır.")
 
                     pdf.ln(8)
                     pdf.set_font(f_isim, size=12, style='B')
