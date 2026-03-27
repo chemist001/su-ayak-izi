@@ -492,6 +492,7 @@ def show_calculator_page():
     if 'yetkili' not in st.session_state: st.session_state['yetkili'] = ""
     if 'email' not in st.session_state: st.session_state['email'] = ""
     if 'telefon' not in st.session_state: st.session_state['telefon'] = ""
+        
 
     # Mavi Su
     if 'sebeke_suyu' not in st.session_state: st.session_state['sebeke_suyu'] = 0.0
@@ -521,7 +522,7 @@ def show_calculator_page():
         "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama"
     ])
 
-    # --- 1. FIRMA PROFILI ---
+ # --- 1. FIRMA PROFILI ---
     with tab_firma:
         st.header("Firma Bilgileri")
         col1, col2 = st.columns(2)
@@ -532,8 +533,14 @@ def show_calculator_page():
             sector = st.text_input("Firma Sektörü", value=st.session_state['sektor'])
             st.session_state['sektor'] = sector
             
-            address = st.text_area("Firma Adresi", value=st.session_state['adres'])
+            address = st.text_input("Firma Adresi", value=st.session_state['adres'])
             st.session_state['adres'] = address
+
+            # YENİ: Raporlama Yılı (Sol Kolon)
+            # Hata vermemesi için .get() ile çağırıyoruz
+            rapor_yili = st.text_input("Raporlama Yılı (Örn: 2026)", value=st.session_state.get('rapor_yili', ''))
+            st.session_state['rapor_yili'] = rapor_yili
+
         with col2:
             contact_person = st.text_input("Yetkili Kişi Adı Soyadı", value=st.session_state['yetkili'])
             st.session_state['yetkili'] = contact_person
@@ -543,6 +550,10 @@ def show_calculator_page():
             
             c_phone = st.text_input("Telefon", value=st.session_state['telefon'])
             st.session_state['telefon'] = c_phone
+
+            # YENİ: Rapor Tarihi (Sağ Kolon - Takvim Formatında)
+            rapor_tarihi = st.date_input("Rapor Tarihi", value=st.session_state.get('rapor_tarihi', None))
+            st.session_state['rapor_tarihi'] = rapor_tarihi
             
             # Kolonların altına Sorumlular Tablosunu ekliyoruz
         st.divider()
