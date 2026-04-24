@@ -684,7 +684,7 @@ def show_calculator_page():
                 
                 # Gemini 2.5 Flash ile iletişime geçiyoruz
                     response = client.models.generate_content(
-                        model='gemini-2.5-flash',
+                        model='gemini-flash-latest',
                         contents=tam_soru
                     )
                 
