@@ -673,33 +673,6 @@ def show_calculator_page():
         st.info("Tesisinizin su ayak izi verilerini veya hedeflerinizi yazın, yapay zeka size profesyonel bir eylem planı sunsun.")
         kullanici_sorusu = st.text_area("Danışmana ne sormak istersiniz?", height=150, placeholder="Örnek: Denim fabrikamızda atıksu deşarjında ZDHC MRSL Seviye 3'e uyum sağlamak ve gri su ayak izimizi azaltmak için nasıl bir aksiyon planı izlemeliyiz?")
 
-        if st.button("Danışmana Sor", type="primary"):
-            if kullanici_sorusu:
-                with st.spinner("AI Danışman teknik verileri analiz ediyor..."):
-                # Verileri buraya "gizli zarf" gibi ekliyoruz
-                    tesis_verileri = f"""
-                    Tesisin Güncel Su Ayak İzi Verileri:
-                    - Mavi Su: {res_blue:.2f} m3/yıl
-                    - Yeşil Su: {res_green:.2f} m3/yıl
-                    - Gri Su: {res_grey:.2f} m3/yıl
-                    - Toplam: {total_wf:.2f} m3/yıl
-                    """
-                # Yapay Zekaya Karakter Veriyoruz (Sistem Komutu)
-                    sistem_talimati = "Sen kıdemli bir endüstri mühendisi ve sürdürülebilirlik baş denetçisisin. Kullanıcının çevresel verilerini analiz edip, teknik, kurumsal ve vizyoner tavsiyeler ver. Cevapların net, uygulanabilir ve resmi bir dille yazılmış olsun."
-
-                    tam_soru = f"{sistem_talimati}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
-                
-                # Gemini 2.5 Flash ile iletişime geçiyoruz
-                    response = client.models.generate_content(
-                        model='gemini-flash-latest',
-                        contents=tam_soru
-                    )
-                
-                    st.success("Analiz Tamamlandı!")
-                    st.markdown(response.text)
-        else:
-            st.warning("Lütfen analiz edilmesi için bir veri veya soru girin.")
-
     # --- 6. RAPORLAMA ---
     with tab_sonuc:
         st.header("Sonuç ve PDF Çıktısı")
@@ -754,6 +727,38 @@ def show_calculator_page():
                 col_res3.metric("⬛ Gri Su Ayak İzi", f"{res_grey:,.2f} m³/yıl", delta=f"Kritik: {res_grey_dict['critical_pollutant']}", delta_color="off")
                 
                 st.info(f"**Toplam Tesis Su Ayak İzi:** {total_wf:,.2f} m³/yıl")
+
+            # --- YENİ YERİ: HESAPLAMALARIN EN ALTINA ---
+                st.markdown("---")
+                st.subheader("🤖 AI Danışman Analizi")
+                
+                kullanici_sorusu = st.text_area("Tesis verilerinizle ilgili AI Danışmana ne sormak istersiniz?", height=100)
+                
+                if st.button("Danışmana Sor", type="primary"):
+                    if kullanici_sorusu:
+                        with st.spinner("AI Danışman tesis verilerinizi analiz ediyor..."):
+                            
+                            # Verileri buraya "gizli zarf" gibi ekliyoruz
+                            tesis_verileri = f"""
+                            Tesisin Güncel Su Ayak İzi Verileri:
+                            - Mavi Su: {res_blue:.2f} m3/yıl
+                            - Yeşil Su: {res_green:.2f} m3/yıl
+                            - Gri Su: {res_grey:.2f} m3/yıl
+                            - Toplam: {total_wf:.2f} m3/yıl
+                            """
+                            
+                            sistem_talimati = "Sen kıdemli bir sürdürülebilirlik denetçisisin. Yukarıdaki tesis verilerini analiz et."
+                            tam_soru = f"{sistem_talimati}\n\n{tesis_verileri}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
+                            
+                            response = client.models.generate_content(
+                                model='gemini-flash-latest',
+                                contents=tam_soru
+                            )
+                            
+                            st.success("Analiz Tamamlandı!")
+                            st.markdown(response.text)
+                    else:
+                        st.warning("Lütfen bir soru girin.")
                 
                 # Plotly Pasta Grafik
                 st.markdown("### 📊 Su Ayak İzi Dağılımı")
