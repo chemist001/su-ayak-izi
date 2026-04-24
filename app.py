@@ -686,7 +686,7 @@ def show_calculator_page():
                     response = client.models.generate_content(
                         model='gemini-2.5-flash',
                         contents=tam_soru
-                )
+                    )
                 
                     st.success("Analiz Tamamlandı!")
                     st.markdown(response.text)
