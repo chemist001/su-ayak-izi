@@ -675,23 +675,23 @@ def show_calculator_page():
 
         if st.button("Danışmana Sor", type="primary"):
         if kullanici_sorusu:
-        with st.spinner("AI Danışman teknik verileri analiz ediyor..."):
-            
-            # Yapay Zekaya Karakter Veriyoruz (Sistem Komutu)
-            sistem_talimati = "Sen kıdemli bir endüstri mühendisi ve sürdürülebilirlik baş denetçisisin. Kullanıcının çevresel verilerini analiz edip, teknik, kurumsal ve vizyoner tavsiyeler ver. Cevapların net, uygulanabilir ve resmi bir dille yazılmış olsun."
-            
-            tam_soru = f"{sistem_talimati}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
-            
-            # Gemini 2.5 Flash ile iletişime geçiyoruz
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=tam_soru
-            )
-            
-            st.success("Analiz Tamamlandı!")
-            st.markdown(response.text)
+            with st.spinner("AI Danışman teknik verileri analiz ediyor..."):
+                
+                # Yapay Zekaya Karakter Veriyoruz (Sistem Komutu)
+                sistem_talimati = "Sen kıdemli bir endüstri mühendisi ve sürdürülebilirlik baş denetçisisin. Kullanıcının çevresel verilerini analiz edip, teknik, kurumsal ve vizyoner tavsiyeler ver. Cevapların net, uygulanabilir ve resmi bir dille yazılmış olsun."
+                
+                tam_soru = f"{sistem_talimati}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
+                
+                # Gemini 2.5 Flash ile iletişime geçiyoruz
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=tam_soru
+                )
+                
+                st.success("Analiz Tamamlandı!")
+                st.markdown(response.text)
         else:
-        st.warning("Lütfen analiz edilmesi için bir veri veya soru girin.")
+            st.warning("Lütfen analiz edilmesi için bir veri veya soru girin.")
 
     # --- 6. RAPORLAMA ---
     with tab_sonuc:
