@@ -5,7 +5,7 @@ import base64
 import matplotlib.pyplot as plt
 import io
 from google import genai
-client = genai.Client(api_key="ALDIĞIN_UPUZUN_API_ANAHTARINI_BURAYA_YAPISTIR")
+client = genai.Client(api_key="AIzaSyAMQYH5_RuSI5F5U3FLMRRJlsOF-DUQTLA")
 
 # --- KÜTÜPHANE KONTROLLERİ ---
 try:
