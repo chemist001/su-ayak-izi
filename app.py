@@ -677,13 +677,13 @@ def show_calculator_page():
             if kullanici_sorusu:
                 with st.spinner("AI Danışman teknik verileri analiz ediyor..."):
                 # Verileri buraya "gizli zarf" gibi ekliyoruz
-                tesis_verileri = f"""
-                Tesisin Güncel Su Ayak İzi Verileri:
-                - Mavi Su: {res_blue:.2f} m3/yıl
-                - Yeşil Su: {res_green:.2f} m3/yıl
-                - Gri Su: {res_grey:.2f} m3/yıl
-                - Toplam: {total_wf:.2f} m3/yıl
-                """
+                    tesis_verileri = f"""
+                    Tesisin Güncel Su Ayak İzi Verileri:
+                    - Mavi Su: {res_blue:.2f} m3/yıl
+                    - Yeşil Su: {res_green:.2f} m3/yıl
+                    - Gri Su: {res_grey:.2f} m3/yıl
+                    - Toplam: {total_wf:.2f} m3/yıl
+                    """
                 # Yapay Zekaya Karakter Veriyoruz (Sistem Komutu)
                     sistem_talimati = "Sen kıdemli bir endüstri mühendisi ve sürdürülebilirlik baş denetçisisin. Kullanıcının çevresel verilerini analiz edip, teknik, kurumsal ve vizyoner tavsiyeler ver. Cevapların net, uygulanabilir ve resmi bir dille yazılmış olsun."
 
