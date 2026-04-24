@@ -522,8 +522,8 @@ def show_calculator_page():
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     # Sekmeli Yapı (Senin tasarımın)
-    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_ai, tab_sonuc, = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "🤖 AI Danışman", "📊 Raporlama", 
+    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc, = st.tabs([
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama", 
     ])
 
  # --- 1. FIRMA PROFILI ---
@@ -667,11 +667,6 @@ def show_calculator_page():
             use_container_width=True, 
             hide_index=True 
         )
-
-    with tab_ai:
-        st.header("Sürdürülebilirlik Yapay Zeka Danışmanı")
-        st.info("Tesisinizin su ayak izi verilerini veya hedeflerinizi yazın, yapay zeka size profesyonel bir eylem planı sunsun.")
-        kullanici_sorusu = st.text_area("Danışmana ne sormak istersiniz?", height=150, placeholder="Örnek: Denim fabrikamızda atıksu deşarjında ZDHC MRSL Seviye 3'e uyum sağlamak ve gri su ayak izimizi azaltmak için nasıl bir aksiyon planı izlemeliyiz?")
 
     # --- 6. RAPORLAMA ---
     with tab_sonuc:
