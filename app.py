@@ -4,6 +4,8 @@ import datetime
 import base64
 import matplotlib.pyplot as plt
 import io
+from google import genai
+client = genai.Client(api_key="ALDIĞIN_UPUZUN_API_ANAHTARINI_BURAYA_YAPISTIR")
 
 # --- KÜTÜPHANE KONTROLLERİ ---
 try:
@@ -520,8 +522,8 @@ def show_calculator_page():
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     # Sekmeli Yapı (Senin tasarımın)
-    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama"
+    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_ai, tab_sonuc, = st.tabs([
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "🤖 AI Danışman", "📊 Raporlama", 
     ])
 
  # --- 1. FIRMA PROFILI ---
@@ -665,6 +667,31 @@ def show_calculator_page():
             use_container_width=True, 
             hide_index=True 
         )
+
+    with tab_ai:
+        st.header("Sürdürülebilirlik Yapay Zeka Danışmanı")
+        st.info("Tesisinizin su ayak izi verilerini veya hedeflerinizi yazın, yapay zeka size profesyonel bir eylem planı sunsun.")
+        kullanici_sorusu = st.text_area("Danışmana ne sormak istersiniz?", height=150, placeholder="Örnek: Denim fabrikamızda atıksu deşarjında ZDHC MRSL Seviye 3'e uyum sağlamak ve gri su ayak izimizi azaltmak için nasıl bir aksiyon planı izlemeliyiz?")
+
+        if st.button("Danışmana Sor", type="primary"):
+        if kullanici_sorusu:
+        with st.spinner("AI Danışman teknik verileri analiz ediyor..."):
+            
+            # Yapay Zekaya Karakter Veriyoruz (Sistem Komutu)
+            sistem_talimati = "Sen kıdemli bir endüstri mühendisi ve sürdürülebilirlik baş denetçisisin. Kullanıcının çevresel verilerini analiz edip, teknik, kurumsal ve vizyoner tavsiyeler ver. Cevapların net, uygulanabilir ve resmi bir dille yazılmış olsun."
+            
+            tam_soru = f"{sistem_talimati}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
+            
+            # Gemini 2.5 Flash ile iletişime geçiyoruz
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=tam_soru
+            )
+            
+            st.success("Analiz Tamamlandı!")
+            st.markdown(response.text)
+        else:
+        st.warning("Lütfen analiz edilmesi için bir veri veya soru girin.")
 
     # --- 6. RAPORLAMA ---
     with tab_sonuc:
