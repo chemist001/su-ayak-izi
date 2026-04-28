@@ -742,7 +742,7 @@ def show_calculator_page():
                             - Toplam: {total_wf:.2f} m3/yıl
                             """
                             
-                            sistem_talimati = "Sen kıdemli bir sürdürülebilirlik denetçisisin. Yukarıdaki tesis verilerini analiz et."
+                            sistem_talimati = "Sen kıdemli bir sürdürülebilirlik denetçisisin. Yukarıdaki tesis verilerini analiz et. Vereceğin yanıta 'Merhaba, ben kıdemli yapay zeka asistanınız olarak paylaştığınız verileri derinlemesine analiz ettim.' cümlesi ile başla "
                             tam_soru = f"{sistem_talimati}\n\n{tesis_verileri}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
                             
                             response = client.models.generate_content(
