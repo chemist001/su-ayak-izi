@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import io
 from google import genai
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"].strip())
-
+from supabase import create_client, Client
 # --- SUPABASE BAĞLANTISI ---
 @st.cache_resource
 def init_connection():
