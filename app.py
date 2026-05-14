@@ -34,7 +34,7 @@ def register_user(email, password):
         response = supabase.auth.sign_up({"email": email, "password": password})
         st.success("Kayıt başarılı! Lütfen Giriş Yap sekmesinden sisteme girin.")
     except Exception as e:
-        st.error("Kayıt hatası: Şifreniz en az 6 karakter olmalıdır veya bu mail zaten kayıtlı.")
+        st.error(f"Gerçek Hata: {str(e)}")
 
 # Kullanıcı giriş yapmamışsa Giriş Ekranını göster ve UYGULAMAYI DURDUR
 if st.session_state.user is None:
