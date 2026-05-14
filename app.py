@@ -15,6 +15,57 @@ def init_connection():
     return create_client(url, key)
 
 supabase: Client = init_connection()
+# --- KULLANICI GİRİŞ SİSTEMİ (AUTH) ---
+if 'user' not in st.session_state:
+    st.session_state.user = None
+
+def login_user(email, password):
+    try:
+        response = supabase.auth.sign_in_with_password({"email": email, "password": password})
+        st.session_state.user = response.user
+        st.success("Giriş başarılı! Yönlendiriliyorsunuz...")
+        time.sleep(1)
+        st.rerun()
+    except Exception as e:
+        st.error("Giriş başarısız: Lütfen bilgilerinizi kontrol edin.")
+
+def register_user(email, password):
+    try:
+        response = supabase.auth.sign_up({"email": email, "password": password})
+        st.success("Kayıt başarılı! Lütfen Giriş Yap sekmesinden sisteme girin.")
+    except Exception as e:
+        st.error("Kayıt hatası: Şifreniz en az 6 karakter olmalıdır veya bu mail zaten kayıtlı.")
+
+# Kullanıcı giriş yapmamışsa Giriş Ekranını göster ve UYGULAMAYI DURDUR
+if st.session_state.user is None:
+    st.title("💧 H2O Denge - Su Ayak İzi Platformu")
+    st.markdown("Lütfen devam etmek için giriş yapın veya yeni bir tesis hesabı oluşturun.")
+    
+    tab1, tab2 = st.tabs(["Giriş Yap", "Yeni Kayıt"])
+    
+    with tab1:
+        st.subheader("Sisteme Giriş")
+        login_email = st.text_input("E-Posta", key="login_email")
+        login_pass = st.text_input("Şifre", type="password", key="login_pass")
+        if st.button("Giriş Yap", type="primary"):
+            login_user(login_email, login_pass)
+            
+    with tab2:
+        st.subheader("Yeni Tesis Kaydı")
+        reg_email = st.text_input("E-Posta", key="reg_email")
+        reg_pass = st.text_input("Şifre (En az 6 karakter)", type="password", key="reg_pass")
+        if st.button("Kayıt Ol"):
+            register_user(reg_email, reg_pass)
+    
+    # Giriş yapılmadıysa uygulamanın (hesaplayıcının) geri kalanını okuma
+    st.stop()
+
+# --- GİRİŞ YAPILDIYSA BURADAN AŞAĞISI ÇALIŞIR ---
+st.sidebar.success(f"Giriş yapıldı: {st.session_state.user.email}")
+if st.sidebar.button("Çıkış Yap"):
+    supabase.auth.sign_out()
+    st.session_state.user = None
+    st.rerun()
 # ---------------------------
 
 # --- KÜTÜPHANE KONTROLLERİ ---
