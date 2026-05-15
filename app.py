@@ -25,9 +25,12 @@ def login_user(email, password):
         st.session_state.user = response.user
         st.success("Giriş başarılı! Yönlendiriliyorsunuz...")
         time.sleep(1)
-        st.rerun()
     except Exception as e:
         st.error("Giriş başarısız: Lütfen bilgilerinizi kontrol edin.")
+        return # Eğer hata varsa fonksiyonu burada durdur, aşağı inme
+    
+    # Hata yoksa ve buraya kadar geldiysek, sayfayı güvenle yenile:
+    st.rerun()
 
 def register_user(email, password):
     try:
