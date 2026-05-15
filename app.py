@@ -878,22 +878,31 @@ def show_calculator_page():
                 
                 st.info(f"**Toplam Tesis Su Ayak İzi:** {total_wf:,.2f} m³/yıl")
 
-            # --- SUPABASE'E KAYDETME BÖLÜMÜ ---
-                st.divider()
-                st.markdown("### 💾 Raporu Arşive Gönder")
-                st.write("Yukarıdaki hesaplama sonuçlarını buluta kaydetmek için aşağıdaki butona tıklayın.")
-                
-                # key="..." ekliyoruz ki Streamlit diğer butonlarla karıştırmasın
-                if st.button("🚀 Tüm Raporu Veritabanına Kaydet", key="btn_bulut_kayit"):
-                    # Senin kodundaki değişkenleri doğrudan Supabase'e yolluyoruz!
-                    raporu_kaydet(
-                        tesis_adi=company_name, 
-                        mavi=res_blue, 
-                        yesil=res_green, 
-                        gri=res_grey, 
-                        toplam=total_wf, 
-                        ai_analizi=""
-                    )
+          def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
+                try:
+                    # 1. Oturumdaki kullanıcının güvenli ID'sini alıyoruz
+                    if 'user' not in st.session_state or st.session_state.user is None:
+                        st.error("Kayıt hatası: Lütfen önce sisteme giriş yapın!")
+                        return
+            
+                    user_id = st.session_state.user.id
+                    
+                    # 2. Supabase'deki 'tesis_raporlari' kasasına verileri gönderiyoruz
+                    # DİKKAT: 'data, count =' yerine 'response =' kullanıyoruz ve her veriyi garanti olsun diye standart formata çeviriyoruz!
+                    response = supabase.table("tesis_raporlari").insert({
+                        "user_id": user_id,
+                        "tesis_adi": str(tesis_adi),
+                        "mavi_su": float(mavi),
+                        "yesil_su": float(yesil),
+                        "gri_su": float(gri),
+                        "toplam_su": float(toplam),
+                        "ai_analizi": str(ai_analizi)
+                    }).execute()
+                    
+                    st.success("🎉 Harika! Raporunuz başarıyla Supabase veritabanına kaydedildi!")
+                    
+                except Exception as e:
+                    st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
 
             # --- YENİ YERİ: HESAPLAMALARIN EN ALTINA ---
                 st.markdown("---")
