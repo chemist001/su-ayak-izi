@@ -887,9 +887,8 @@ def show_calculator_page():
             
                     user_id = st.session_state.user.id
                     
-                    # 2. Supabase'deki 'tesis_raporlari' kasasına verileri gönderiyoruz
-                    # DİKKAT: 'data, count =' yerine 'response =' kullanıyoruz ve her veriyi garanti olsun diye standart formata çeviriyoruz!
-                    response = supabase.table("tesis_raporlari").insert({
+                    # DİKKAT: .table yerine .from_ kullanıyoruz!
+                    response = supabase.from_("tesis_raporlari").insert({
                         "user_id": user_id,
                         "tesis_adi": str(tesis_adi),
                         "mavi_su": float(mavi),
