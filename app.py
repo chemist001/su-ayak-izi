@@ -68,6 +68,27 @@ if st.session_state.user is None:
         reg_pass = st.text_input("Şifre (En az 6 karakter)", type="password", key="reg_pass")
         if st.button("Kayıt Ol"):
             register_user(reg_email, reg_pass)
+
+    def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
+    try:
+        # 1. Oturumdaki kullanıcının güvenli ID'sini alıyoruz
+        user_id = st.session_state.user.id
+        
+        # 2. Supabase'deki 'tesis_raporlari' kasasına verileri gönderiyoruz
+        data, count = supabase.table("tesis_raporlari").insert({
+            "user_id": user_id,
+            "tesis_adi": tesis_adi,
+            "mavi_su": float(mavi),
+            "yesil_su": float(yesil),
+            "gri_su": float(gri),
+            "toplam_su": float(toplam),
+            "ai_analizi": ai_analizi
+        }).execute()
+        
+        st.success("🎉 Harika! Raporunuz başarıyla Supabase veritabanına kaydedildi!")
+        
+    except Exception as e:
+        st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
     
     # Giriş yapılmadıysa uygulamanın (hesaplayıcının) geri kalanını okuma
     st.stop()
