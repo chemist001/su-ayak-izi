@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import time
 import datetime
 import base64
 import matplotlib.pyplot as plt
