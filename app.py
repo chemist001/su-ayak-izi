@@ -857,6 +857,23 @@ def show_calculator_page():
                 
                 st.info(f"**Toplam Tesis Su Ayak İzi:** {total_wf:,.2f} m³/yıl")
 
+            # --- SUPABASE'E KAYDETME BÖLÜMÜ ---
+                st.divider()
+                st.markdown("### 💾 Raporu Arşive Gönder")
+                st.write("Yukarıdaki hesaplama sonuçlarını buluta kaydetmek için aşağıdaki butona tıklayın.")
+                
+                # key="..." ekliyoruz ki Streamlit diğer butonlarla karıştırmasın
+                if st.button("🚀 Tüm Raporu Veritabanına Kaydet", key="btn_bulut_kayit"):
+                    # Senin kodundaki değişkenleri doğrudan Supabase'e yolluyoruz!
+                    raporu_kaydet(
+                        tesis_adi=company_name, 
+                        mavi=res_blue, 
+                        yesil=res_green, 
+                        gri=res_grey, 
+                        toplam=total_wf, 
+                        ai_analizi=""
+                    )
+
             # --- YENİ YERİ: HESAPLAMALARIN EN ALTINA ---
                 st.markdown("---")
                 st.subheader("🤖 AI Danışman Analizi")
