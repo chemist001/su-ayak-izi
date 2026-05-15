@@ -20,6 +20,13 @@ supabase: Client = init_connection()
 if 'user' not in st.session_state:
     st.session_state.user = None
 
+if 'mavi_su_sonuc' not in st.session_state:
+    st.session_state.mavi_su_sonuc = 0.0
+if 'yesil_su_sonuc' not in st.session_state:
+    st.session_state.yesil_su_sonuc = 0.0
+if 'gri_su_sonuc' not in st.session_state:
+    st.session_state.gri_su_sonuc = 0.0
+
 def login_user(email, password):
     try:
         response = supabase.auth.sign_in_with_password({"email": email, "password": password})
