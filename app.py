@@ -679,6 +679,29 @@ def show_calculator_page():
         
         is_dry_process = st.checkbox("Tesis sadece evsel su tüketiyor (OSB Kuru Proses - %10 Varsayım)", value=st.session_state['kuru_proses'])
         st.session_state['kuru_proses'] = is_dry_process
+        # --- BURADAN İTİBAREN YENİ EKLENECEK KISIM ---
+        st.divider()
+        if st.button("💧 Mavi Su Ayak İzini Hesapla"):
+            hesaplanan_mavi = 0.0
+            
+            # Hesaplama Mantığı (ISO 14046 ve Su Ayak İzi Ağı metodolojisi)
+            if is_dry_process:
+                # Kuru proses evsel tüketim %10 kayıp varsayımı
+                hesaplanan_mavi = toplam_giren * 0.10
+            else:
+                if ayni_havza_mi:
+                    # Aynı havzaya dönüyorsa: Çekilen - Deşarj Edilen
+                    # Eksi değer çıkmaması için max(0, ...) kullanıyoruz
+                    hesaplanan_mavi = max(0.0, toplam_giren - desarj_miktari) 
+                else:
+                    # Başka havzaya deşarj ediliyorsa çekilen suyun tamamı Mavi Su tüketimi sayılır
+                    hesaplanan_mavi = toplam_giren
+            
+            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Diğer sekmelere geçince kaybolmasın diye)
+            st.session_state.mavi_su_sonuc = hesaplanan_mavi
+            
+            # 2. Kullanıcıya ekranda gösteriyoruz
+            st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
     # --- 3. YEŞİL SU ---
     with tab_yesil:
@@ -689,6 +712,17 @@ def show_calculator_page():
         
         green_incorp = c2.number_input("Ürüne Giren Yeşil Su (m³/yıl)", min_value=0.0, value=st.session_state['yesil_incorp'])
         st.session_state['yesil_incorp'] = green_incorp
+        # --- YEŞİL SU HESAPLAMA BUTONU ---
+        st.divider()
+        if st.button("🌱 Yeşil Su Ayak İzini Hesapla"):
+            # Formül: Yağmur Suyu Evaporasyonu + Ürüne Giren Su
+            hesaplanan_yesil = green_evap + green_incorp
+            
+            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Kaydet butonu için)
+            st.session_state.yesil_su_sonuc = hesaplanan_yesil
+            
+            # 2. Kullanıcıya ekranda gösteriyoruz
+            st.success(f"✅ Yeşil Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_yesil:.2f} m³/yıl")
 
     # --- 4. GRİ SU ---
     with tab_gri:
@@ -697,6 +731,33 @@ def show_calculator_page():
         
         # Tabloyu doğrudan kalıcı hafızadan çağırıyor ve değişiklikleri kasaya kilitliyoruz
         duzenlenmis_df = st.data_editor(st.session_state['gri_tablo'], num_rows="dynamic", use_container_width=True)
+        # --- GRİ SU HESAPLAMA BUTONU ---
+        # Tabloda yapılan son değişiklikleri garanti olsun diye tekrar hafızaya alıyoruz
+        st.session_state['gri_tablo'] = duzenlenmis_df 
+        
+        st.divider()
+        if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
+            hesaplanan_gri = 0.0
+            
+            # Eğer tablo boş değilse hesaplama yap
+            if not duzenlenmis_df.empty:
+                try:
+                    # DİKKAT: Aşağıdaki satırı kendi tablondaki sütun ismine göre düzeltmelisin.
+                    # Örneğin tablonda her satır için sonucu veren 'Gri_Su_Hacmi' adında bir sütun varsa:
+                    # hesaplanan_gri = duzenlenmis_df['Gri_Su_Hacmi'].max()
+                    
+                    # Geçici olarak: Tablodaki en büyük sayıyı (kritik kirleticiyi) otomatik seçen joker kod:
+                    sayisal_sutunlar = duzenlenmis_df.select_dtypes(include=['float64', 'int64'])
+                    if not sayisal_sutunlar.empty:
+                        hesaplanan_gri = float(sayisal_sutunlar.max().max())
+                except Exception as e:
+                    st.warning(f"Tablo hesaplanırken bir hata oluştu: {str(e)}")
+                    
+            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz
+            st.session_state.gri_su_sonuc = hesaplanan_gri
+            
+            # 2. Kullanıcıya ekranda gösteriyoruz
+            st.success(f"✅ Gri Su Ayak İzi (Kritik Kirletici) Seçildi: {hesaplanan_gri:.2f} m³/yıl")
 
     # --- 5. VERİ KALİTESİ VE SİSTEM SINIRI ---
     with tab_veri:
