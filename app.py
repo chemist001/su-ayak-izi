@@ -26,10 +26,11 @@ def login_user(email, password):
         st.success("Giriş başarılı! Yönlendiriliyorsunuz...")
         time.sleep(1)
     except Exception as e:
-        st.error("Giriş başarısız: Lütfen bilgilerinizi kontrol edin.")
-        return # Eğer hata varsa fonksiyonu burada durdur, aşağı inme
+        # Eğer bir hata varsa, hatanın tam teknik adını ekrana basacak:
+        st.error(f"Giriş hatası detayı: {str(e)}")
+        return 
     
-    # Hata yoksa ve buraya kadar geldiysek, sayfayı güvenle yenile:
+    # Bu komut kesinlikle except bloğunun DIŞINDA ve try ile aynı hizada olmalı:
     st.rerun()
 
 def register_user(email, password):
