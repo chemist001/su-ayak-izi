@@ -878,7 +878,7 @@ def show_calculator_page():
                 
                 st.info(f"**Toplam Tesis Su Ayak İzi:** {total_wf:,.2f} m³/yıl")
 
-          def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
+              def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
                 try:
                     # 1. Oturumdaki kullanıcının güvenli ID'sini alıyoruz
                     if 'user' not in st.session_state or st.session_state.user is None:
