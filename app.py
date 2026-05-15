@@ -14,6 +14,37 @@ def init_connection():
     url = st.secrets["SUPABASE_URL"]
     key = st.secrets["SUPABASE_KEY"]
     return create_client(url, key)
+def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
+    try:
+        # 1. Giriş kontrolü
+        if 'user' not in st.session_state or st.session_state.user is None:
+            st.error("Kayıt hatası: Lütfen önce sisteme giriş yapın!")
+            return
+
+        # 2. Supabase'e işlemden saniyeler önce kimliği (token) gösteriyoruz!
+        if 'session' in st.session_state:
+            supabase.auth.set_session(
+                st.session_state.session.access_token, 
+                st.session_state.session.refresh_token
+            )
+
+        user_id = st.session_state.user.id
+        
+        # 3. .from_ kullanarak versiyon hatasını aşıyoruz ve veriyi yolluyoruz
+        response = supabase.from_("tesis_raporlari").insert({
+            "user_id": user_id,
+            "tesis_adi": str(tesis_adi),
+            "mavi_su": float(mavi),
+            "yesil_su": float(yesil),
+            "gri_su": float(gri),
+            "toplam_su": float(toplam),
+            "ai_analizi": str(ai_analizi)
+        }).execute()
+        
+        st.success("🎉 Harika! Raporunuz başarıyla Supabase veritabanına kaydedildi!")
+        
+    except Exception as e:
+        st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
 
 supabase: Client = init_connection()
 # --- KULLANICI GİRİŞ SİSTEMİ (AUTH) ---
@@ -878,30 +909,6 @@ def show_calculator_page():
                 
                 st.info(f"**Toplam Tesis Su Ayak İzi:** {total_wf:,.2f} m³/yıl")
 
-              def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
-                try:
-                    # 1. Oturumdaki kullanıcının güvenli ID'sini alıyoruz
-                    if 'user' not in st.session_state or st.session_state.user is None:
-                        st.error("Kayıt hatası: Lütfen önce sisteme giriş yapın!")
-                        return
-            
-                    user_id = st.session_state.user.id
-                    
-                    # DİKKAT: .table yerine .from_ kullanıyoruz!
-                    response = supabase.from_("tesis_raporlari").insert({
-                        "user_id": user_id,
-                        "tesis_adi": str(tesis_adi),
-                        "mavi_su": float(mavi),
-                        "yesil_su": float(yesil),
-                        "gri_su": float(gri),
-                        "toplam_su": float(toplam),
-                        "ai_analizi": str(ai_analizi)
-                    }).execute()
-                    
-                    st.success("🎉 Harika! Raporunuz başarıyla Supabase veritabanına kaydedildi!")
-                    
-                except Exception as e:
-                    st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
 
             # --- YENİ YERİ: HESAPLAMALARIN EN ALTINA ---
                 st.markdown("---")
