@@ -965,6 +965,24 @@ def show_calculator_page():
                     use_container_width=True,
                     key="hedefler_tablo_editor" # Odak kaybını engelleyen kilit!
                 )
+                st.markdown("---")
+                st.subheader("💾 Raporu Veritabanına Kaydet")
+                st.info("Hesaplamalarınızı ve tesis verilerinizi güvenli bulut sistemine kaydetmek için aşağıdaki butonu kullanın.")
+                
+                # Kullanıcıya rapor ismini değiştirebilme imkanı sunuyoruz
+                kayit_adi = st.text_input("Rapor Başlığı (Veritabanında bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
+                
+                # Kaydet butonu (Diğer butonlarla karışmasın diye özel key atadık)
+                if st.button("🚀 Tüm Verileri Buluta Yükle", type="primary", key="btn_bulut_kayit_son"):
+                    # En tepeye yazdığımız fonksiyonu çağırıp motorun sonuçlarını içine atıyoruz
+                    raporu_kaydet(
+                        tesis_adi=kayit_adi,
+                        mavi=res_blue,
+                        yesil=res_green,
+                        gri=res_grey,
+                        toplam=total_wf,
+                        ai_analizi="AI Analizi ve Sürdürülebilirlik Hedefleri sisteme girildi." 
+                    )
                 # ------------------------------------------------
 
                 # ==========================================
