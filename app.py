@@ -46,6 +46,20 @@ def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
     except Exception as e:
         st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
 
+def gecmis_raporlari_getir():
+    try:
+        # Oturum kontrolü
+        if 'user' not in st.session_state or st.session_state.user is None:
+            return None
+            
+        # Supabase'den sadece bu kullanıcının verilerini en yeniden eskiye doğru (desc) çekiyoruz
+        response = supabase.from_("tesis_raporlari").select("*").order("olusturma_tarihi", desc=True).execute()
+        return response.data
+        
+    except Exception as e:
+        st.error(f"Geçmiş raporlar yüklenirken hata oluştu: {str(e)}")
+        return None
+
 supabase: Client = init_connection()
 # --- KULLANICI GİRİŞ SİSTEMİ (AUTH) ---
 if 'user' not in st.session_state:
@@ -647,8 +661,8 @@ def show_calculator_page():
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     # Sekmeli Yapı (Senin tasarımın)
-    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc, = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama", 
+    tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc, tab_sonuc = st.tabs([
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama", "🗄️ Geçmiş Raporlar"
     ])
 
  # --- 1. FIRMA PROFILI ---
@@ -984,7 +998,35 @@ def show_calculator_page():
                         ai_analizi="AI Analizi ve Sürdürülebilirlik Hedefleri sisteme girildi." 
                     )
                 # ------------------------------------------------
-
+    
+        # --- 7. GEÇMİŞ RAPORLAR SEKME İÇERİĞİ ---
+        with tab_gecmis:
+            st.header("🗄️ Geçmiş Raporlarım")
+            st.write("Daha önce buluta kaydettiğiniz tüm su ayak izi analizleri aşağıda listelenmiştir.")
+            
+            # Yenile butonu (Kullanıcı yeni kayıt yaptıktan sonra listeyi yenilemek isterse diye)
+            if st.button("🔄 Tabloyu Yenile"):
+                st.rerun()
+                
+            # 1. Verileri fonksiyondan çek
+            veriler = gecmis_raporlari_getir()
+            
+            # 2. Eğer veri varsa, Pandas ile şık bir tabloya (DataFrame) dönüştür
+            if veriler and len(veriler) > 0:
+                df_gecmis = pd.DataFrame(veriler)
+                
+                # Sütunları düzenleyip isimlendiriyoruz (İngilizce SQL isimlerini Türkçeye çeviriyoruz)
+                df_gosterim = df_gecmis[["tesis_adi", "mavi_su", "yesil_su", "gri_su", "toplam_su", "olusturma_tarihi"]].copy()
+                df_gosterim.columns = ["Rapor Adı", "Mavi Su (m³)", "Yeşil Su (m³)", "Gri Su (m³)", "Toplam Su (m³)", "Kayıt Tarihi"]
+                
+                # Tarih formatını daha okunaklı (Gün-Ay-Yıl Saat) yapıyoruz
+                df_gosterim["Kayıt Tarihi"] = pd.to_datetime(df_gosterim["Kayıt Tarihi"]).dt.strftime("%d-%m-%Y %H:%M")
+                
+                # Streamlit'in harika interaktif tablosuyla ekrana basıyoruz
+                st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
+                
+            else:
+                st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor. Hesaplama yaptıktan sonra 'Buluta Yükle' butonunu kullanabilirsiniz.")
                 # ==========================================
                 # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
                 # ==========================================
