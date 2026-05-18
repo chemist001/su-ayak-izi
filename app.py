@@ -1438,7 +1438,6 @@ def show_calculator_page():
    # --- 7. GEÇMİŞ RAPORLAR SEKME İÇERİĞİ ---
     with tab_gecmis:
         st.header("🗄️ Geçmiş Raporlarım")
-        st.write("Daha önce buluta kaydettiğiniz tüm su ayak izi analizleri aşağıda listelenmiştir.")
         
         if st.button("🔄 Tabloyu Yenile", key="btn_yenile_gecmis"):
             st.rerun()
