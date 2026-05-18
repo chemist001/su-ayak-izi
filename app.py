@@ -1461,8 +1461,6 @@ def show_calculator_page():
             if secilen_rapor_etiketi != "Lütfen Seçiniz...":
                 secilen_isim = secilen_rapor_etiketi.rsplit(" (", 1)[0]
                 secilen_veri = df_gecmis[df_gecmis["tesis_adi"] == secilen_isim].iloc[0]
-                
-                st.info(f"⏳ **{secilen_veri['tesis_adi']}** raporu seçildi. PDF raporunuz arka planda dinamik olarak hazırlanıyor...")
 
                 # ==========================================
                 # KRİTİK VERİ EŞLEŞTİRME (Supabase'den gelen geçmiş verileri PDF motoruna bağlıyoruz)
