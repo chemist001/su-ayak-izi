@@ -1493,7 +1493,7 @@ def show_calculator_page():
                 # ==========================================
                 # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
                 # ==========================================
-                            st.divider()
+            st.divider()
                     
                 def format_num(value):
                         return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
