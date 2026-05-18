@@ -999,34 +999,56 @@ def show_calculator_page():
                     )
                 # ------------------------------------------------
     
-        # --- 7. GEÇMİŞ RAPORLAR SEKME İÇERİĞİ ---
-        with tab_gecmis:
-            st.header("🗄️ Geçmiş Raporlarım")
-            st.write("Daha önce buluta kaydettiğiniz tüm su ayak izi analizleri aşağıda listelenmiştir.")
+    # --- 7. GEÇMİŞ RAPORLAR SEKME İÇERİĞİ
+    with tab_gecmis:
+        st.header("🗄️ Geçmiş Raporlarım")
+        st.write("Daha önce buluta kaydettiğiniz tüm su ayak izi analizleri aşağıda listelenmiştir.")
+        
+        if st.button("🔄 Tabloyu Yenile"):
+            st.rerun()
             
-            # Yenile butonu (Kullanıcı yeni kayıt yaptıktan sonra listeyi yenilemek isterse diye)
-            if st.button("🔄 Tabloyu Yenile"):
-                st.rerun()
-                
-            # 1. Verileri fonksiyondan çek
-            veriler = gecmis_raporlari_getir()
+        veriler = gecmis_raporlari_getir()
+        
+        if veriler and len(veriler) > 0:
+            df_gecmis = pd.DataFrame(veriler)
             
-            # 2. Eğer veri varsa, Pandas ile şık bir tabloya (DataFrame) dönüştür
-            if veriler and len(veriler) > 0:
-                df_gecmis = pd.DataFrame(veriler)
+            # Görüntüleme için tabloyu hazırlıyoruz
+            df_gosterim = df_gecmis[["tesis_adi", "mavi_su", "yesil_su", "gri_su", "toplam_su", "olusturma_tarihi"]].copy()
+            df_gosterim.columns = ["Rapor Adı", "Mavi Su (m³)", "Yeşil Su (m³)", "Gri Su (m³)", "Toplam Su (m³)", "Kayıt Tarihi"]
+            df_gosterim["Kayıt Tarihi"] = pd.to_datetime(df_gosterim["Kayıt Tarihi"]).dt.strftime("%d-%m-%Y %H:%M")
+            
+            # Ana tabloyu ekrana basıyoruz
+            st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
+            
+            # --- YENİ EKLENEN: PDF SEÇİM VE İNDİRME BÖLÜMÜ ---
+            st.markdown("---")
+            st.subheader("📄 Detaylı PDF Raporu Görüntüle")
+            st.write("Eski bir raporun detaylı PDF çıktısını almak için aşağıdan raporunuzu seçin.")
+            
+            # Kullanıcıya tablodaki rapor isimlerini bir açılır menüde sunuyoruz
+            # Aynı isimde raporlar olabileceği için tarihle birleştirip eşsiz (unique) yapıyoruz
+            rapor_secenekleri = [f"{row['tesis_adi']} ({row['olusturma_tarihi'][:10]})" for index, row in df_gecmis.iterrows()]
+            
+            secilen_rapor_etiketi = st.selectbox("İndirmek istediğiniz raporu seçin:", options=["Lütfen Seçiniz..."] + rapor_secenekleri)
+            
+            if secilen_rapor_etiketi != "Lütfen Seçiniz...":
+                # Seçilen isme göre orjinal veriyi buluyoruz
+                secilen_isim = secilen_rapor_etiketi.rsplit(" (", 1)[0]
+                secilen_veri = df_gecmis[df_gecmis["tesis_adi"] == secilen_isim].iloc[0]
                 
-                # Sütunları düzenleyip isimlendiriyoruz (İngilizce SQL isimlerini Türkçeye çeviriyoruz)
-                df_gosterim = df_gecmis[["tesis_adi", "mavi_su", "yesil_su", "gri_su", "toplam_su", "olusturma_tarihi"]].copy()
-                df_gosterim.columns = ["Rapor Adı", "Mavi Su (m³)", "Yeşil Su (m³)", "Gri Su (m³)", "Toplam Su (m³)", "Kayıt Tarihi"]
+                # Seçilen verinin minik bir özetini gösteriyoruz
+                st.info(f"✅ **{secilen_veri['tesis_adi']}** raporu seçildi. Toplam Su Ayak İzi: {secilen_veri['toplam_su']:.2f} m³")
                 
-                # Tarih formatını daha okunaklı (Gün-Ay-Yıl Saat) yapıyoruz
-                df_gosterim["Kayıt Tarihi"] = pd.to_datetime(df_gosterim["Kayıt Tarihi"]).dt.strftime("%d-%m-%Y %H:%M")
+                # --- PDF İNDİRME BUTONU YERİ ---
+                # Burada senin arka planda yazdığın/yazacağın PDF oluşturma fonksiyonu devreye girecek.
+                # Örnek Kullanım:
+                # pdf_dosyasi = pdf_olusturucu_fonksiyon(secilen_veri)
+                # st.download_button(label="📥 PDF Olarak İndir", data=pdf_dosyasi, file_name=f"{secilen_isim}_raporu.pdf", mime="application/pdf")
                 
-                # Streamlit'in harika interaktif tablosuyla ekrana basıyoruz
-                st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
+                st.warning("Not: PDF oluşturma modülü (fonksiyonu) buraya bağlandığında indirme butonu aktif olacaktır. 🚀")
                 
-            else:
-                st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor. Hesaplama yaptıktan sonra 'Buluta Yükle' butonunu kullanabilirsiniz.")
+        else:
+            st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
                 # ==========================================
                 # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
                 # ==========================================
