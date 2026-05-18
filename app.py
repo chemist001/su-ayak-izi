@@ -227,11 +227,8 @@ class WaterFootprintCalculator:
         WFN Mavi Su Ayak İzi Hesaplaması
         Öncelik Kütle Denkliğindedir (Mass Balance). 
         """
-        # 1. İstisna: OSB Kuru Proses (Örn: Sadece evsel su kullanan tekstil/dokuma fabrikası)
-        if is_dry_process and v_in > 0:
-            return v_in * 0.10
-            
-        # 2. Yaklaşım: Kütle Denkliği (Giren ve çıkan su biliniyorsa)
+     
+        # 1. Yaklaşım: Kütle Denkliği (Giren ve çıkan su biliniyorsa)
         if v_in > 0 and v_discharge >= 0:
             if same_basin:
                 # Aynı havzaya dönüyorsa, aradaki kayıp tüketimdir (Mavi Su)
@@ -240,7 +237,7 @@ class WaterFootprintCalculator:
                 # Farklı havzaya gidiyorsa, giren suyun tamamı kaybedilmiş (Mavi Su) sayılır
                 return v_in
                 
-        # 3. Yaklaşım: Doğrudan WFN Temel Formülü (Eğer doğrudan sahadan bu veriler toplanabilmişse)
+        # 2. Yaklaşım: Doğrudan WFN Temel Formülü (Eğer doğrudan sahadan bu veriler toplanabilmişse)
         return evaporation + incorporation + lost_return
 
     def calculate_green_water(self, evaporation=0.0, incorporation=0.0):
@@ -743,31 +740,25 @@ def show_calculator_page():
         ayni_havza_mi = c5.checkbox("Deşarj edilen su, çekildiği havzaya/nehre mi dönüyor?", value=st.session_state['ayni_havza'])
         st.session_state['ayni_havza'] = ayni_havza_mi
         
-        is_dry_process = st.checkbox("Tesis sadece evsel su tüketiyor (OSB Kuru Proses - %10 Varsayım)", value=st.session_state['kuru_proses'])
-        st.session_state['kuru_proses'] = is_dry_process
         # --- BURADAN İTİBAREN YENİ EKLENECEK KISIM ---
         st.divider()
         if st.button("💧 Mavi Su Ayak İzini Hesapla"):
             hesaplanan_mavi = 0.0
             
             # Hesaplama Mantığı (ISO 14046 ve Su Ayak İzi Ağı metodolojisi)
-            if is_dry_process:
-                # Kuru proses evsel tüketim %10 kayıp varsayımı
-                hesaplanan_mavi = toplam_giren * 0.10
-            else:
-                if ayni_havza_mi:
+            if ayni_havza_mi:
                     # Aynı havzaya dönüyorsa: Çekilen - Deşarj Edilen
                     # Eksi değer çıkmaması için max(0, ...) kullanıyoruz
                     hesaplanan_mavi = max(0.0, toplam_giren - desarj_miktari) 
-                else:
+            else:
                     # Başka havzaya deşarj ediliyorsa çekilen suyun tamamı Mavi Su tüketimi sayılır
                     hesaplanan_mavi = toplam_giren
             
-            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Diğer sekmelere geçince kaybolmasın diye)
-            st.session_state.mavi_su_sonuc = hesaplanan_mavi
+        # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Diğer sekmelere geçince kaybolmasın diye)
+        st.session_state.mavi_su_sonuc = hesaplanan_mavi
             
-            # 2. Kullanıcıya ekranda gösteriyoruz
-            st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
+        # 2. Kullanıcıya ekranda gösteriyoruz
+        st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
     # --- 3. YEŞİL SU ---
     with tab_yesil:
