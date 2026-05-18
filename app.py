@@ -1951,7 +1951,7 @@ def show_calculator_page():
                         pdf_bytes = pdf_dosyasi.read()
                         
                     st.download_button(
-                        label="📄 Profesyonel Kurumsal PDF Raporunu İndir",
+                        label="📄 PDF Raporunu İndir",
                         data=pdf_bytes,
                         file_name=f"Su_Ayak_Izi_Raporu_{str(company_name)}.pdf",
                         mime="application/pdf"
