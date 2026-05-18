@@ -790,33 +790,45 @@ def show_calculator_page():
         
         # Tabloyu doğrudan kalıcı hafızadan çağırıyor ve değişiklikleri kasaya kilitliyoruz
         duzenlenmis_df = st.data_editor(st.session_state['gri_tablo'], num_rows="dynamic", use_container_width=True)
-        # --- GRİ SU HESAPLAMA BUTONU ---
+       # --- GRİ SU HESAPLAMA BUTONU ---
         # Tabloda yapılan son değişiklikleri garanti olsun diye tekrar hafızaya alıyoruz
         st.session_state['gri_tablo'] = duzenlenmis_df 
         
         st.divider()
         if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
             hesaplanan_gri = 0.0
+            kritik_kirletici = "Belirlenmedi"
             
             # Eğer tablo boş değilse hesaplama yap
             if not duzenlenmis_df.empty:
                 try:
-                    # DİKKAT: Aşağıdaki satırı kendi tablondaki sütun ismine göre düzeltmelisin.
-                    # Örneğin tablonda her satır için sonucu veren 'Gri_Su_Hacmi' adında bir sütun varsa:
-                    # hesaplanan_gri = duzenlenmis_df['Gri_Su_Hacmi'].max()
+                    # 1. Tablodaki satırları, senin hesaplama motorunun istediği formata (liste içine sözlük) çeviriyoruz
+                    pollutants_list = []
+                    for index, row in duzenlenmis_df.iterrows():
+                        pollutants_list.append({
+                            "name": row["Parametre"],
+                            "load": float(row["Yük (kg/yıl)"]),
+                            "c_max": float(row["C_max Limit (kg/m³)"]),
+                            "c_nat": float(row["C_nat Doğal (kg/m³)"])
+                        })
                     
-                    # Geçici olarak: Tablodaki en büyük sayıyı (kritik kirleticiyi) otomatik seçen joker kod:
-                    sayisal_sutunlar = duzenlenmis_df.select_dtypes(include=['float64', 'int64'])
-                    if not sayisal_sutunlar.empty:
-                        hesaplanan_gri = float(sayisal_sutunlar.max().max())
+                    # 2. Senin gerçek hesaplama motorunu (Sınıfı) çağırıyoruz
+                    calc = WaterFootprintCalculator()
+                    res_grey_dict = calc.calculate_grey_water(pollutants_list)
+                    
+                    # 3. Sonuçları alıyoruz
+                    hesaplanan_gri = res_grey_dict["value_m3"]
+                    kritik_kirletici = res_grey_dict["critical_pollutant"]
+                    
                 except Exception as e:
-                    st.warning(f"Tablo hesaplanırken bir hata oluştu: {str(e)}")
+                    st.warning(f"Hesaplama sırasında bir hata oluştu. Lütfen tablodaki verileri kontrol edin. Hata Detayı: {str(e)}")
                     
-            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz
+            # 4. Çıkan sonucu ANA HAFIZAYA atıyoruz
             st.session_state.gri_su_sonuc = hesaplanan_gri
+            st.session_state.kritik_kirletici_isim = kritik_kirletici # İsmi de kaydediyoruz ki raporda kullanılabilsin
             
-            # 2. Kullanıcıya ekranda gösteriyoruz
-            st.success(f"✅ Gri Su Ayak İzi (Kritik Kirletici) Seçildi: {hesaplanan_gri:.2f} m³/yıl")
+            # 5. Kullanıcıya ekranda gösteriyoruz
+            st.success(f"✅ Gri Su Ayak İzi Başarıyla Hesaplandı!\n\nKritik Kirletici: **{kritik_kirletici}** \nHacim: **{hesaplanan_gri:,.2f} m³/yıl**")
 
     # --- 5. VERİ KALİTESİ VE SİSTEM SINIRI ---
     with tab_veri:
