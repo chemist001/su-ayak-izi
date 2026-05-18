@@ -747,18 +747,20 @@ def show_calculator_page():
             
             # Hesaplama Mantığı (ISO 14046 ve Su Ayak İzi Ağı metodolojisi)
             if ayni_havza_mi:
-                    # Aynı havzaya dönüyorsa: Çekilen - Deşarj Edilen
-                    # Eksi değer çıkmaması için max(0, ...) kullanıyoruz
-                    hesaplanan_mavi = max(0.0, toplam_giren - desarj_miktari) 
+                # Aynı havzaya dönüyorsa: Çekilen - Deşarj Edilen
+                # Eksi değer çıkmaması için max(0, ...) kullanıyoruz
+                hesaplanan_mavi = max(0.0, toplam_giren - desarj_miktari) 
             else:
-                    # Başka havzaya deşarj ediliyorsa çekilen suyun tamamı Mavi Su tüketimi sayılır
-                    hesaplanan_mavi = toplam_giren
+                # Başka havzaya deşarj ediliyorsa çekilen suyun tamamı Mavi Su tüketimi sayılır
+                hesaplanan_mavi = toplam_giren
             
-        # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Diğer sekmelere geçince kaybolmasın diye)
-        st.session_state.mavi_su_sonuc = hesaplanan_mavi
+            # --- DÜZELTİLEN KISIM: AŞAĞIDAKİ İKİ SATIRI İÇERİ (SAĞA) ALDIK ---
             
-        # 2. Kullanıcıya ekranda gösteriyoruz
-        st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
+            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Sadece butona basılınca çalışır)
+            st.session_state.mavi_su_sonuc = hesaplanan_mavi
+                
+            # 2. Kullanıcıya ekranda gösteriyoruz
+            st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
     # --- 3. YEŞİL SU ---
     with tab_yesil:
