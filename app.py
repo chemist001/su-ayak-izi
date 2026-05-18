@@ -1049,10 +1049,10 @@ def show_calculator_page():
                 
         else:
             st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
-                # ==========================================
-                # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
-                # ==========================================
-                st.divider()
+# ==========================================
+# --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
+# ==========================================
+st.divider()
                 
                 def format_num(value):
                     return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
