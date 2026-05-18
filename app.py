@@ -1047,44 +1047,44 @@ def show_calculator_page():
                 
                 st.warning("Not: PDF oluşturma modülü (fonksiyonu) buraya bağlandığında indirme butonu aktif olacaktır. 🚀")
                 
-        else:
-            st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
-# ==========================================
-# --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
-# ==========================================
-st.divider()
+            else:
+                st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
+        # ==========================================
+        # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
+        # ==========================================
+        st.divider()
                 
-                def format_num(value):
+            def format_num(value):
                     return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
-                try:
-                    from fpdf import FPDF
-                    import datetime
-                    import os
+            try:
+                from fpdf import FPDF
+                import datetime
+                import os
                     
-                    logo_firma = "logos/firma_logo.png" 
-                    logo_adaso = "logos/adaso_logo.png"
+                logo_firma = "logos/firma_logo.png" 
+                logo_adaso = "logos/adaso_logo.png"
                     
-                    class ProfessionalPDF(FPDF):
-                        def header(self):
-                            # Sayfa numarası 1'den büyükse (yani kapak değilse) logoları ve çizgiyi ekle
-                            if self.page_no() > 1:
-                                self.set_line_width(1)
-                                self.set_draw_color(0, 150, 136)
-                                self.line(10, 8, 200, 8)
-                                try: self.image(logo_firma, x=15, y=10, w=25)
-                                except: pass
-                                try: self.image(logo_adaso, x=165, y=10, w=25)
-                                except: pass
+                class ProfessionalPDF(FPDF):
+                    def header(self):
+                        # Sayfa numarası 1'den büyükse (yani kapak değilse) logoları ve çizgiyi ekle
+                        if self.page_no() > 1:
+                            self.set_line_width(1)
+                            self.set_draw_color(0, 150, 136)
+                            self.line(10, 8, 200, 8)
+                            try: self.image(logo_firma, x=15, y=10, w=25)
+                            except: pass
+                            try: self.image(logo_adaso, x=165, y=10, w=25)
+                            except: pass
                             
-                            # Kapak dahil her sayfada üstten boşluk bırak ki metinler yukarı yapışmasın
-                            self.ln(20)
+                        # Kapak dahil her sayfada üstten boşluk bırak ki metinler yukarı yapışmasın
+                        self.ln(20)
 
-                        def footer(self):
-                            self.set_y(-20)
-                            self.set_font("helvetica", style='', size=8) 
-                            self.cell(100, 10, txt="Su Ayak Izi Raporu", ln=False, align='L')
-                            self.cell(90, 10, txt=f"Sayfa {self.page_no()}/{{nb}}", ln=False, align='R')
+                    def footer(self):
+                        self.set_y(-20)
+                        self.set_font("helvetica", style='', size=8) 
+                        self.cell(100, 10, txt="Su Ayak Izi Raporu", ln=False, align='L')
+                        self.cell(90, 10, txt=f"Sayfa {self.page_no()}/{{nb}}", ln=False, align='R')
 
                     pdf = ProfessionalPDF()
                     pdf.alias_nb_pages()
