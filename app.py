@@ -222,7 +222,7 @@ def add_bg_from_url():
 class WaterFootprintCalculator:
     
     def calculate_blue_water(self, v_in=0.0, v_discharge=0.0, same_basin=True, 
-                             is_dry_process=False, evaporation=0.0, incorporation=0.0, lost_return=0.0):
+                            evaporation=0.0, incorporation=0.0, lost_return=0.0):
         """
         WFN Mavi Su Ayak İzi Hesaplaması
         Öncelik Kütle Denkliğindedir (Mass Balance). 
@@ -880,8 +880,7 @@ def show_calculator_page():
                 res_blue = calc.calculate_blue_water(
                     v_in=toplam_giren, 
                     v_discharge=desarj_miktari, 
-                    same_basin=ayni_havza_mi, 
-                    is_dry_process=is_dry_process
+                    same_basin=ayni_havza_mi,
                 )
                 
                 # 2. Yeşil Su Hesapla
