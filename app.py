@@ -1455,8 +1455,6 @@ def show_calculator_page():
             # Ana tabloyu ekrana basıyoruz
             st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
             
-            st.write("Eski bir raporun detaylı PDF çıktısını almak için aşağıdan raporunuzu seçin.")
-            
             rapor_secenekleri = [f"{row['tesis_adi']} ({row['olusturma_tarihi'][:10]})" for index, row in df_gecmis.iterrows()]
             secilen_rapor_etiketi = st.selectbox("İndirmek istediğiniz raporu seçin:", options=["Lütfen Seçiniz..."] + rapor_secenekleri)
             
