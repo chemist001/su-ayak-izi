@@ -1403,7 +1403,7 @@ def show_calculator_page():
                         pdf_bytes = pdf_dosyasi.read()
                         
                     st.download_button(
-                        label="📥 Anlık Olarak Hesaplanan Raporun PDF Çıktısını İndir",
+                        label="📥 Raporu PDF Olarak İndir",
                         data=pdf_bytes,
                         file_name=f"Su_Ayak_Izi_Raporu_{str(company_name)}.pdf",
                         mime="application/pdf",
@@ -1423,7 +1423,7 @@ def show_calculator_page():
                 kayit_adi = st.text_input("Rapor Başlığı (Veritabanında bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
                 
                 # Kaydet butonu (Diğer butonlarla karışmasın diye özel key atadık)
-                if st.button("🚀 Tüm Verileri Buluta Yükle", type="primary", key="btn_bulut_kayit_son"):
+                if st.button("🚀 Raporu Kaydet", type="primary", key="btn_bulut_kayit_son"):
                     # En tepeye yazdığımız fonksiyonu çağırıp motorun sonuçlarını içine atıyoruz
                     raporu_kaydet(
                         tesis_adi=kayit_adi,
@@ -1456,8 +1456,6 @@ def show_calculator_page():
             # Ana tabloyu ekrana basıyoruz
             st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
             
-            st.markdown("---")
-            st.subheader("📄 Detaylı PDF Raporu Görüntüle")
             st.write("Eski bir raporun detaylı PDF çıktısını almak için aşağıdan raporunuzu seçin.")
             
             rapor_secenekleri = [f"{row['tesis_adi']} ({row['olusturma_tarihi'][:10]})" for index, row in df_gecmis.iterrows()]
