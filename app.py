@@ -1970,14 +1970,67 @@ def show_calculator_page():
 def main():
     st.set_page_config(page_title="Su Ayak İzi Pro", page_icon="💧", layout="wide")
     add_bg_from_url()
-    
-    st.sidebar.title("Menü")
-    page = st.sidebar.radio("Sayfa Seçiniz:", ["🏠 Ana Sayfa", "🧮 Hesaplama"])
 
+    # ========================================================
+    # --- 1. SİHİRLİ BAĞLANTI (URL) KONTROLÜ ---
+    # ========================================================
+    try:
+        url_yetki = st.query_params.get("yetki", "")
+        if url_yetki == "adaso_patron":
+            st.session_state['admin_mi'] = True
+        else:
+            st.session_state['admin_mi'] = False
+    except:
+        st.session_state['admin_mi'] = False
+
+    # ========================================================
+    # --- 2. DİNAMİK SOL MENÜ OLUŞTURMA ---
+    # ========================================================
+    st.sidebar.title("Menü")
+    
+    sayfalar = ["🏠 Ana Sayfa", "🧮 Hesaplama"]
+    
+    # Sadece linkte sihirli şifre varsa 3. seçeneği ekle
+    if st.session_state.get('admin_mi', False):
+        sayfalar.append("👑 Admin Paneli")
+        
+    page = st.sidebar.radio("Sayfa Seçiniz:", sayfalar)
+
+    # ========================================================
+    # --- 3. SAYFA YÖNLENDİRMELERİ (ROUTER) ---
+    # ========================================================
     if page == "🏠 Ana Sayfa":
         show_home_page()
     elif page == "🧮 Hesaplama":
         show_calculator_page()
+        
+    # --- YENİ: GİZLİ ADMİN SAYFASI İÇERİĞİ ---
+    elif page == "👑 Admin Paneli":
+        st.header("👑 Patron Ekranı (Sistem Yönetimi)")
+        st.success("✅ Sihirli bağlantı ile yetkili girişi algılandı.")
+        st.markdown("---")
+        
+        st.subheader("📊 Sistemdeki Tüm Raporlar")
+        
+        try:
+            # Supabase'den TÜM kayıtları çekiyoruz
+            admin_response = supabase.from_("tesis_raporlari").select("*").order("olusturma_tarihi", desc=True).execute()
+            
+            if admin_response.data and len(admin_response.data) > 0:
+                import pandas as pd
+                df_admin = pd.DataFrame(admin_response.data)
+                
+                # 'id' sütununu gizleyip daha şık yapalım
+                if "id" in df_admin.columns:
+                    df_admin = df_admin.drop(columns=["id"])
+                    
+                st.metric(label="Sistemde Kayıtlı Toplam Rapor Sayısı", value=len(df_admin))
+                st.dataframe(df_admin, use_container_width=True, hide_index=True)
+            else:
+                st.info("Sistemde henüz hiç kayıt bulunmuyor.")
+                
+        except Exception as e:
+            st.error(f"Veritabanından veriler çekilirken bir hata oluştu: {str(e)}")
 
 if __name__ == "__main__":
     main()
