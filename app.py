@@ -35,7 +35,7 @@ def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
         
         # Tabloları veritabanı formatına (JSON) çevirme
         sorumlular_json = st.session_state.get('sorumlular_tablosu').to_dict(orient='records') if 'sorumlular_tablosu' in st.session_state and not st.session_state['sorumlular_tablosu'].empty else []
-        sinir_json = st.session_state.get('sistem_siniri_tablo').to_dict(orient='records') if 'sistem_siniri_tablo' in st.session_state and not st.session_state['sistem_siniri_tablo'].empty else []
+        sinir_json = st.session_state.get('sistem_siniri_tablosu').to_dict(orient='records') if 'sistem_siniri_tablosu' in st.session_state and not st.session_state['sistem_siniri_tablosu'].empty else []
         hedefler_json = st.session_state.get('hedef_tablosu').to_dict(orient='records') if 'hedef_tablosu' in st.session_state and not st.session_state['hedef_tablosu'].empty else []
 
         response = supabase.from_("tesis_raporlari").insert({
@@ -47,12 +47,12 @@ def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
             "toplam_su": float(toplam),
             "ai_analizi": str(ai_analizi),
             
-            # --- YENİ EKLENEN RAFLAR (Firma Bilgileri ve Tablolar) ---
-            "firma_adresi": st.session_state.get('address', 'Belirtilmedi'),
-            "sektor": st.session_state.get('sector', 'Belirtilmedi'),
-            "yetkili_kisi": st.session_state.get('contact_person', 'Belirtilmedi'),
+            # --- İSİMLER TAMAMEN SENİN KODUNA GÖRE EŞLEŞTİRİLDİ ---
+            "firma_adresi": st.session_state.get('adres', 'Belirtilmedi'),
+            "sektor": st.session_state.get('sektor', 'Belirtilmedi'),
+            "yetkili_kisi": st.session_state.get('yetkili', 'Belirtilmedi'),
             "iletisim_email": st.session_state.get('email', 'Belirtilmedi'),
-            "iletisim_telefon": st.session_state.get('c_phone', 'Belirtilmedi'),
+            "iletisim_telefon": st.session_state.get('telefon', 'Belirtilmedi'),
             "sorumlular_tablosu": sorumlular_json,
             "sistem_siniri_tablosu": sinir_json,
             "hedefler_tablosu": hedefler_json
@@ -730,6 +730,7 @@ def show_calculator_page():
             use_container_width=True,
             key="sorumlular_tablo_editor"
         )
+        st.session_state['sorumlular_tablosu'] = duzenlenmis_sorumlular
 
     # --- 2. MAVİ SU (Kütle Denkliği ile Düzeltilmiş Yapı) ---
     with tab_mavi:
@@ -891,6 +892,7 @@ def show_calculator_page():
             use_container_width=True, 
             hide_index=True 
         )
+        st.session_state['sistem_siniri_tablosu'] = sistem_siniri_tablosu
 
     # --- 6. RAPORLAMA ---
     with tab_sonuc:
