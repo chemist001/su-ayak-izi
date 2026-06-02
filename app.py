@@ -120,7 +120,12 @@ if st.session_state.user is None:
             # 1. Oturumdaki kullanıcının güvenli ID'sini alıyoruz
             user_id = st.session_state.user.id
             
-            # 2. Supabase'deki 'tesis_raporlari' kasasına verileri gönderiyoruz
+            # --- YENİ: Tabloları veritabanının anlayacağı formata (JSON) çeviriyoruz ---
+            sorumlular_json = st.session_state.get('sorumlular_tablo').to_dict(orient='records') if 'sorumlular_tablo' in st.session_state and not st.session_state['sorumlular_tablo'].empty else []
+            sinir_json = st.session_state.get('sistem_siniri_tablo').to_dict(orient='records') if 'sistem_siniri_tablo' in st.session_state and not st.session_state['sistem_siniri_tablo'].empty else []
+            hedefler_json = st.session_state.get('hedefler_tablo').to_dict(orient='records') if 'hedefler_tablo' in st.session_state and not st.session_state['hedefler_tablo'].empty else []
+
+            # 2. Supabase'deki 'tesis_raporlari' kasasına verileri FULL PAKET gönderiyoruz
             data, count = supabase.table("tesis_raporlari").insert({
                 "user_id": user_id,
                 "tesis_adi": tesis_adi,
@@ -128,10 +133,20 @@ if st.session_state.user is None:
                 "yesil_su": float(yesil),
                 "gri_su": float(gri),
                 "toplam_su": float(toplam),
-                "ai_analizi": ai_analizi
+                "ai_analizi": ai_analizi,
+                
+                # --- YENİ EKLENEN RAFLAR (Firma Bilgileri ve Tablolar) ---
+                "firma_adresi": st.session_state.get('address', 'Belirtilmedi'),
+                "sektor": st.session_state.get('sector', 'Belirtilmedi'),
+                "yetkili_kisi": st.session_state.get('contact_person', 'Belirtilmedi'),
+                "iletisim_email": st.session_state.get('email', 'Belirtilmedi'),
+                "iletisim_telefon": st.session_state.get('c_phone', 'Belirtilmedi'),
+                "sorumlular_tablosu": sorumlular_json,
+                "sistem_siniri_tablosu": sinir_json,
+                "hedefler_tablosu": hedefler_json
             }).execute()
             
-            st.success("🎉 Harika! Raporunuz başarıyla Supabase veritabanına kaydedildi!")
+            st.success("🎉 Harika! Raporunuz (ve tüm firma detayları) başarıyla Supabase veritabanına kaydedildi!")
         
         except Exception as e:
             st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
