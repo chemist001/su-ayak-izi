@@ -146,17 +146,6 @@ if st.sidebar.button("Çıkış Yap"):
     st.session_state.user = None
     st.rerun()
 # ---------------------------
-
-# --- KÜTÜPHANE KONTROLLERİ ---
-try:
-except ModuleNotFoundError:
-    st.error("⚠️ 'fpdf' kütüphanesi eksik. Terminale şunu yazın: python -m pip install fpdf")
-    st.stop()
-
-try:
-except ModuleNotFoundError:
-    st.error("⚠️ 'matplotlib' kütüphanesi eksik. Terminale şunu yazın: python -m pip install matplotlib")
-    st.stop()
 # --- TABLO ODAK SORUNUNU ÇÖZEN HAFIZA ---
 if 'gri_su_tablo_editor' not in st.session_state:
     st.session_state['gri_su_tablo_editor'] = {"edited_rows": {}, "added_rows": [], "deleted_rows": []}
