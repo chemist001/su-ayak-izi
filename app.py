@@ -4,6 +4,7 @@ import time
 import datetime
 import base64
 import matplotlib.pyplot as plt
+from fpdf import FPDF
 import io
 from google import genai
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"].strip())
