@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+from fpdf import FPDF
 import time
 import datetime
 import base64
-import matplotlib.pyplot as plt
-from fpdf import FPDF
 import io
 from google import genai
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"].strip())
@@ -149,13 +149,11 @@ if st.sidebar.button("Çıkış Yap"):
 
 # --- KÜTÜPHANE KONTROLLERİ ---
 try:
-    from fpdf import FPDF
 except ModuleNotFoundError:
     st.error("⚠️ 'fpdf' kütüphanesi eksik. Terminale şunu yazın: python -m pip install fpdf")
     st.stop()
 
 try:
-    import matplotlib.pyplot as plt
 except ModuleNotFoundError:
     st.error("⚠️ 'matplotlib' kütüphanesi eksik. Terminale şunu yazın: python -m pip install matplotlib")
     st.stop()
@@ -992,10 +990,8 @@ def show_calculator_page():
                     return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         
                 try:
-                    from fpdf import FPDF
                     import datetime
                     import os
-                    import matplotlib.pyplot as plt
                     
                     logo_firma = "logos/firma_logo.png" 
                     logo_adaso = "logos/adaso_logo.png"
@@ -1496,7 +1492,7 @@ def show_calculator_page():
                         return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     
                 try:
-                    from fpdf import FPDF
+                
                     import datetime
                     import os
                         
