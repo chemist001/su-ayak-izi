@@ -1475,18 +1475,41 @@ def show_calculator_page():
                 res_green = float(secilen_veri['yesil_su'])
                 res_grey = float(secilen_veri['gri_su'])
                 total_wf = float(secilen_veri['toplam_su'])
-                
-                # Firma profilindeki diğer verileri güvenli çekiyoruz (boşsa çökmemesi için yedekli)
-                address = st.session_state.get('address', 'Belirtilmedi')
-                sector = st.session_state.get('sector', 'Belirtilmedi')
-                c_phone = st.session_state.get('c_phone', 'Belirtilmedi')
-                email = st.session_state.get('email', 'Belirtilmedi')
-                contact_person = st.session_state.get('contact_person', 'Belirtilmedi')
 
-                # Tabloların boş kalıp çökmesini önlemek için yedek tanımlamalar
-                duzenlenmis_sorumlular = st.session_state.get('sorumlular_tablo', pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"]))
-                sistem_siniri_tablosu = st.session_state.get('sistem_siniri_tablo', pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]))
-                duzenlenmis_hedefler = st.session_state.get('hedef_tablosu', pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"]))
+                # ==========================================
+                # YENİ SİSTEM: VERİLERİ HAFIZADAN DEĞİL, DOĞRUDAN SUPABASE'DEN ÇEKİYORUZ
+                # ==========================================
+                def guvenli_metin(kolon_adi):
+                    # Eğer eski rapor olduğu için bu sütunlar henüz yoksa çökmeyi önler
+                    if kolon_adi in secilen_veri and pd.notna(secilen_veri[kolon_adi]) and secilen_veri[kolon_adi] != "":
+                        return str(secilen_veri[kolon_adi])
+                    return "Belirtilmedi"
+
+                address = guvenli_metin('firma_adresi')
+                sector = guvenli_metin('sektor')
+                contact_person = guvenli_metin('yetkili_kisi')
+                email = guvenli_metin('iletisim_email')
+                c_phone = guvenli_metin('iletisim_telefon')
+
+                # JSON (Liste) formatında gelen tabloları PDF'in okuyabileceği formata çeviriyoruz
+                # Eski raporlarda bu tablolar boş geleceği için hata vermesin diye yedek şablonlar ekledik
+                sorumlular_db = secilen_veri.get('sorumlular_tablosu')
+                if isinstance(sorumlular_db, list) and len(sorumlular_db) > 0:
+                    duzenlenmis_sorumlular = pd.DataFrame(sorumlular_db)
+                else:
+                    duzenlenmis_sorumlular = pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"])
+
+                sinir_db = secilen_veri.get('sistem_siniri_tablosu')
+                if isinstance(sinir_db, list) and len(sinir_db) > 0:
+                    sistem_siniri_tablosu = pd.DataFrame(sinir_db)
+                else:
+                    sistem_siniri_tablosu = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"])
+
+                hedefler_db = secilen_veri.get('hedefler_tablosu')
+                if isinstance(hedefler_db, list) and len(hedefler_db) > 0:
+                    duzenlenmis_hedefler = pd.DataFrame(hedefler_db)
+                else:
+                    duzenlenmis_hedefler = pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"])
 
                 # ==========================================
                 # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
