@@ -31,7 +31,13 @@ def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
 
         user_id = st.session_state.user.id
         
-        # 3. .from_ kullanarak versiyon hatasını aşıyoruz ve veriyi yolluyoruz
+# 3. .from_ kullanarak versiyon hatasını aşıyoruz ve FULL PAKETİ yolluyoruz
+        
+        # Tabloları veritabanı formatına (JSON) çevirme
+        sorumlular_json = st.session_state.get('sorumlular_tablosu').to_dict(orient='records') if 'sorumlular_tablosu' in st.session_state and not st.session_state['sorumlular_tablosu'].empty else []
+        sinir_json = st.session_state.get('sistem_siniri_tablo').to_dict(orient='records') if 'sistem_siniri_tablo' in st.session_state and not st.session_state['sistem_siniri_tablo'].empty else []
+        hedefler_json = st.session_state.get('hedef_tablosu').to_dict(orient='records') if 'hedef_tablosu' in st.session_state and not st.session_state['hedef_tablosu'].empty else []
+
         response = supabase.from_("tesis_raporlari").insert({
             "user_id": user_id,
             "tesis_adi": str(tesis_adi),
@@ -39,10 +45,20 @@ def raporu_kaydet(tesis_adi, mavi, yesil, gri, toplam, ai_analizi=""):
             "yesil_su": float(yesil),
             "gri_su": float(gri),
             "toplam_su": float(toplam),
-            "ai_analizi": str(ai_analizi)
+            "ai_analizi": str(ai_analizi),
+            
+            # --- YENİ EKLENEN RAFLAR (Firma Bilgileri ve Tablolar) ---
+            "firma_adresi": st.session_state.get('address', 'Belirtilmedi'),
+            "sektor": st.session_state.get('sector', 'Belirtilmedi'),
+            "yetkili_kisi": st.session_state.get('contact_person', 'Belirtilmedi'),
+            "iletisim_email": st.session_state.get('email', 'Belirtilmedi'),
+            "iletisim_telefon": st.session_state.get('c_phone', 'Belirtilmedi'),
+            "sorumlular_tablosu": sorumlular_json,
+            "sistem_siniri_tablosu": sinir_json,
+            "hedefler_tablosu": hedefler_json
         }).execute()
         
-        st.success("🎉 Harika! Raporunuz başarıyla Supabase veritabanına kaydedildi!")
+        st.success("Raporunuz Kaydedildi")
         
     except Exception as e:
         st.error(f"Kayıt sırasında bir hata oluştu: {str(e)}")
