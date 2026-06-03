@@ -898,6 +898,7 @@ def sayfa_raporlama():
     st.header("Sonuç ve PDF Çıktısı")
         
     # Sadece kilidi açmak için butonu kullanıyoruz
+    company_name = st.session_state.get('firma_adi', '')
     if st.button("HESAPLA VE RAPORU OLUŞTUR", type="primary"):
         if not company_name:
             st.error("Lütfen Firma Adını giriniz (Firma Profili sekmesinden).")
