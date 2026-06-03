@@ -678,7 +678,7 @@ def show_calculator_page():
 
     # Sekmeli Yapı (Senin tasarımın)
     tab_firma, tab_mavi, tab_yesil, tab_gri, tab_veri, tab_sonuc, tab_gecmis = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su", "📋Veri Kalitesi", "📊 Raporlama", "🗄️ Geçmiş Raporlar",
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su",
     ])
 
  # --- 1. FIRMA PROFILI ---
