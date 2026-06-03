@@ -899,6 +899,20 @@ def sayfa_raporlama():
         
     # Sadece kilidi açmak için butonu kullanıyoruz
     company_name = st.session_state.get('firma_adi', '')
+    
+    # 1. Mavi Su Girdilerini Çek ve Toplamı Bul
+    sebeke = st.session_state.get('sebeke_suyu', 0.0)
+    kuyu = st.session_state.get('kuyu_suyu', 0.0)
+    diger = st.session_state.get('diger_su', 0.0)
+    toplam_giren = sebeke + kuyu + diger
+    
+    desarj = st.session_state.get('desarj', 0.0)
+    
+    # 2. Hesaplanan Ayak İzi Sonuçlarını Çek
+    mavi = st.session_state.get('mavi_su_sonuc', 0.0)
+    yesil = st.session_state.get('yesil_su_sonuc', 0.0)
+    gri = st.session_state.get('gri_su_sonuc', 0.0)
+    toplam = mavi + yesil + gri
     if st.button("HESAPLA VE RAPORU OLUŞTUR", type="primary"):
         if not company_name:
             st.error("Lütfen Firma Adını giriniz (Firma Profili sekmesinden).")
