@@ -900,14 +900,15 @@ def sayfa_raporlama():
     # Sadece kilidi açmak için butonu kullanıyoruz
     company_name = st.session_state.get('firma_adi', '')
     
-    # 1. Mavi Su Girdilerini Çek ve Toplamı Bul
+    # 1. Mavi Su Yeşil Su ve Gri Su Girdilerini Çek ve Toplamı Bul
     sebeke = st.session_state.get('sebeke_suyu', 0.0)
     kuyu = st.session_state.get('kuyu_suyu', 0.0)
     diger = st.session_state.get('diger_su', 0.0)
     toplam_giren = sebeke + kuyu + diger
-    
     desarj_miktari = st.session_state.get('desarj', 0.0)
     ayni_havza_mi = st.session_state.get('ayni_havza', False)
+    green_evap = st.session_state.get('yesil_evap', 0.0)
+    green_incorp = st.session_state.get('yesil_incorp', 0.0)
     
     # 2. Hesaplanan Ayak İzi Sonuçlarını Çek
     mavi = st.session_state.get('mavi_su_sonuc', 0.0)
