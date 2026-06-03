@@ -907,6 +907,7 @@ def sayfa_raporlama():
     toplam_giren = sebeke + kuyu + diger
     
     desarj_miktari = st.session_state.get('desarj', 0.0)
+    ayni_havza_mi = st.session_state.get('ayni_havza', False)
     
     # 2. Hesaplanan Ayak İzi Sonuçlarını Çek
     mavi = st.session_state.get('mavi_su_sonuc', 0.0)
