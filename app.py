@@ -912,6 +912,21 @@ def sayfa_raporlama():
     # --- GRİ SU GİRDİLERİ (Kirlilik Tablosu) ---
     duzenlenmis_df = st.session_state.get('gri_tablo')
     pollutants_list = []
+    # Metin verilerini senin 'Firma Profili'nde belirlediğin Türkçe isimlerden çekiyoruz
+    address = st.session_state.get('adres', 'Belirtilmedi')
+    sector = st.session_state.get('sektor', 'Belirtilmedi')
+    contact_person = st.session_state.get('yetkili', 'Belirtilmedi')
+    email = st.session_state.get('email', 'Belirtilmedi')
+    c_phone = st.session_state.get('telefon', 'Belirtilmedi')
+    
+    # Rapor tarihi ve yılı
+    rapor_yili = st.session_state.get('rapor_yili', '2026')
+    rapor_tarihi = st.session_state.get('rapor_tarihi', None)
+
+    # PDF'in içine basılacak olan tabloları çekiyoruz (Boşsalar çökmesin diye yedekli)
+    duzenlenmis_sorumlular = st.session_state.get('sorumlular_tablosu', pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"]))
+    sistem_siniri_tablosu = st.session_state.get('sistem_siniri_tablosu', pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]))
+    duzenlenmis_hedefler = st.session_state.get('hedef_tablosu', pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"]))
     
     # Tablo boş değilse, içindeki verileri hesaplama motoru için listeye çeviriyoruz
     if duzenlenmis_df is not None and not duzenlenmis_df.empty:
