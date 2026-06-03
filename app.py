@@ -2098,9 +2098,6 @@ def main():
         
     # --- YENİ: GİZLİ ADMİN SAYFASI İÇERİĞİ ---
     elif page == "👑 Admin Paneli":
-        st.header("👑 Patron Ekranı (Sistem Yönetimi)")
-        st.success("✅ Sihirli bağlantı ile yetkili girişi algılandı.")
-        st.markdown("---")
         
         st.subheader("📊 Sistemdeki Tüm Raporlar")
         
