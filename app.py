@@ -909,6 +909,19 @@ def sayfa_raporlama():
     ayni_havza_mi = st.session_state.get('ayni_havza', False)
     green_evap = st.session_state.get('yesil_evap', 0.0)
     green_incorp = st.session_state.get('yesil_incorp', 0.0)
+    # --- GRİ SU GİRDİLERİ (Kirlilik Tablosu) ---
+    duzenlenmis_df = st.session_state.get('gri_tablo')
+    pollutants_list = []
+    
+    # Tablo boş değilse, içindeki verileri hesaplama motoru için listeye çeviriyoruz
+    if duzenlenmis_df is not None and not duzenlenmis_df.empty:
+        for index, row in duzenlenmis_df.iterrows():
+            pollutants_list.append({
+                "name": row["Parametre"],
+                "load": float(row["Yük (kg/yıl)"]),
+                "c_max": float(row["C_max Limit (kg/m³)"]),
+                "c_nat": float(row["C_nat Doğal (kg/m³)"])
+            })
     
     # 2. Hesaplanan Ayak İzi Sonuçlarını Çek
     mavi = st.session_state.get('mavi_su_sonuc', 0.0)
