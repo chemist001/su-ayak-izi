@@ -894,7 +894,7 @@ def sayfa_veri_kalitesi():
     st.session_state['sistem_siniri_tablosu'] = sistem_siniri_tablosu
 
     # --- 6. RAPORLAMA ---
-    with tab_sonuc:
+def sayfa_raporlama():
         st.header("Sonuç ve PDF Çıktısı")
         
     # Sadece kilidi açmak için butonu kullanıyoruz
