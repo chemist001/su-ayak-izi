@@ -1458,552 +1458,552 @@ def sayfa_raporlama():
             # ------------------------------------------------
     
    # --- 7. GEÇMİŞ RAPORLAR SEKME İÇERİĞİ ---
-    with tab_gecmis:
-        st.header("🗄️ Geçmiş Raporlarım")
-        
-        if st.button("🔄 Tabloyu Yenile", key="btn_yenile_gecmis"):
-            st.rerun()
-            
-        veriler = gecmis_raporlari_getir()
-        
-        if veriler and len(veriler) > 0:
-            df_gecmis = pd.DataFrame(veriler)
-            
-            # Görüntüleme için tabloyu hazırlıyoruz
-            df_gosterim = df_gecmis[["tesis_adi", "mavi_su", "yesil_su", "gri_su", "toplam_su", "olusturma_tarihi"]].copy()
-            df_gosterim.columns = ["Rapor Adı", "Mavi Su (m³)", "Yeşil Su (m³)", "Gri Su (m³)", "Toplam Su (m³)", "Kayıt Tarihi"]
-            df_gosterim["Kayıt Tarihi"] = pd.to_datetime(df_gosterim["Kayıt Tarihi"]).dt.strftime("%d-%m-%Y %H:%M")
-            
-            # Ana tabloyu ekrana basıyoruz
-            st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
-            
-            rapor_secenekleri = [f"{row['tesis_adi']} ({row['olusturma_tarihi'][:10]})" for index, row in df_gecmis.iterrows()]
-            secilen_rapor_etiketi = st.selectbox("İndirmek istediğiniz raporu seçin:", options=["Lütfen Seçiniz..."] + rapor_secenekleri)
-            
-            if secilen_rapor_etiketi != "Lütfen Seçiniz...":
-                secilen_isim = secilen_rapor_etiketi.rsplit(" (", 1)[0]
-                secilen_veri = df_gecmis[df_gecmis["tesis_adi"] == secilen_isim].iloc[0]
-
-                # ==========================================
-                # KRİTİK VERİ EŞLEŞTİRME (Supabase'den gelen geçmiş verileri PDF motoruna bağlıyoruz)
-                # ==========================================
-                company_name = secilen_veri['tesis_adi']
-                res_blue = float(secilen_veri['mavi_su'])
-                res_green = float(secilen_veri['yesil_su'])
-                res_grey = float(secilen_veri['gri_su'])
-                total_wf = float(secilen_veri['toplam_su'])
-
-                # ==========================================
-                # YENİ SİSTEM: VERİLERİ HAFIZADAN DEĞİL, DOĞRUDAN SUPABASE'DEN ÇEKİYORUZ
-                # ==========================================
-                def guvenli_metin(kolon_adi):
-                    # Eğer eski rapor olduğu için bu sütunlar henüz yoksa çökmeyi önler
-                    if kolon_adi in secilen_veri and pd.notna(secilen_veri[kolon_adi]) and secilen_veri[kolon_adi] != "":
-                        return str(secilen_veri[kolon_adi])
-                    return "Belirtilmedi"
-
-                address = guvenli_metin('firma_adresi')
-                sector = guvenli_metin('sektor')
-                contact_person = guvenli_metin('yetkili_kisi')
-                email = guvenli_metin('iletisim_email')
-                c_phone = guvenli_metin('iletisim_telefon')
-
-                # JSON (Liste) formatında gelen tabloları PDF'in okuyabileceği formata çeviriyoruz
-                # Eski raporlarda bu tablolar boş geleceği için hata vermesin diye yedek şablonlar ekledik
-                sorumlular_db = secilen_veri.get('sorumlular_tablosu')
-                if isinstance(sorumlular_db, list) and len(sorumlular_db) > 0:
-                    duzenlenmis_sorumlular = pd.DataFrame(sorumlular_db)
-                else:
-                    duzenlenmis_sorumlular = pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"])
-
-                sinir_db = secilen_veri.get('sistem_siniri_tablosu')
-                if isinstance(sinir_db, list) and len(sinir_db) > 0:
-                    sistem_siniri_tablosu = pd.DataFrame(sinir_db)
-                else:
-                    sistem_siniri_tablosu = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"])
-
-                hedefler_db = secilen_veri.get('hedefler_tablosu')
-                if isinstance(hedefler_db, list) and len(hedefler_db) > 0:
-                    duzenlenmis_hedefler = pd.DataFrame(hedefler_db)
-                else:
-                    duzenlenmis_hedefler = pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"])
-
-                # ==========================================
-                # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
-                # ==========================================
-                    
-                def format_num(value):
-                        return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+def sayfa_gecmis_raporlar():
+    st.header("🗄️ Geçmiş Raporlarım")
     
-                try:
+    if st.button("🔄 Tabloyu Yenile", key="btn_yenile_gecmis"):
+        st.rerun()
+        
+    veriler = gecmis_raporlari_getir()
+    
+    if veriler and len(veriler) > 0:
+        df_gecmis = pd.DataFrame(veriler)
+        
+        # Görüntüleme için tabloyu hazırlıyoruz
+        df_gosterim = df_gecmis[["tesis_adi", "mavi_su", "yesil_su", "gri_su", "toplam_su", "olusturma_tarihi"]].copy()
+        df_gosterim.columns = ["Rapor Adı", "Mavi Su (m³)", "Yeşil Su (m³)", "Gri Su (m³)", "Toplam Su (m³)", "Kayıt Tarihi"]
+        df_gosterim["Kayıt Tarihi"] = pd.to_datetime(df_gosterim["Kayıt Tarihi"]).dt.strftime("%d-%m-%Y %H:%M")
+        
+        # Ana tabloyu ekrana basıyoruz
+        st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
+        
+        rapor_secenekleri = [f"{row['tesis_adi']} ({row['olusturma_tarihi'][:10]})" for index, row in df_gecmis.iterrows()]
+        secilen_rapor_etiketi = st.selectbox("İndirmek istediğiniz raporu seçin:", options=["Lütfen Seçiniz..."] + rapor_secenekleri)
+        
+        if secilen_rapor_etiketi != "Lütfen Seçiniz...":
+            secilen_isim = secilen_rapor_etiketi.rsplit(" (", 1)[0]
+            secilen_veri = df_gecmis[df_gecmis["tesis_adi"] == secilen_isim].iloc[0]
+
+            # ==========================================
+            # KRİTİK VERİ EŞLEŞTİRME (Supabase'den gelen geçmiş verileri PDF motoruna bağlıyoruz)
+            # ==========================================
+            company_name = secilen_veri['tesis_adi']
+            res_blue = float(secilen_veri['mavi_su'])
+            res_green = float(secilen_veri['yesil_su'])
+            res_grey = float(secilen_veri['gri_su'])
+            total_wf = float(secilen_veri['toplam_su'])
+
+            # ==========================================
+            # YENİ SİSTEM: VERİLERİ HAFIZADAN DEĞİL, DOĞRUDAN SUPABASE'DEN ÇEKİYORUZ
+            # ==========================================
+            def guvenli_metin(kolon_adi):
+                # Eğer eski rapor olduğu için bu sütunlar henüz yoksa çökmeyi önler
+                if kolon_adi in secilen_veri and pd.notna(secilen_veri[kolon_adi]) and secilen_veri[kolon_adi] != "":
+                    return str(secilen_veri[kolon_adi])
+                return "Belirtilmedi"
+
+            address = guvenli_metin('firma_adresi')
+            sector = guvenli_metin('sektor')
+            contact_person = guvenli_metin('yetkili_kisi')
+            email = guvenli_metin('iletisim_email')
+            c_phone = guvenli_metin('iletisim_telefon')
+
+            # JSON (Liste) formatında gelen tabloları PDF'in okuyabileceği formata çeviriyoruz
+            # Eski raporlarda bu tablolar boş geleceği için hata vermesin diye yedek şablonlar ekledik
+            sorumlular_db = secilen_veri.get('sorumlular_tablosu')
+            if isinstance(sorumlular_db, list) and len(sorumlular_db) > 0:
+                duzenlenmis_sorumlular = pd.DataFrame(sorumlular_db)
+            else:
+                duzenlenmis_sorumlular = pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"])
+
+            sinir_db = secilen_veri.get('sistem_siniri_tablosu')
+            if isinstance(sinir_db, list) and len(sinir_db) > 0:
+                sistem_siniri_tablosu = pd.DataFrame(sinir_db)
+            else:
+                sistem_siniri_tablosu = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"])
+
+            hedefler_db = secilen_veri.get('hedefler_tablosu')
+            if isinstance(hedefler_db, list) and len(hedefler_db) > 0:
+                duzenlenmis_hedefler = pd.DataFrame(hedefler_db)
+            else:
+                duzenlenmis_hedefler = pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"])
+
+            # ==========================================
+            # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
+            # ==========================================
                 
-                    import datetime
-                    import os
-                        
-                    logo_firma = "logos/firma_logo.png" 
-                    logo_adaso = "logos/adaso_logo.png"
-                        
-                    class ProfessionalPDF(FPDF):
-                        def header(self):
-                            # Sayfa numarası 1'den büyükse (yani kapak değilse) logoları ve çizgiyi ekle
-                            if self.page_no() > 1:
-                                self.set_line_width(1)
-                                self.set_draw_color(0, 150, 136)
-                                self.line(10, 8, 200, 8)
-                                try: self.image(logo_firma, x=15, y=10, w=25)
-                                except: pass
-                                try: self.image(logo_adaso, x=165, y=10, w=25)
-                                except: pass
-                                
-                            # Kapak dahil her sayfada üstten boşluk bırak ki metinler yukarı yapışmasın
-                            self.ln(20)
-    
-                        def footer(self):
-                            self.set_y(-20)
-                            self.set_font("helvetica", style='', size=8) 
-                            self.cell(100, 10, txt="Su Ayak Izi Raporu", ln=False, align='L')
-                            self.cell(90, 10, txt=f"Sayfa {self.page_no()}/{{nb}}", ln=False, align='R')
+            def format_num(value):
+                    return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
-                    pdf = ProfessionalPDF()
-                    pdf.alias_nb_pages()
+            try:
+            
+                import datetime
+                import os
+                    
+                logo_firma = "logos/firma_logo.png" 
+                logo_adaso = "logos/adaso_logo.png"
+                    
+                class ProfessionalPDF(FPDF):
+                    def header(self):
+                        # Sayfa numarası 1'den büyükse (yani kapak değilse) logoları ve çizgiyi ekle
+                        if self.page_no() > 1:
+                            self.set_line_width(1)
+                            self.set_draw_color(0, 150, 136)
+                            self.line(10, 8, 200, 8)
+                            try: self.image(logo_firma, x=15, y=10, w=25)
+                            except: pass
+                            try: self.image(logo_adaso, x=165, y=10, w=25)
+                            except: pass
+                            
+                        # Kapak dahil her sayfada üstten boşluk bırak ki metinler yukarı yapışmasın
+                        self.ln(20)
 
-                    # ---------------------------------------------------------
-                    # KRİTİK NOKTA: TÜRKÇE FONTU SİSTEME 'uni=True' İLE GÖMME
-                    # ---------------------------------------------------------
-                    font_regular = "fonts/arial.ttf"
-                    font_bold = "fonts/arialbd.ttf"
-                    
-                    if os.path.exists(font_regular) and os.path.exists(font_bold):
-                        # uni=True parametresi Türkçe karakterlerin silinmesini %100 engeller!
-                        pdf.add_font("ArialTR", style="", fname=font_regular, uni=True)
-                        pdf.add_font("ArialTR", style="B", fname=font_bold, uni=True)
-                        f_isim = "ArialTR"
-                    else:
-                        st.error("DİKKAT: C:\\Windows\\Fonts\\arial.ttf bulunamadı!")
-                        f_isim = "helvetica" # Hata almamak için acil durum yedeği
-                    # ---------------------------------------------------------
+                    def footer(self):
+                        self.set_y(-20)
+                        self.set_font("helvetica", style='', size=8) 
+                        self.cell(100, 10, txt="Su Ayak Izi Raporu", ln=False, align='L')
+                        self.cell(90, 10, txt=f"Sayfa {self.page_no()}/{{nb}}", ln=False, align='R')
 
-                    # --- KAPAK SAYFASI ---
-                    pdf.add_page()
-                    pdf.set_font(f_isim, size=24, style='B')
-                    pdf.set_fill_color(0, 150, 136) 
-                    pdf.set_text_color(255, 255, 255) 
-                    pdf.cell(190, 20, txt="SU AYAK İZİ RAPORU", ln=True, align='C', fill=True)
-                    
-                    pdf.set_text_color(0, 0, 0) 
-                    pdf.ln(10)
-                    pdf.set_font(f_isim, size=14, style='B')
-                    current_year = datetime.datetime.now().year - 1
-                    pdf.cell(190, 10, txt=f"{current_year} Dönemi", ln=True, align='C')
-                    
-                    pdf.ln(20)
-                    try: pdf.image(logo_firma, x=60, y=80, w=90) 
-                    except: pass
-                    
-                    pdf.set_y(220)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.set_text_color(0, 150, 136)
-                    pdf.cell(190, 10, txt="Adana Sanayi Odası (ADASO)", ln=True, align='C')
-                    
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından MaviRota Platformu Kullanılarak Hazırlanmıştır.", align='C')
+                pdf = ProfessionalPDF()
+                pdf.alias_nb_pages()
 
-                    # ==========================================
-                    # --- BÖLÜM 1: GİRİŞ VE KAPSAM ---
-                    # ==========================================
-                    # ==========================================
-                    # --- İÇİNDEKİLER SAYFASI ---
-                    # ==========================================
-                    pdf.add_page()
-                    pdf.set_font(f_isim, size=16, style='B')
-                    pdf.cell(190, 10, txt="İÇİNDEKİLER", ln=True, align='C')
-                    pdf.ln(10)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1. GİRİŞ", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.1. Kuruluş Bilgileri", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.2. Tanımlar", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.3. Kuruluş Su Yönetimi ve Sorumlular", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.4. Amaç ve Kapsam", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.5. Hedef Kullanıcı", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.6. ISO 14046:2014 Uygunluk Açıklaması", ln=True)
-                    pdf.ln(4)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="2. GENEL", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="2.1. Raporun Sahibi Olan Kuruluş ve Raporlama Dönemi", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="2.2. Operasyonel Sınırlar", ln=True)
-                    pdf.ln(4)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="3. METODOLOJİ", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="3.1. Veri Kalitesi", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="3.2. Kabuller", ln=True)
-                    pdf.ln(4)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="4. HESAPLAMALAR", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.1. Mavi Su Ayak İzi Hesaplamaları", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.2. Yeşil Su Ayak İzi Hesaplamaları", ln=True)
-                    pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
-                    pdf.ln(4)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="5. SONUÇ", ln=True)
-                    pdf.cell(190, 8, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True)
-                    
-                    # ==========================================
-                    # --- BÖLÜM 1: GİRİŞ ---
-                    # ==========================================
-                    pdf.add_page()
-                    pdf.set_fill_color(0, 150, 136) 
-                    pdf.set_text_color(255, 255, 255) 
-                    pdf.set_font(f_isim, size=14, style='B')
-                    pdf.cell(190, 10, txt="1. GİRİŞ", ln=True, align='L', fill=True)
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.ln(5)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1.1. Kuruluş Bilgileri", ln=True)
-                    pdf.set_font(f_isim, size=10, style='')
+                # ---------------------------------------------------------
+                # KRİTİK NOKTA: TÜRKÇE FONTU SİSTEME 'uni=True' İLE GÖMME
+                # ---------------------------------------------------------
+                font_regular = "fonts/arial.ttf"
+                font_bold = "fonts/arialbd.ttf"
+                
+                if os.path.exists(font_regular) and os.path.exists(font_bold):
+                    # uni=True parametresi Türkçe karakterlerin silinmesini %100 engeller!
+                    pdf.add_font("ArialTR", style="", fname=font_regular, uni=True)
+                    pdf.add_font("ArialTR", style="B", fname=font_bold, uni=True)
+                    f_isim = "ArialTR"
+                else:
+                    st.error("DİKKAT: C:\\Windows\\Fonts\\arial.ttf bulunamadı!")
+                    f_isim = "helvetica" # Hata almamak için acil durum yedeği
+                # ---------------------------------------------------------
 
-                    rapor_yili = st.session_state.get('rapor_yili', '2026')
-                    rapor_tarihi = st.session_state.get('rapor_tarihi', None)
+                # --- KAPAK SAYFASI ---
+                pdf.add_page()
+                pdf.set_font(f_isim, size=24, style='B')
+                pdf.set_fill_color(0, 150, 136) 
+                pdf.set_text_color(255, 255, 255) 
+                pdf.cell(190, 20, txt="SU AYAK İZİ RAPORU", ln=True, align='C', fill=True)
+                
+                pdf.set_text_color(0, 0, 0) 
+                pdf.ln(10)
+                pdf.set_font(f_isim, size=14, style='B')
+                current_year = datetime.datetime.now().year - 1
+                pdf.cell(190, 10, txt=f"{current_year} Dönemi", ln=True, align='C')
+                
+                pdf.ln(20)
+                try: pdf.image(logo_firma, x=60, y=80, w=90) 
+                except: pass
+                
+                pdf.set_y(220)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.set_text_color(0, 150, 136)
+                pdf.cell(190, 10, txt="Adana Sanayi Odası (ADASO)", ln=True, align='C')
+                
+                pdf.set_text_color(0, 0, 0)
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından MaviRota Platformu Kullanılarak Hazırlanmıştır.", align='C')
 
-                    if rapor_tarihi:
-                        rapor_tarihi_str = rapor_tarihi.strftime("%d.%m.%Y")
-                    else:
-                        rapor_tarihi_str = "Belirtilmedi"
-                    
-                    # Detaylı Kuruluş Tablosu
-                    pdf.set_fill_color(240, 240, 240) 
-                    pdf.cell(60, 8, txt="Kuruluş Adı", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{str(company_name)}", border=1, ln=True)
-                    pdf.cell(60, 8, txt="Tesis Adresi", border=1, fill=True)
-                    adres_text = str(address).replace("\n", " ")[:80] + ("..." if len(str(address)) > 80 else "")
-                    pdf.cell(130, 8, txt=adres_text, border=1, ln=True)
-                    pdf.cell(60, 8, txt="Tesis Sektörü", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{str(sector)}", border=1, ln=True)
-                    pdf.cell(60, 8, txt="İletişim (Tel / E-Mail)", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{str(c_phone)} / {str(email)}", border=1, ln=True)
-                    pdf.cell(60, 8, txt="Rapordan Sorumlu Kişi", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{str(contact_person)}", border=1, ln=True)
-                    pdf.cell(60, 8, txt="Raporlama Yili", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{rapor_yili}", border=1, ln=True)
-                    pdf.cell(60, 8, txt="Rapor Tarihi", border=1, fill=True)
-                    pdf.cell(130, 8, txt=f"{rapor_tarihi_str}", border=1, ln=True)
+                # ==========================================
+                # --- BÖLÜM 1: GİRİŞ VE KAPSAM ---
+                # ==========================================
+                # ==========================================
+                # --- İÇİNDEKİLER SAYFASI ---
+                # ==========================================
+                pdf.add_page()
+                pdf.set_font(f_isim, size=16, style='B')
+                pdf.cell(190, 10, txt="İÇİNDEKİLER", ln=True, align='C')
+                pdf.ln(10)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1. GİRİŞ", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.1. Kuruluş Bilgileri", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.2. Tanımlar", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.3. Kuruluş Su Yönetimi ve Sorumlular", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.4. Amaç ve Kapsam", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.5. Hedef Kullanıcı", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="1.6. ISO 14046:2014 Uygunluk Açıklaması", ln=True)
+                pdf.ln(4)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="2. GENEL", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="2.1. Raporun Sahibi Olan Kuruluş ve Raporlama Dönemi", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="2.2. Operasyonel Sınırlar", ln=True)
+                pdf.ln(4)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="3. METODOLOJİ", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="3.1. Veri Kalitesi", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="3.2. Kabuller", ln=True)
+                pdf.ln(4)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="4. HESAPLAMALAR", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.1. Mavi Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.2. Yeşil Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.ln(4)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="5. SONUÇ", ln=True)
+                pdf.cell(190, 8, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True)
+                
+                # ==========================================
+                # --- BÖLÜM 1: GİRİŞ ---
+                # ==========================================
+                pdf.add_page()
+                pdf.set_fill_color(0, 150, 136) 
+                pdf.set_text_color(255, 255, 255) 
+                pdf.set_font(f_isim, size=14, style='B')
+                pdf.cell(190, 10, txt="1. GİRİŞ", ln=True, align='L', fill=True)
+                pdf.set_text_color(0, 0, 0)
+                pdf.ln(5)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1.1. Kuruluş Bilgileri", ln=True)
+                pdf.set_font(f_isim, size=10, style='')
 
-                    pdf.ln(8)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1.2. Tanımlar", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Mavi Su Ayak İzi: Doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.\n\nYeşil Su Ayak İzi: Bir tesisin faaliyetleri kapsamında doğrudan veya dolaylı olarak kullanılan hammaddelerin üretimi sırasında tüketilen, yağış kaynaklı suyun toplamını ifade eder..\n\nGri Su Ayak İzi: Kirliliği ifade eder ve mevcut çevre su kalitesi standartlarına dayanarak kirletici yükünü asimile etmek için gereken tatlı su hacmi olarak tanımlanır.")
+                rapor_yili = st.session_state.get('rapor_yili', '2026')
+                rapor_tarihi = st.session_state.get('rapor_tarihi', None)
 
-                    pdf.ln(8)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1.3. Kuruluş Su Yönetimi ve Sorumlular", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt=f"{str(company_name)} olarak raporlama yılında Mavi su olarak; insani kullanım ve üretim amacıyla şebeke, kuyu ve diğer tatlı su kaynakları temin edilmektedir. Mavi su ayak izi hesabında sayaç tüketimleri ve faturalar kabul edilerek hesap yapılmaktadır.\n\nGri su olarak; üretim amacıyla proseste kullanılan suyun endüstriyel nitelikli atıksu faaliyeti sonucunda arıtma tesislerine veya kanalizasyona deşarjı baz alınmaktadır.")
-                    
-                    pdf.ln(5)
-                    pdf.set_font(f_isim, size=11, style='B')
-                    pdf.cell(190, 8, txt="Tablo 1: Sorumlu Kişilerin İletişim Bilgileri", ln=True)
-                    pdf.set_font(f_isim, size=10, style='B')
-                    pdf.set_fill_color(0, 0, 128)
-                    pdf.set_text_color(255, 255, 255)
-                    pdf.cell(60, 8, txt="Sorumlu Kişi", border=1, fill=True, align='C')
-                    pdf.cell(80, 8, txt="Görev", border=1, fill=True, align='C')
-                    pdf.cell(50, 8, txt="İletişim", border=1, ln=True, fill=True, align='C')
-                    
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.set_font(f_isim, size=10, style='')
-                    # Arayüzden gelen tablo verilerini PDF'e yazdıran dinamik döngü
-                    gecerli_sorumlular = [row for index, row in duzenlenmis_sorumlular.iterrows() if str(row["Görev"]).strip() != ""]
-                    
-                    for row in gecerli_sorumlular:
-                        # Tabloya sığması için metinleri biraz tıraşlıyoruz (taşıp PDF'i bozmaması için)
-                        sorumlu = str(row["Sorumlu Kişi"])[:30] 
-                        gorev = str(row["Görev"])[:45]
-                        iletisim = str(row["İletişim"])[:25]
-                        
-                        pdf.cell(60, 8, txt=sorumlu, border=1, align='C')
-                        pdf.cell(80, 8, txt=gorev, border=1, align='C')
-                        pdf.cell(50, 8, txt=iletisim, border=1, ln=True, align='C')
-                        
-                    # ==========================================
-                    # --- BÖLÜM 1 DEVAMI VE BÖLÜM 2 ---
-                    # ==========================================
-                    pdf.add_page()
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1.4. Amaç ve Kapsam", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt=f"{str(company_name)} bünyesinde su kullanımı ve su güvenliğini sağlamak için oluşturulan hedeflere ulaşmak amacıyla kuruluş bazında bu rapor hazırlanmıştır.\nRaporun amacı; {current_year} yılı su kullanımı ve deşarjına dair hesaplamalardan elde edilen miktarların doğrulanması ve şeffaf bir süreç oluşturulmasıdır.")
-                    
-                    pdf.ln(4)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1.5. Hedef Kullanıcı", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Su ayak izi raporu hedef kullanıcıları; Firmamız Üst Yönetimi, Çalışanlar, Tedarikçiler ve Diğer Paydaşlardır.\nRapor, resmi kurumların talebi durumunda, sürdürülebilirlik raporlarına veri talebi durumunda ve küresel organizasyonların talebi durumunda ilgili kitlelere iletilir.")
+                if rapor_tarihi:
+                    rapor_tarihi_str = rapor_tarihi.strftime("%d.%m.%Y")
+                else:
+                    rapor_tarihi_str = "Belirtilmedi"
+                
+                # Detaylı Kuruluş Tablosu
+                pdf.set_fill_color(240, 240, 240) 
+                pdf.cell(60, 8, txt="Kuruluş Adı", border=1, fill=True)
+                pdf.cell(130, 8, txt=f"{str(company_name)}", border=1, ln=True)
+                pdf.cell(60, 8, txt="Tesis Adresi", border=1, fill=True)
+                adres_text = str(address).replace("\n", " ")[:80] + ("..." if len(str(address)) > 80 else "")
+                pdf.cell(130, 8, txt=adres_text, border=1, ln=True)
+                pdf.cell(60, 8, txt="Tesis Sektörü", border=1, fill=True)
+                pdf.cell(130, 8, txt=f"{str(sector)}", border=1, ln=True)
+                pdf.cell(60, 8, txt="İletişim (Tel / E-Mail)", border=1, fill=True)
+                pdf.cell(130, 8, txt=f"{str(c_phone)} / {str(email)}", border=1, ln=True)
+                pdf.cell(60, 8, txt="Rapordan Sorumlu Kişi", border=1, fill=True)
+                pdf.cell(130, 8, txt=f"{str(contact_person)}", border=1, ln=True)
+                pdf.cell(60, 8, txt="Raporlama Yili", border=1, fill=True)
+                pdf.cell(130, 8, txt=f"{rapor_yili}", border=1, ln=True)
+                pdf.cell(60, 8, txt="Rapor Tarihi", border=1, fill=True)
+                pdf.cell(130, 8, txt=f"{rapor_tarihi_str}", border=1, ln=True)
 
-                    pdf.ln(4)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="1.6. Raporun ISO 14046:2014'e Uygunluğuna Dair Açıklama", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Su Ayakizi Raporu 'ISO 14046:2014 Water Footprint - Principles, Requirements and Guidelines' gereklerine uygun olarak yazılımımız tarafından otomatik hazırlanmıştır.")
+                pdf.ln(8)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1.2. Tanımlar", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt="Mavi Su Ayak İzi: Doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.\n\nYeşil Su Ayak İzi: Bir tesisin faaliyetleri kapsamında doğrudan veya dolaylı olarak kullanılan hammaddelerin üretimi sırasında tüketilen, yağış kaynaklı suyun toplamını ifade eder..\n\nGri Su Ayak İzi: Kirliliği ifade eder ve mevcut çevre su kalitesi standartlarına dayanarak kirletici yükünü asimile etmek için gereken tatlı su hacmi olarak tanımlanır.")
 
+                pdf.ln(8)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1.3. Kuruluş Su Yönetimi ve Sorumlular", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt=f"{str(company_name)} olarak raporlama yılında Mavi su olarak; insani kullanım ve üretim amacıyla şebeke, kuyu ve diğer tatlı su kaynakları temin edilmektedir. Mavi su ayak izi hesabında sayaç tüketimleri ve faturalar kabul edilerek hesap yapılmaktadır.\n\nGri su olarak; üretim amacıyla proseste kullanılan suyun endüstriyel nitelikli atıksu faaliyeti sonucunda arıtma tesislerine veya kanalizasyona deşarjı baz alınmaktadır.")
+                
+                pdf.ln(5)
+                pdf.set_font(f_isim, size=11, style='B')
+                pdf.cell(190, 8, txt="Tablo 1: Sorumlu Kişilerin İletişim Bilgileri", ln=True)
+                pdf.set_font(f_isim, size=10, style='B')
+                pdf.set_fill_color(0, 0, 128)
+                pdf.set_text_color(255, 255, 255)
+                pdf.cell(60, 8, txt="Sorumlu Kişi", border=1, fill=True, align='C')
+                pdf.cell(80, 8, txt="Görev", border=1, fill=True, align='C')
+                pdf.cell(50, 8, txt="İletişim", border=1, ln=True, fill=True, align='C')
+                
+                pdf.set_text_color(0, 0, 0)
+                pdf.set_font(f_isim, size=10, style='')
+                # Arayüzden gelen tablo verilerini PDF'e yazdıran dinamik döngü
+                gecerli_sorumlular = [row for index, row in duzenlenmis_sorumlular.iterrows() if str(row["Görev"]).strip() != ""]
+                
+                for row in gecerli_sorumlular:
+                    # Tabloya sığması için metinleri biraz tıraşlıyoruz (taşıp PDF'i bozmaması için)
+                    sorumlu = str(row["Sorumlu Kişi"])[:30] 
+                    gorev = str(row["Görev"])[:45]
+                    iletisim = str(row["İletişim"])[:25]
+                    
+                    pdf.cell(60, 8, txt=sorumlu, border=1, align='C')
+                    pdf.cell(80, 8, txt=gorev, border=1, align='C')
+                    pdf.cell(50, 8, txt=iletisim, border=1, ln=True, align='C')
+                    
+                # ==========================================
+                # --- BÖLÜM 1 DEVAMI VE BÖLÜM 2 ---
+                # ==========================================
+                pdf.add_page()
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1.4. Amaç ve Kapsam", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt=f"{str(company_name)} bünyesinde su kullanımı ve su güvenliğini sağlamak için oluşturulan hedeflere ulaşmak amacıyla kuruluş bazında bu rapor hazırlanmıştır.\nRaporun amacı; {current_year} yılı su kullanımı ve deşarjına dair hesaplamalardan elde edilen miktarların doğrulanması ve şeffaf bir süreç oluşturulmasıdır.")
+                
+                pdf.ln(4)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1.5. Hedef Kullanıcı", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt="Su ayak izi raporu hedef kullanıcıları; Firmamız Üst Yönetimi, Çalışanlar, Tedarikçiler ve Diğer Paydaşlardır.\nRapor, resmi kurumların talebi durumunda, sürdürülebilirlik raporlarına veri talebi durumunda ve küresel organizasyonların talebi durumunda ilgili kitlelere iletilir.")
+
+                pdf.ln(4)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="1.6. Raporun ISO 14046:2014'e Uygunluğuna Dair Açıklama", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt="Su Ayakizi Raporu 'ISO 14046:2014 Water Footprint - Principles, Requirements and Guidelines' gereklerine uygun olarak yazılımımız tarafından otomatik hazırlanmıştır.")
+
+                pdf.ln(6)
+                pdf.set_fill_color(0, 150, 136) 
+                pdf.set_text_color(255, 255, 255) 
+                pdf.set_font(f_isim, size=14, style='B')
+                pdf.cell(190, 10, txt="2. GENEL", ln=True, align='L', fill=True)
+                pdf.set_text_color(0, 0, 0)
+                pdf.ln(5)
+
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="2.1. Raporun Sahibi Olan Kuruluş ve Raporlama Dönemi", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt=f"Raporun sahibi {str(company_name)} olup, rapor 01 Ocak {current_year} - 31 Aralık {current_year} tarih aralığı için hazırlanmıştır.")
+
+                pdf.ln(4)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="2.2. Operasyonel Sınırlar", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalışmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
+
+                # ==========================================
+                # --- BÖLÜM 3: METODOLOJİ ---
+                # ==========================================
+                pdf.add_page()
+                pdf.set_fill_color(0, 150, 136) 
+                pdf.set_text_color(255, 255, 255) 
+                pdf.set_font(f_isim, size=14, style='B')
+                pdf.cell(190, 10, txt="3. METODOLOJİ", ln=True, align='L', fill=True)
+                pdf.set_text_color(0, 0, 0)
+                pdf.ln(3)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="3.1. Veri Kalitesi", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanılan şebeke ve kuyu suyu verisi sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.")
+                pdf.ln(3)
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="3.2. Kabuller", ln=True)
+                pdf.set_font(f_isim, size=11, style='')
+                pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarında, üretim sonucu oluşan atıksuları hesaplarken laboratuvar analiz sonuçlarına göre en yüksek hacmi talep eden 'Kritik Kirletici' baz alınarak birincil veri kullanılmıştır.")
+
+                pdf.ln(4)
+                pdf.set_font(f_isim, size=11, style='B')
+                pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
+                
+                pdf.set_font(f_isim, size=10, style='B')
+                pdf.set_fill_color(255, 192, 0) # Sarımtırak başlık
+                pdf.cell(40, 8, txt="Bileşen", border=1, fill=True, align='C')
+                pdf.cell(50, 8, txt="Kaynak", border=1, fill=True, align='C')
+                pdf.cell(50, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                pdf.cell(50, 8, txt="Veri Doğrulama", border=1, ln=True, fill=True, align='C')
+                
+                pdf.set_font(f_isim, size=10, style='')
+
+                # Arayüzdeki dinamik tablonun her bir satırını okuyup PDF'e basan döngü
+                for index, row in sistem_siniri_tablosu.iterrows():
+                    # Eğer kullanıcı hücreyi boş bıraktıysa hata vermemesi için "-" yazdırıyoruz
+                    bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
+                    kaynak = str(row["Kaynak"]) if pd.notna(row["Kaynak"]) else "-"
+                    veri_kaynagi = str(row["Veri Kaynağı"]) if pd.notna(row["Veri Kaynağı"]) else "-"
+                    veri_dogrulama = str(row["Veri Doğrulama"]) if pd.notna(row["Veri Doğrulama"]) else "-"
+                    
+                    # Sadece içi tamamen boş olmayan satırları PDF'e ekle
+                    if bilesen != "-" or kaynak != "-":
+                        pdf.cell(40, 8, txt=bilesen, border=1, align='C')
+                        pdf.cell(50, 8, txt=kaynak, border=1, align='C')
+                        pdf.cell(50, 8, txt=veri_kaynagi, border=1, align='C')
+                        pdf.cell(50, 8, txt=veri_dogrulama, border=1, ln=True, align='C')
+
+                # ==========================================
+                # --- BÖLÜM 4: HESAPLAMALAR ---
+                # ==========================================
+                pdf.ln(6)
+                pdf.set_fill_color(0, 150, 136) 
+                pdf.set_text_color(255, 255, 255) 
+                pdf.set_font(f_isim, size=14, style='B')
+                pdf.cell(190, 10, txt="4. HESAPLAMALAR", ln=True, align='L', fill=True)
+                pdf.set_text_color(0, 0, 0)
+                pdf.ln(5)
+
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="4.1. Mavi Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.multi_cell(190, 6, txt="Tesisin doğrudan tükettiği, buharlaştırdığı veya ürüne kattığı tatlı su miktarını temsil eder. Tesis giriş suyu ile deşarj arasındaki kütle denkliğine göre hesaplanmıştır.")
+                
+                pdf.ln(3)
+                pdf.set_font(f_isim, size=10, style='B')
+                pdf.set_fill_color(220, 220, 220)
+                pdf.cell(95, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                pdf.cell(95, 8, txt="Toplam Tüketim (m³/yıl)", border=1, ln=True, fill=True, align='C')
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.cell(95, 8, txt="Tesis Mavi Su Ayak İzi Hacmi", border=1, align='C')
+                pdf.cell(95, 8, txt=f"{format_num(res_blue)}", border=1, ln=True, align='C')
+
+                pdf.ln(5)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="4.2. Yeşil Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.multi_cell(190, 6, txt="Tesis sınırları içerisinde tüketilen veya ürüne katılan yağmur suyunu temsil eder.")
+                
+                pdf.ln(3)
+                pdf.set_font(f_isim, size=10, style='B')
+                pdf.set_fill_color(220, 220, 220)
+                pdf.cell(95, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                pdf.cell(95, 8, txt="Toplam Tüketim (m³/yıl)", border=1, ln=True, fill=True, align='C')
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.cell(95, 8, txt="Tesis Yeşil Su Ayak İzi Hacmi", border=1, align='C')
+                pdf.cell(95, 8, txt=f"{format_num(res_green)}", border=1, ln=True, align='C')
+
+                pdf.ln(5)
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken teorik tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
+                
+                pdf.ln(3)
+                pdf.set_font(f_isim, size=10, style='B')
+                pdf.set_fill_color(220, 220, 220)
+                pdf.cell(95, 8, txt="Bileşen / Kritik Kirletici", border=1, fill=True, align='C')
+                pdf.cell(95, 8, txt="Gereken Seyreltme Hacmi (m³/yıl)", border=1, ln=True, fill=True, align='C')
+                pdf.set_font(f_isim, size=10, style='')
+                pdf.cell(95, 8, txt=f"Endüstriyel Atıksu (Kritik Kirletici)", border=1, align='C')
+                pdf.cell(95, 8, txt=f"{format_num(res_grey)}", border=1, ln=True, align='C')
+
+                # ==========================================
+                # --- BÖLÜM 5: SONUÇ VE TAVSİYELER ---
+                # ==========================================
+                pdf.add_page()
+                pdf.set_fill_color(0, 150, 136) 
+                pdf.set_text_color(255, 255, 255) 
+                pdf.set_font(f_isim, size=14, style='B')
+                pdf.cell(190, 10, txt="5. SONUÇ", ln=True, align='L', fill=True)
+                pdf.set_text_color(0, 0, 0)
+                pdf.ln(3)
+
+                total_vol = res_blue + res_green + res_grey
+                
+                pdf.set_font(f_isim, size=12, style='B')
+                pdf.cell(190, 8, txt=f"Toplam Tesis Su Ayak İzi: {format_num(total_vol)} m³/yıl", ln=True)
+                pdf.ln(3)
+
+                # Genel Dağılım Tablosu
+                pdf.set_fill_color(0, 0, 128)
+                pdf.set_text_color(255, 255, 255)
+                pdf.cell(70, 8, txt="Bileşen", border=1, align='C', fill=True)
+                pdf.cell(70, 8, txt="Hacim (m³/yıl)", border=1, align='C', fill=True)
+                pdf.cell(50, 8, txt="Dağılım (%)", border=1, ln=True, align='C', fill=True)
+                
+                pdf.set_text_color(0, 0, 0)
+                pdf.set_font(f_isim, size=11, style='')
+                p_blue = (res_blue / total_vol) * 100 if total_vol > 0 else 0
+                p_green = (res_green / total_vol) * 100 if total_vol > 0 else 0
+                p_grey = (res_grey / total_vol) * 100 if total_vol > 0 else 0
+                
+                pdf.cell(70, 8, txt="Mavi Su", border=1, align='C')
+                pdf.cell(70, 8, txt=f"{format_num(res_blue)}", border=1, align='C')
+                pdf.cell(50, 8, txt=f"% {p_blue:,.1f}", border=1, ln=True, align='C')
+                
+                pdf.cell(70, 8, txt="Yeşil Su", border=1, align='C')
+                pdf.cell(70, 8, txt=f"{format_num(res_green)}", border=1, align='C')
+                pdf.cell(50, 8, txt=f"% {p_green:,.1f}", border=1, ln=True, align='C')
+                
+                pdf.cell(70, 8, txt="Gri Su", border=1, align='C')
+                pdf.cell(70, 8, txt=f"{format_num(res_grey)}", border=1, align='C')
+                pdf.cell(50, 8, txt=f"% {p_grey:,.1f}", border=1, ln=True, align='C')
+                
+                pdf.set_font(f_isim, size=11, style='B')
+                pdf.set_fill_color(220, 220, 220)
+                pdf.cell(70, 8, txt="TOPLAM", border=1, align='C', fill=True)
+                pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
+                pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
+
+                pdf.ln(6) # Tablo ile grafik arasına biraz boşluk bırakalım
+
+                           # --- PDF İÇİN TEMİZ VE MODERN DONUT GRAFİĞİ OLUŞTURMA ---
+                etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
+                degerler = [res_blue, res_green, res_grey] 
+                renkler = ['#678B99', '#8A9A70', '#C25946'] # Puslu Çini Mavisi, Mat Zeytin Yeşili, Klasik Kiremit
+        
+                # Eğer herhangi bir veri girilmişse grafiği çiz
+                if sum(degerler) > 0:
+                    # Temiz, düz zemin. shadow=False yaparak beğenmediğiniz efekti kaldırıyoruz.
+                    fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
+                    
+                    # width=0.3 ile ortasını boşaltıp "Halka" yapıyoruz
+                    wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', 
+                                                     shadow=False, # Gölge yok, düz tasarım
+                                                     startangle=90, 
+                                                     colors=renkler, 
+                                                     textprops={'fontsize': 10, 'weight': 'bold'}, 
+                                                     pctdistance=0.85, 
+                                                     wedgeprops=dict(width=0.3, edgecolor='w')) 
+        
+                    ax.axis('equal') # Grafiğin tam yuvarlak olmasını sağlar
+                    ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
+                    
+                    total = sum(degerler)
+                    # Rakamı en basit ve garantili yöntemle tam ortaya yerleştiriyoruz
+                    ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
+        
+                    # Grafik dosyası olarak kaydetme (Hafıza hatasını çözer)
+                    grafik_yolu = "temp_grafik.png"
+                    plt.savefig(grafik_yolu, format='png', dpi=300, bbox_inches='tight') 
+                    plt.close(fig)
+                    
+                    # FPDF'e doğrudan dosya yolunu veriyoruz ki rfind hatası vermesin
+                    pdf.image(grafik_yolu, x=35, y=pdf.get_y(), w=140) 
+                    pdf.ln(100) # Grafiğin boyu kadar aşağı in
+                
+                # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
+                gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
+                
+                if len(gecerli_hedefler) > 0:
                     pdf.ln(6)
                     pdf.set_fill_color(0, 150, 136) 
                     pdf.set_text_color(255, 255, 255) 
                     pdf.set_font(f_isim, size=14, style='B')
-                    pdf.cell(190, 10, txt="2. GENEL", ln=True, align='L', fill=True)
+                    pdf.cell(190, 10, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True, align='L', fill=True)
                     pdf.set_text_color(0, 0, 0)
                     pdf.ln(5)
-
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="2.1. Raporun Sahibi Olan Kuruluş ve Raporlama Dönemi", ln=True)
+                    
                     pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt=f"Raporun sahibi {str(company_name)} olup, rapor 01 Ocak {current_year} - 31 Aralık {current_year} tarih aralığı için hazırlanmıştır.")
+                    for i, hedef in enumerate(gecerli_hedefler):
+                        hedef_metni = f"• {hedef['Hedef Yılı']} Yılı Hedefi: {hedef['Hedef Açıklaması']}"
+                        pdf.multi_cell(190, 6, txt=hedef_metni)
 
-                    pdf.ln(4)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="2.2. Operasyonel Sınırlar", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalışmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
+                # ==========================================
+                # --- FİZİKSEL DOSYA KAYDI VE İNDİRME ---
+                # ==========================================
+                gecici_dosya_adi = "gecici_rapor.pdf"
+                pdf.output(gecici_dosya_adi)
+                
+                with open(gecici_dosya_adi, "rb") as pdf_dosyasi:
+                    pdf_bytes = pdf_dosyasi.read()
+                    
+                st.download_button(
+                    label="📄 PDF Raporunu İndir",
+                    data=pdf_bytes,
+                    file_name=f"Su_Ayak_Izi_Raporu_{str(company_name)}.pdf",
+                    mime="application/pdf"
+                )
 
-                    # ==========================================
-                    # --- BÖLÜM 3: METODOLOJİ ---
-                    # ==========================================
-                    pdf.add_page()
-                    pdf.set_fill_color(0, 150, 136) 
-                    pdf.set_text_color(255, 255, 255) 
-                    pdf.set_font(f_isim, size=14, style='B')
-                    pdf.cell(190, 10, txt="3. METODOLOJİ", ln=True, align='L', fill=True)
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.ln(3)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="3.1. Veri Kalitesi", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanılan şebeke ve kuyu suyu verisi sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.")
-                    pdf.ln(3)
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="3.2. Kabuller", ln=True)
-                    pdf.set_font(f_isim, size=11, style='')
-                    pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarında, üretim sonucu oluşan atıksuları hesaplarken laboratuvar analiz sonuçlarına göre en yüksek hacmi talep eden 'Kritik Kirletici' baz alınarak birincil veri kullanılmıştır.")
+            except Exception as e:
+                st.error(f"Profesyonel PDF Oluşturma Hatası: {str(e)}")
 
-                    pdf.ln(4)
-                    pdf.set_font(f_isim, size=11, style='B')
-                    pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
-                    
-                    pdf.set_font(f_isim, size=10, style='B')
-                    pdf.set_fill_color(255, 192, 0) # Sarımtırak başlık
-                    pdf.cell(40, 8, txt="Bileşen", border=1, fill=True, align='C')
-                    pdf.cell(50, 8, txt="Kaynak", border=1, fill=True, align='C')
-                    pdf.cell(50, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
-                    pdf.cell(50, 8, txt="Veri Doğrulama", border=1, ln=True, fill=True, align='C')
-                    
-                    pdf.set_font(f_isim, size=10, style='')
-
-                    # Arayüzdeki dinamik tablonun her bir satırını okuyup PDF'e basan döngü
-                    for index, row in sistem_siniri_tablosu.iterrows():
-                        # Eğer kullanıcı hücreyi boş bıraktıysa hata vermemesi için "-" yazdırıyoruz
-                        bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
-                        kaynak = str(row["Kaynak"]) if pd.notna(row["Kaynak"]) else "-"
-                        veri_kaynagi = str(row["Veri Kaynağı"]) if pd.notna(row["Veri Kaynağı"]) else "-"
-                        veri_dogrulama = str(row["Veri Doğrulama"]) if pd.notna(row["Veri Doğrulama"]) else "-"
-                        
-                        # Sadece içi tamamen boş olmayan satırları PDF'e ekle
-                        if bilesen != "-" or kaynak != "-":
-                            pdf.cell(40, 8, txt=bilesen, border=1, align='C')
-                            pdf.cell(50, 8, txt=kaynak, border=1, align='C')
-                            pdf.cell(50, 8, txt=veri_kaynagi, border=1, align='C')
-                            pdf.cell(50, 8, txt=veri_dogrulama, border=1, ln=True, align='C')
-
-                    # ==========================================
-                    # --- BÖLÜM 4: HESAPLAMALAR ---
-                    # ==========================================
-                    pdf.ln(6)
-                    pdf.set_fill_color(0, 150, 136) 
-                    pdf.set_text_color(255, 255, 255) 
-                    pdf.set_font(f_isim, size=14, style='B')
-                    pdf.cell(190, 10, txt="4. HESAPLAMALAR", ln=True, align='L', fill=True)
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.ln(5)
-
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="4.1. Mavi Su Ayak İzi Hesaplamaları", ln=True)
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.multi_cell(190, 6, txt="Tesisin doğrudan tükettiği, buharlaştırdığı veya ürüne kattığı tatlı su miktarını temsil eder. Tesis giriş suyu ile deşarj arasındaki kütle denkliğine göre hesaplanmıştır.")
-                    
-                    pdf.ln(3)
-                    pdf.set_font(f_isim, size=10, style='B')
-                    pdf.set_fill_color(220, 220, 220)
-                    pdf.cell(95, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
-                    pdf.cell(95, 8, txt="Toplam Tüketim (m³/yıl)", border=1, ln=True, fill=True, align='C')
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.cell(95, 8, txt="Tesis Mavi Su Ayak İzi Hacmi", border=1, align='C')
-                    pdf.cell(95, 8, txt=f"{format_num(res_blue)}", border=1, ln=True, align='C')
-
-                    pdf.ln(5)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="4.2. Yeşil Su Ayak İzi Hesaplamaları", ln=True)
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.multi_cell(190, 6, txt="Tesis sınırları içerisinde tüketilen veya ürüne katılan yağmur suyunu temsil eder.")
-                    
-                    pdf.ln(3)
-                    pdf.set_font(f_isim, size=10, style='B')
-                    pdf.set_fill_color(220, 220, 220)
-                    pdf.cell(95, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
-                    pdf.cell(95, 8, txt="Toplam Tüketim (m³/yıl)", border=1, ln=True, fill=True, align='C')
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.cell(95, 8, txt="Tesis Yeşil Su Ayak İzi Hacmi", border=1, align='C')
-                    pdf.cell(95, 8, txt=f"{format_num(res_green)}", border=1, ln=True, align='C')
-
-                    pdf.ln(5)
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken teorik tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
-                    
-                    pdf.ln(3)
-                    pdf.set_font(f_isim, size=10, style='B')
-                    pdf.set_fill_color(220, 220, 220)
-                    pdf.cell(95, 8, txt="Bileşen / Kritik Kirletici", border=1, fill=True, align='C')
-                    pdf.cell(95, 8, txt="Gereken Seyreltme Hacmi (m³/yıl)", border=1, ln=True, fill=True, align='C')
-                    pdf.set_font(f_isim, size=10, style='')
-                    pdf.cell(95, 8, txt=f"Endüstriyel Atıksu (Kritik Kirletici)", border=1, align='C')
-                    pdf.cell(95, 8, txt=f"{format_num(res_grey)}", border=1, ln=True, align='C')
-
-                    # ==========================================
-                    # --- BÖLÜM 5: SONUÇ VE TAVSİYELER ---
-                    # ==========================================
-                    pdf.add_page()
-                    pdf.set_fill_color(0, 150, 136) 
-                    pdf.set_text_color(255, 255, 255) 
-                    pdf.set_font(f_isim, size=14, style='B')
-                    pdf.cell(190, 10, txt="5. SONUÇ", ln=True, align='L', fill=True)
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.ln(3)
-
-                    total_vol = res_blue + res_green + res_grey
-                    
-                    pdf.set_font(f_isim, size=12, style='B')
-                    pdf.cell(190, 8, txt=f"Toplam Tesis Su Ayak İzi: {format_num(total_vol)} m³/yıl", ln=True)
-                    pdf.ln(3)
-
-                    # Genel Dağılım Tablosu
-                    pdf.set_fill_color(0, 0, 128)
-                    pdf.set_text_color(255, 255, 255)
-                    pdf.cell(70, 8, txt="Bileşen", border=1, align='C', fill=True)
-                    pdf.cell(70, 8, txt="Hacim (m³/yıl)", border=1, align='C', fill=True)
-                    pdf.cell(50, 8, txt="Dağılım (%)", border=1, ln=True, align='C', fill=True)
-                    
-                    pdf.set_text_color(0, 0, 0)
-                    pdf.set_font(f_isim, size=11, style='')
-                    p_blue = (res_blue / total_vol) * 100 if total_vol > 0 else 0
-                    p_green = (res_green / total_vol) * 100 if total_vol > 0 else 0
-                    p_grey = (res_grey / total_vol) * 100 if total_vol > 0 else 0
-                    
-                    pdf.cell(70, 8, txt="Mavi Su", border=1, align='C')
-                    pdf.cell(70, 8, txt=f"{format_num(res_blue)}", border=1, align='C')
-                    pdf.cell(50, 8, txt=f"% {p_blue:,.1f}", border=1, ln=True, align='C')
-                    
-                    pdf.cell(70, 8, txt="Yeşil Su", border=1, align='C')
-                    pdf.cell(70, 8, txt=f"{format_num(res_green)}", border=1, align='C')
-                    pdf.cell(50, 8, txt=f"% {p_green:,.1f}", border=1, ln=True, align='C')
-                    
-                    pdf.cell(70, 8, txt="Gri Su", border=1, align='C')
-                    pdf.cell(70, 8, txt=f"{format_num(res_grey)}", border=1, align='C')
-                    pdf.cell(50, 8, txt=f"% {p_grey:,.1f}", border=1, ln=True, align='C')
-                    
-                    pdf.set_font(f_isim, size=11, style='B')
-                    pdf.set_fill_color(220, 220, 220)
-                    pdf.cell(70, 8, txt="TOPLAM", border=1, align='C', fill=True)
-                    pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
-                    pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
-
-                    pdf.ln(6) # Tablo ile grafik arasına biraz boşluk bırakalım
-
-                               # --- PDF İÇİN TEMİZ VE MODERN DONUT GRAFİĞİ OLUŞTURMA ---
-                    etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
-                    degerler = [res_blue, res_green, res_grey] 
-                    renkler = ['#678B99', '#8A9A70', '#C25946'] # Puslu Çini Mavisi, Mat Zeytin Yeşili, Klasik Kiremit
-            
-                    # Eğer herhangi bir veri girilmişse grafiği çiz
-                    if sum(degerler) > 0:
-                        # Temiz, düz zemin. shadow=False yaparak beğenmediğiniz efekti kaldırıyoruz.
-                        fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
-                        
-                        # width=0.3 ile ortasını boşaltıp "Halka" yapıyoruz
-                        wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', 
-                                                         shadow=False, # Gölge yok, düz tasarım
-                                                         startangle=90, 
-                                                         colors=renkler, 
-                                                         textprops={'fontsize': 10, 'weight': 'bold'}, 
-                                                         pctdistance=0.85, 
-                                                         wedgeprops=dict(width=0.3, edgecolor='w')) 
-            
-                        ax.axis('equal') # Grafiğin tam yuvarlak olmasını sağlar
-                        ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
-                        
-                        total = sum(degerler)
-                        # Rakamı en basit ve garantili yöntemle tam ortaya yerleştiriyoruz
-                        ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
-            
-                        # Grafik dosyası olarak kaydetme (Hafıza hatasını çözer)
-                        grafik_yolu = "temp_grafik.png"
-                        plt.savefig(grafik_yolu, format='png', dpi=300, bbox_inches='tight') 
-                        plt.close(fig)
-                        
-                        # FPDF'e doğrudan dosya yolunu veriyoruz ki rfind hatası vermesin
-                        pdf.image(grafik_yolu, x=35, y=pdf.get_y(), w=140) 
-                        pdf.ln(100) # Grafiğin boyu kadar aşağı in
-                    
-                    # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
-                    gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
-                    
-                    if len(gecerli_hedefler) > 0:
-                        pdf.ln(6)
-                        pdf.set_fill_color(0, 150, 136) 
-                        pdf.set_text_color(255, 255, 255) 
-                        pdf.set_font(f_isim, size=14, style='B')
-                        pdf.cell(190, 10, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True, align='L', fill=True)
-                        pdf.set_text_color(0, 0, 0)
-                        pdf.ln(5)
-                        
-                        pdf.set_font(f_isim, size=11, style='')
-                        for i, hedef in enumerate(gecerli_hedefler):
-                            hedef_metni = f"• {hedef['Hedef Yılı']} Yılı Hedefi: {hedef['Hedef Açıklaması']}"
-                            pdf.multi_cell(190, 6, txt=hedef_metni)
-
-                    # ==========================================
-                    # --- FİZİKSEL DOSYA KAYDI VE İNDİRME ---
-                    # ==========================================
-                    gecici_dosya_adi = "gecici_rapor.pdf"
-                    pdf.output(gecici_dosya_adi)
-                    
-                    with open(gecici_dosya_adi, "rb") as pdf_dosyasi:
-                        pdf_bytes = pdf_dosyasi.read()
-                        
-                    st.download_button(
-                        label="📄 PDF Raporunu İndir",
-                        data=pdf_bytes,
-                        file_name=f"Su_Ayak_Izi_Raporu_{str(company_name)}.pdf",
-                        mime="application/pdf"
-                    )
-
-                except Exception as e:
-                    st.error(f"Profesyonel PDF Oluşturma Hatası: {str(e)}")
-
-                    
-        else:
-            st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
+                
+    else:
+        st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
 
 # ==========================================
 # 7. ANA KONTROL (ROUTER)
