@@ -2133,7 +2133,7 @@ def main():
     # ========================================================
     st.sidebar.title("Menü")
     
-    sayfalar = ["🏠 Ana Sayfa", "🧮 Hesaplama", "📊 Veri Kalitesi", "📄 Raporlama", "🗄️ Geçmiş Raporlar"]
+    sayfalar = ["🏠 Ana Sayfa", "🧮 Hesaplama", "📊 Veri Kalitesi","📈 Performans (KPI)", "📄 Raporlama", "🗄️ Geçmiş Raporlar", ]
     
     # Sadece linkte sihirli şifre varsa 3. seçeneği ekle
     if st.session_state.get('admin_mi', False):
@@ -2150,6 +2150,8 @@ def main():
         show_calculator_page()
     elif page == "📊 Veri Kalitesi":
         sayfa_veri_kalitesi()
+    elif page == "📈 Performans (KPI)":
+        sayfa_performans_kpi()
     elif page == "📄 Raporlama":
         sayfa_raporlama()
     elif page == "🗄️ Geçmiş Raporlar":
