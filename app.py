@@ -465,7 +465,6 @@ def show_home_page():
     
     st.info("""💡 Türkiye, kişi başına düşen yıllık yaklaşık 1.313 m³ kullanılabilir su miktarı ile "su stresi çeken" ülkeler statüsündedir. 2030 yılına kadar bu rakamın 1.000 m³'ün altına düşerek **su fakiri** kategorisine geçme riskimiz bulunmaktadır.""")
     
-    st.markdown("---")
     st.markdown("### Su Ayak İzinin 3 Rengi")
 
 # Senin 3'lü sütun yapın aynen kalıyor
