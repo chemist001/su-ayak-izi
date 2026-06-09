@@ -2052,7 +2052,7 @@ def sayfa_gecmis_raporlar():
 
 def sayfa_performans_kpi():
     st.header("📈 Tesis Performans Göstergeleri (KPI)")
-    st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini ölçebilirsiniz.")
+    st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini hesaplayabilirsiniz.")
 
     # --- EKSİK OLAN 1. KISIM: ÜRETİM VE PERSONEL VERİLERİ EKLENDİ ---
     st.subheader("1. Üretim ve Personel Verileri")
@@ -2068,8 +2068,7 @@ def sayfa_performans_kpi():
     personel_sayisi = col4.number_input("Personel Sayısı", min_value=1, value=st.session_state.get('personel_sayisi', 50))
 
     # --- 2. KISIM: SENİN HARİKA EKLENTİLERİN ---
-    st.subheader("2. Evsel Su ve Kapsam Dışı Kullanımlar")
-    st.write("Spesifik üretim hesabı (Net Proses Suyu) bulunurken aşağıdaki kullanımlar toplam tüketimden düşülecektir.")
+    st.subheader("2. Evsel Su ve Diğer Su Tüketimleri")
     
     col5, col6, col7 = st.columns(3)
     evsel_su = col5.number_input("Evsel Su (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
@@ -2078,7 +2077,6 @@ def sayfa_performans_kpi():
 
     col8, col9, col10 = st.columns(3)
     arac_yikama = col8.number_input("Araç Yıkama/Zemin Tem. (m³/yıl)", min_value=0.0, value=st.session_state.get('arac_yikama', 0.0))
-    # DÜZELTME: Buradaki etiket "Yeşil Alan Sulama" kalmıştı, "Geri Kazanım Suyu" olarak değiştirildi.
     gerikazanim_suyu = col9.number_input("Geri Kazanım Suyu (m³/yıl)", min_value=0.0, value=st.session_state.get('gerikazanim_suyu', 0.0))
     evsel_atiksu = col10.number_input("Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
 
