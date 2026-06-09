@@ -517,7 +517,7 @@ def show_home_page():
     st.markdown("### 🏆 Belgelendirme Seviyeleri ve Kriterler")
     
     tab_mavi, tab_yesil, tab_turkuaz = st.tabs([
-        " Mavi Su Belgesi, 
+        " Mavi Su Belgesi", 
         " Yeşil Su Belgesi", 
         " Turkuaz Su Belgesi"
     ])
