@@ -517,9 +517,9 @@ def show_home_page():
     st.markdown("### 🏆 Belgelendirme Seviyeleri ve Kriterler")
     
     tab_mavi, tab_yesil, tab_turkuaz = st.tabs([
-        "🟦 Mavi Belge (Temel)", 
-        "🟩 Yeşil Belge (Verimlilik)", 
-        "🩵 Turkuaz Belge (Mükemmeliyet)"
+        "🟦 Mavi Su Belgesi, 
+        "🟩 Yeşil Su Belgesi", 
+        "🩵 Turkuaz Su Belgesi"
     ])
 
     with tab_mavi:
@@ -527,7 +527,7 @@ def show_home_page():
         st.write("Su verimliliği yönetim sistemini kuran tesislere verilir.")
         st.markdown("""
         **Gerekli Kriterler**
-        * ✅ Su verimliliği konusunda sorumlu personel görevlendirilmesi.
+        * ✅ Su verimliliği konusunda yeterli sayıda sorumlu personel görevlendirilmesi.
         * ✅ Mevcut su kullanım durumunun belirlenmesi (Su Envanteri).
         * ✅ Su verimliliği hedeflerinin belirlenmesi.
         * ✅ Eğitim faaliyetlerinin düzenlenmesi.
@@ -542,7 +542,7 @@ def show_home_page():
         **Endüstriyel Tesisler İçin Kriterler**
         * ✅ **Alternatif Kaynaklar:** Toplam su kullanımının **%10'unun** geleneksel olmayan kaynaklardan sağlanması.
         * ✅ **Sektörel Rehberler:** NACE Koduna uygun tekniklerin uygulanması.
-        * ✅ **Yönetim Sistemi:** TS ISO 46001 Belgesine sahip olunması.
+        * ✅ **Yönetim Sistemi:** *TS ISO 46001 Belgesine sahip olunması.
         """)
         st.warning("OSB'ler için yağmur suyu hasadı ve gri su kullanımı zorunludur.")
 
