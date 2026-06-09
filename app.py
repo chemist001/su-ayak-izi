@@ -2122,7 +2122,7 @@ def sayfa_performans_kpi():
         st.session_state['kpi_hesaplandi'] = True
 
     if st.session_state.get('kpi_hesaplandi', False):
-        st.success("✅ Verimlilik Göstergeleri Başarıyla Hesaplandı ve Hafızaya Alındı!")
+        st.success("✅ Verimlilik Göstergeleri Başarıyla Hesaplandı!")
         
         st.markdown("#### Proses (Üretim) Verimliliği")
         c1, c2 = st.columns(2)
