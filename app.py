@@ -2055,15 +2055,26 @@ def sayfa_performans_kpi():
     st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini ölçebilirsiniz.")
 
     st.subheader("1. Üretim ve Personel Verileri")
-    col1, col2, col3 = st.columns(3)
-    uretim_miktari = col1.number_input("Yıllık Fiili Üretim Miktarı (Ton, Adet vb.)", min_value=1.0, value=st.session_state.get('uretim_miktari', 1000.0))
-    calisma_gunu = col2.number_input("Yıllık Çalışma Gün Sayısı", min_value=1, value=st.session_state.get('calisma_gunu', 300))
-    personel_sayisi = col3.number_input("Toplam Personel Sayısı", min_value=1, value=st.session_state.get('personel_sayisi', 50))
+    
+    # Sütun yapısını 4'e çıkarıyoruz ki birim seçici kutusu da şık bir şekilde sığsın
+    # [2, 1, 2, 2] oranları ile kutu genişliklerini estetik olarak ayarlıyoruz
+    col1, col2, col3, col4 = st.columns([2, 1, 2, 2]) 
+    
+    uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=1.0, value=st.session_state.get('uretim_miktari', 1000.0))
+    
+    # --- YENİ EKLENEN BİRİM SEÇİCİ KUTUSU ---
+    birim_secenekleri = ["ton", "kg", "adet", "m²", "m³", "litre", "kutu"]
+    varsayilan_birim = st.session_state.get('uretim_birimi', 'ton')
+    secili_index = birim_secenekleri.index(varsayilan_birim) if varsayilan_birim in birim_secenekleri else 0
+    uretim_birimi = col2.selectbox("Birim", options=birim_secenekleri, index=secili_index)
+    
+    calisma_gunu = col3.number_input("Yıllık Çalışma Günü", min_value=1, value=st.session_state.get('calisma_gunu', 300))
+    personel_sayisi = col4.number_input("Personel Sayısı", min_value=1, value=st.session_state.get('personel_sayisi', 50))
 
     st.subheader("2. Evsel Su ve Atıksu Verileri")
-    col4, col5 = st.columns(2)
-    evsel_su = col4.number_input("Yıllık Evsel Su Tüketimi (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
-    evsel_atiksu = col5.number_input("Yıllık Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
+    col5, col6 = st.columns(2)
+    evsel_su = col5.number_input("Yıllık Evsel Su Tüketimi (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
+    evsel_atiksu = col6.number_input("Yıllık Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
 
     # Ana hafızadan proses (endüstriyel) su verilerini otomatik çekiyoruz
     sebeke = st.session_state.get('sebeke_suyu', 0.0)
@@ -2075,8 +2086,9 @@ def sayfa_performans_kpi():
     st.divider()
 
     if st.button("📊 KPI Göstergelerini Hesapla", type="primary"):
-        # Hafızaya Mühürleme İşlemleri
+        # Hafızaya Mühürleme İşlemleri (Birim dahil)
         st.session_state['uretim_miktari'] = uretim_miktari
+        st.session_state['uretim_birimi'] = uretim_birimi
         st.session_state['calisma_gunu'] = calisma_gunu
         st.session_state['personel_sayisi'] = personel_sayisi
         st.session_state['evsel_su'] = evsel_su
@@ -2101,8 +2113,10 @@ def sayfa_performans_kpi():
         
         st.markdown("#### Proses (Üretim) Verimliliği")
         c1, c2 = st.columns(2)
-        c1.metric(label="Spesifik Su Tüketimi", value=f"{spesifik_su:,.2f} m³/ürün")
-        c2.metric(label="Spesifik Atıksu Oluşumu", value=f"{spesifik_atiksu:,.2f} m³/ürün")
+        
+        # --- DİNAMİK BİRİMLER BURADA KULLANILIYOR ---
+        c1.metric(label="Spesifik Su Tüketimi", value=f"{spesifik_su:,.2f} m³/{uretim_birimi}")
+        c2.metric(label="Spesifik Atıksu Oluşumu", value=f"{spesifik_atiksu:,.2f} m³/{uretim_birimi}")
 
         st.markdown("#### Evsel (Personel) Verimliliği")
         c3, c4 = st.columns(2)
