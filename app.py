@@ -199,41 +199,47 @@ if 'sorumlular_tablosu' not in st.session_state:
 # 1. GÖRSEL TASARIM VE CSS
 # ==========================================
 def add_bg_from_url():
-    st.sidebar.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2070&auto=format&fit=crop");
-             background-attachment: fixed;
-             background-size: cover;
-         }}
-         div[data-testid="stVerticalBlock"] > div {{
-             background-color: rgba(255, 255, 255, 0.96); 
-             padding: 25px;
-             border-radius: 12px;
-             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-         }}
-         [data-testid="stSidebar"] {{
-             background-color: rgba(240, 248, 255, 0.95); 
-             border-right: 1px solid #b0c4de;
-         }}
-         h1 {{ color: #003366 !important; }}
-         h2 {{ color: #004e92 !important; }}
-         h3 {{ color: #006994 !important; }}
-         
-         .report-header {{
-             background-color: #f0f2f6;
-             padding: 10px;
-             border-radius: 5px;
-             border-left: 5px solid #004e92;
-             margin-bottom: 10px;
-             font-weight: bold;
-             color: #333;
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
+    # st.html kullanarak o sinir bozucu hayalet kutunun oluşmasını sonsuza dek engelliyoruz!
+    st.html(
+        """
+        <style>
+        /* 1. YENİ ARKA PLAN (Sakin Su Yüzeyi) */
+        .stApp {
+            background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2000&auto=format&fit=crop");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* 2. SENİN EFSANE KART TASARIMLARIN (Aynen korundu) */
+        div[data-testid="stVerticalBlock"] > div {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-testid="stSidebar"] {
+            background-color: rgba(240, 248, 255, 0.95);
+            border-right: 1px solid #b0c4de;
+        }
+        
+        h1 { color: #003366 !important; }
+        h2 { color: #004e92 !important; }
+        h3 { color: #006994 !important; }
+
+        .report-header {
+            background-color: #f0f2f6;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #004e92;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        </style>
+        """
+    )
 
 # ==========================================
 # 2. HESAPLAMA MOTORU (BACKEND)
