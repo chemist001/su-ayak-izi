@@ -866,16 +866,18 @@ def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
     st.info("Lütfen tesisinize ait su bileşenlerini, kaynaklarını ve veri doğrulama yöntemlerini aşağıdaki tablodan seçiniz veya düzenleyiniz.")
     
-    # 1. Aşama: Tablonun varsayılan (ilk açıldığında görünen) hali
-    baslangic_verisi = pd.DataFrame(
-    columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]
-)
+    # 1. Aşama: Veriyi hafızadan (session_state) çek, yoksa boş tablo yarat
+    if 'sistem_siniri_tablosu' not in st.session_state:
+        st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(
+            columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]
+        )
+        # En az 1 boş satır ile başlatmak istersen:
+        st.session_state['sistem_siniri_tablosu'].loc[0] = [None, None, None, None]
 
-    baslangic_verisi.loc[0] = [None, None, None, None]
-    
-    # 2. Aşama: Tabloyu Streamlit'te etkileşimli (Excel gibi) hale getirme
+    # 2. Aşama: Tabloyu interaktif yap
+    # Artık 'data' kaynağı olarak session_state içindeki tabloyu kullanıyoruz
     sistem_siniri_tablosu = st.data_editor(
-        baslangic_verisi,
+        st.session_state['sistem_siniri_tablosu'],
         column_config={
             "Bileşen": st.column_config.SelectboxColumn(
                 "Bileşen",
@@ -903,6 +905,8 @@ def sayfa_veri_kalitesi():
         use_container_width=True, 
         hide_index=True 
     )
+
+    # 3. Aşama: Tablodaki her değişiklikte hafızayı güncelle
     st.session_state['sistem_siniri_tablosu'] = sistem_siniri_tablosu
 
     # --- 6. RAPORLAMA ---
