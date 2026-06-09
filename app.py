@@ -466,44 +466,54 @@ def show_home_page():
     st.info("""💡 Türkiye, kişi başına düşen yıllık yaklaşık 1.313 m³ kullanılabilir su miktarı ile "su stresi çeken" ülkeler statüsündedir. 2030 yılına kadar bu rakamın 1.000 m³'ün altına düşerek **su fakiri** kategorisine geçme riskimiz bulunmaktadır.""")
     
     st.markdown("---")
-    st.subheader("Su Ayak İzinin 3 Rengi")
+    st.markdown("### Su Ayak İzinin 3 Rengi")
+
+# Senin 3'lü sütun yapın aynen kalıyor
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    # 1. Başlık Vurgusu (Sadece 'Mavi' kelimesi boyalı)
+    st.markdown("""
+    <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
+    """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
+    st.write("Mavi su ayak izi, bir malı üretmek için ihtiyaç duyulan toplam yüzey ve yeraltı tatlı su hacmidir. Sanayi ve evsel su kullanımları için, yüzey veya yeraltı suyu kaynaklarından çekilen brüt su olarak tariflenebilir.")
+    st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
     
-    with col1:
-        st.markdown("### 🟦 Mavi Su")
-        st.caption("Yüzey ve Yeraltı Suyu")
-        st.write("""
-        Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Bu, suyun bir ürüne, hizmete veya süreçlere
-        dahil edilmesi sırasında yapılan su çekimini temsil eder.
+    # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
+    st.markdown("""
+    <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
+    Sulu Tarım = Buharlaşan + Ürüne Dahil Olan + Drenaj
+    </div>
+    """, unsafe_allow_html=True)
 
-        * 🏭 Sanayi üretimi
-        * 🚰 Evsel kullanım
-        * 🌾 Tarımsal sulama
-        """)
-        
-    with col2:
-        st.markdown("### 🟩 Yeşil Su")
-        st.caption("Yağmur Suyu")
-        st.write("""
-        Yeşil su ayak izi, bitkilerin büyümesi için kullanılan yağış suyunu ifade eder. Bu, toprak tarafından emilen ve bitkiler tarafından kullanılan su miktarını kapsar
-        ve suyun doğal döngüsü içinde yer aldığı süreçleri değerlendirir. 
+with col2:
+    st.markdown("""
+    <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
+    """, unsafe_allow_html=True)
+    
+    st.write("Yeşil su ayak izi, toprağa düşen ve bitkiler tarafından terleme/buharlaşma yoluyla tüketilen yağış kaynaklı sudur. Özellikle tarım, bahçe ve orman ürünleri için geçerlidir.")
+    st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
+    
+    st.markdown("""
+    <div style='background-color:#28a745; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
+    Yeşil Su = Buharlaşan Yeşil Su + Ürüne Dahil Olan
+    </div>
+    """, unsafe_allow_html=True)
 
-        * 🌲 Orman ürünleri
-        * 🚜 Yağmurla beslenen tarım
-        * 🌧️ Yağmur hasadı
-        """)
-        
-    with col3:
-        st.markdown("### ⬜ Gri Su")
-        st.caption("Kirlilik Yükü")
-        st.write("""
-        Oluşan kirliliği, su kalitesi standartlarına (doğal konsantrasyona) seyreltmek için 
-        gereken teorik temiz su miktarıdır. Bu, bir ürün veya süreç nedeniyle kirlenen suyun doğrudan veya dolaylı olarak temizlenmesi gereken su miktarını hesaplar.
-
-        * 🧪 Kimyasal atıklar
-        * 🚿 Atık su deşarjı
-        """)
+with col3:
+    st.markdown("""
+    <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
+    """, unsafe_allow_html=True)
+    
+    st.write("Gri su ayak izi, kirleticilerin özümsenerek su kalitesi standartlarının sağlanması için gereken tatlı su miktarıdır. Kirlilik yükünün bertarafı için hesaplanır.")
+    st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
+    
+    st.markdown("""
+    <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
+    Gri Su = Kirlilik Yükü / (C_max - C_nat)
+    </div>
+    """, unsafe_allow_html=True)
         
     st.markdown("---")
 
