@@ -2076,7 +2076,7 @@ def sayfa_performans_kpi():
     yangin_suyu = col7.number_input("Yangın Hattı (m³/yıl)", min_value=0.0, value=st.session_state.get('yangin_suyu', 0.0))
 
     col8, col9, col10 = st.columns(3)
-    arac_yikama = col8.number_input("Araç Yıkama/Zemin Tem. (m³/yıl)", min_value=0.0, value=st.session_state.get('arac_yikama', 0.0))
+    arac_yikama = col8.number_input("Araç Yıkama/Zemin Temizliği vb. (m³/yıl)", min_value=0.0, value=st.session_state.get('arac_yikama', 0.0))
     gerikazanim_suyu = col9.number_input("Geri Kazanım Suyu (m³/yıl)", min_value=0.0, value=st.session_state.get('gerikazanim_suyu', 0.0))
     evsel_atiksu = col10.number_input("Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
 
