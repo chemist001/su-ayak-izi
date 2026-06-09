@@ -554,7 +554,7 @@ def show_home_page():
         * ✅ **Geri Kazanım:** Atık suyun en az **%20'sinin** geri kazanılarak yeniden kullanılması.
         * ✅ **Su Ayak İzi:** **TS EN ISO 14046 Su Ayak İzi** standardı kapsamında belgenin olması.
         * ✅ NACE koduna uygun su verimliliği rehber dokümanlarında yer alan tekniklerin uygulanması.
-        * ✅ TSE tarafından verilen TS ISO 46001 Su Verimliliği Yönetim Sistemi Belgesine sahip olması.
+        * ✅ TSE tarafından verilen **TS ISO 46001** Su Verimliliği Yönetim Sistemi Belgesine sahip olması.
         """)
 
 
