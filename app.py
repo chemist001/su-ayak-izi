@@ -2063,7 +2063,7 @@ def sayfa_performans_kpi():
     uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=1.0, value=st.session_state.get('uretim_miktari', 1000.0))
     
     # --- YENİ EKLENEN BİRİM SEÇİCİ KUTUSU ---
-    birim_secenekleri = ["ton", "kg", "adet", "m²", "m³", "litre", "kutu"]
+    birim_secenekleri = ["ton", "kg", "adet", "metre", "m²", "m³", "litre", "kutu"]
     varsayilan_birim = st.session_state.get('uretim_birimi', 'ton')
     secili_index = birim_secenekleri.index(varsayilan_birim) if varsayilan_birim in birim_secenekleri else 0
     uretim_birimi = col2.selectbox("Birim", options=birim_secenekleri, index=secili_index)
