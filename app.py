@@ -2086,7 +2086,7 @@ def sayfa_performans_kpi():
     st.divider()
 
     if st.button("📊 KPI Göstergelerini Hesapla", type="primary"):
-        # Hafızaya Mühürleme İşlemleri (Birim dahil)
+        # Hafızaya Mühürleme İşlemleri
         st.session_state['uretim_miktari'] = uretim_miktari
         st.session_state['uretim_birimi'] = uretim_birimi
         st.session_state['calisma_gunu'] = calisma_gunu
@@ -2102,26 +2102,35 @@ def sayfa_performans_kpi():
         spesifik_evsel_su = (evsel_su * 1000) / payda_kisi_gun if payda_kisi_gun > 0 else 0
         spesifik_evsel_atiksu = (evsel_atiksu * 1000) / payda_kisi_gun if payda_kisi_gun > 0 else 0
 
-        # Hesaplanan KPI'ları PDF ve Veritabanı için hafızaya alma
+        # Hesaplanan KPI'ları hafızaya alma
         st.session_state['kpi_spesifik_su'] = spesifik_su
         st.session_state['kpi_spesifik_atiksu'] = spesifik_atiksu
         st.session_state['kpi_evsel_su'] = spesifik_evsel_su
         st.session_state['kpi_evsel_atiksu'] = spesifik_evsel_atiksu
+        
+        # KRİTİK NOKTA: Hesaplamanın yapıldığını sisteme not ediyoruz
+        st.session_state['kpi_hesaplandi'] = True
 
-        # Kullanıcıya Görsel Sunum (Dashboard Tarzı)
-        st.success("✅ Verimlilik Göstergeleri Başarıyla Hesaplandı!")
+    # ========================================================
+    # GÖRÜNTÜLEME KISMI (BUTONUN DIŞINA ÇIKARDIK)
+    # Eğer hafızada hesaplama yapıldığına dair not varsa, ekrana sürekli bas!
+    # ========================================================
+    if st.session_state.get('kpi_hesaplandi', False):
+        st.success("✅ Verimlilik Göstergeleri Başarıyla Hesaplandı ve Hafızaya Alındı!")
         
         st.markdown("#### Proses (Üretim) Verimliliği")
         c1, c2 = st.columns(2)
         
-        # --- DİNAMİK BİRİMLER BURADA KULLANILIYOR ---
-        c1.metric(label="Spesifik Su Tüketimi", value=f"{spesifik_su:,.2f} m³/{uretim_birimi}")
-        c2.metric(label="Spesifik Atıksu Oluşumu", value=f"{spesifik_atiksu:,.2f} m³/{uretim_birimi}")
+        # Birimi hafızadan çekiyoruz
+        birim = st.session_state.get('uretim_birimi', 'ton')
+        
+        c1.metric(label="Spesifik Su Tüketimi", value=f"{st.session_state['kpi_spesifik_su']:,.2f} m³/{birim}")
+        c2.metric(label="Spesifik Atıksu Oluşumu", value=f"{st.session_state['kpi_spesifik_atiksu']:,.2f} m³/{birim}")
 
         st.markdown("#### Evsel (Personel) Verimliliği")
         c3, c4 = st.columns(2)
-        c3.metric(label="Spesifik Evsel Su Tüketimi", value=f"{spesifik_evsel_su:,.2f} L/kişi.gün")
-        c4.metric(label="Spesifik Evsel Atıksu Miktarı", value=f"{spesifik_evsel_atiksu:,.2f} L/kişi.gün")
+        c3.metric(label="Spesifik Evsel Su Tüketimi", value=f"{st.session_state['kpi_evsel_su']:,.2f} L/kişi.gün")
+        c4.metric(label="Spesifik Evsel Atıksu Miktarı", value=f"{st.session_state['kpi_evsel_atiksu']:,.2f} L/kişi.gün")
         
 # ==========================================
 # 7. ANA KONTROL (ROUTER)
