@@ -483,7 +483,7 @@ def show_home_page():
         # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
         st.markdown("""
         <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-        Sulu Tarım = Buharlaşan + Ürüne Dahil Olan + Drenaj
+        Mavi Su Ayakizi (hacim/zaman) = Buharlaşan Mavi Su + Ürüne Dahil Olan Mavi Su + Drenaj Miktarı
         </div>
         """, unsafe_allow_html=True)
     
@@ -497,7 +497,7 @@ def show_home_page():
         
         st.markdown("""
         <div style='background-color:#28a745; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-        Yeşil Su = Buharlaşan Yeşil Su + Ürüne Dahil Olan
+        Yeşil Su Ayakizi (hacim/zaman) = Buharlaşan Yeşil Su + Ürüne Dahil Olan Yeşil Su
         </div>
         """, unsafe_allow_html=True)
     
@@ -511,7 +511,7 @@ def show_home_page():
         
         st.markdown("""
         <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-        Gri Su = Kirlilik Yükü / (C_max - C_nat)
+        Gri Su Ayakizi (hacim/zaman) = Kirletici Yükü / (Alıcı Su Kütlesindeki Ölçülen Maksimum Konsantrasyon – Alıcı Su Kütlesindeki Doğal Konsantrasyon)
         </div>
         """, unsafe_allow_html=True)
         
