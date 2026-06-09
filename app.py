@@ -887,7 +887,7 @@ def sayfa_veri_kalitesi():
     )
 
     # 3. Aşama: "Kaydet" butonu ile hafızaya mühürle
-    if st.button("💾 Tabloyu Kaydet"):
+    if st.button("Kaydet"):
         st.session_state['sistem_siniri_tablosu'] = gecici_df
         st.success("Veriler başarıyla kaydedildi!")
         st.rerun() # Sayfayı yenileyerek kaydın kesinleşmesini sağla
