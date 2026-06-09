@@ -863,51 +863,35 @@ def show_calculator_page():
             st.success(f"✅ Gri Su Ayak İzi Başarıyla Hesaplandı!\n\nKritik Kirletici: **{kritik_kirletici}** \nHacim: **{hesaplanan_gri:,.2f} m³/yıl**")
             
 def sayfa_veri_kalitesi():
+    def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
-    st.info("Lütfen tesisinize ait su bileşenlerini, kaynaklarını ve veri doğrulama yöntemlerini aşağıdaki tablodan seçiniz veya düzenleyiniz.")
     
-    # 1. Aşama: Veriyi hafızadan (session_state) çek, yoksa boş tablo yarat
+    # 1. Aşama: Veriyi hafızadan çek
     if 'sistem_siniri_tablosu' not in st.session_state:
         st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(
             columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]
         )
-        # En az 1 boş satır ile başlatmak istersen:
-        st.session_state['sistem_siniri_tablosu'].loc[0] = [None, None, None, None]
 
-    # 2. Aşama: Tabloyu interaktif yap
-    # Artık 'data' kaynağı olarak session_state içindeki tabloyu kullanıyoruz
-    sistem_siniri_tablosu = st.data_editor(
+    # 2. Aşama: Editör (Bu editör direkt session_state'i değiştirmiyor, geçici bir değişken döndürüyor)
+    gecici_df = st.data_editor(
         st.session_state['sistem_siniri_tablosu'],
         column_config={
-            "Bileşen": st.column_config.SelectboxColumn(
-                "Bileşen",
-                help="Suyun kategorisini seçin",
-                options=["Mavi Su", "Gri Su", "Yeşil Su"],
-                required=True
-            ),
-            "Kaynak": st.column_config.SelectboxColumn(
-                "Kaynak",
-                options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu"],
-                required=True
-            ),
-            "Veri Kaynağı": st.column_config.SelectboxColumn(
-                "Veri Kaynağı",
-                options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan"],
-                required=True
-            ),
-            "Veri Doğrulama": st.column_config.SelectboxColumn(
-                "Veri Doğrulama",
-                options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar"],
-                required=True
-            )
+            # ... (Senin column_config ayarların aynen kalacak) ...
+            "Bileşen": st.column_config.SelectboxColumn("Bileşen", options=["Mavi Su", "Gri Su", "Yeşil Su"], required=True),
+            "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu"], required=True),
+            "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan"], required=True),
+            "Veri Doğrulama": st.column_config.SelectboxColumn("Veri Doğrulama", options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar"], required=True)
         },
         num_rows="dynamic", 
         use_container_width=True, 
         hide_index=True 
     )
 
-    # 3. Aşama: Tablodaki her değişiklikte hafızayı güncelle
-    st.session_state['sistem_siniri_tablosu'] = sistem_siniri_tablosu
+    # 3. Aşama: "Kaydet" butonu ile hafızaya mühürle
+    if st.button("💾 Tabloyu Kaydet"):
+        st.session_state['sistem_siniri_tablosu'] = gecici_df
+        st.success("Veriler başarıyla kaydedildi!")
+        st.rerun() # Sayfayı yenileyerek kaydın kesinleşmesini sağla
 
     # --- 6. RAPORLAMA ---
 def sayfa_raporlama():
