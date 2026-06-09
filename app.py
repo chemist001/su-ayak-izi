@@ -205,9 +205,7 @@ def add_bg_from_url():
         <style>
         /* 1. YENİ ARKA PLAN (Sakin Su Yüzeyi) */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2000&auto=format&fit=crop");
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 50%, #bae6fd 100%);
             background-attachment: fixed;
         }
 
