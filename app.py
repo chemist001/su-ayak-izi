@@ -2073,8 +2073,8 @@ def sayfa_performans_kpi():
     col5, col6, col7 = st.columns(3)
     evsel_su = col5.number_input("Evsel Su (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
     sulama_suyu = col6.number_input("Yeşil Alan Sulama (m³/yıl)", min_value=0.0, value=st.session_state.get('sulama_suyu', 0.0))
-    diger_haric = col7.number_input("Yangın/Zemin Yıkama (m³/yıl)", min_value=0.0, value=st.session_state.get('diger_haric', 0.0))
-    
+    yangin_suyu = col7.number_input("Yangın Hattı (m³/yıl)", min_value=0.0, value=st.session_state.get('yangin_suyu', 0.0))
+
     evsel_atiksu = st.number_input("Yıllık Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
 
     # Ana hafızadan proses (endüstriyel) su verilerini otomatik çekiyoruz
@@ -2094,12 +2094,12 @@ def sayfa_performans_kpi():
         st.session_state['personel_sayisi'] = personel_sayisi
         st.session_state['evsel_su'] = evsel_su
         st.session_state['sulama_suyu'] = sulama_suyu
-        st.session_state['diger_haric'] = diger_haric
+        st.session_state['yangin_suyu'] = yangin_suyu
         st.session_state['evsel_atiksu'] = evsel_atiksu
 
         # --- YENİ HESAPLAMA MANTIĞI ---
         # Toplam giren sudan tabloya göre dahil edilmeyecekleri çıkarıyoruz
-        net_proses_suyu = max(0.0, toplam_giren_su - (evsel_su + sulama_suyu + diger_haric))
+        net_proses_suyu = max(0.0, toplam_giren_su - (evsel_su + sulama_suyu + yangin_suyu))
 
         # KPI Hesaplamaları
         spesifik_su = net_proses_suyu / uretim_miktari if uretim_miktari > 0 else 0
