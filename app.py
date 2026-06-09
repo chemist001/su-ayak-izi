@@ -469,51 +469,51 @@ def show_home_page():
     st.markdown("### Su Ayak İzinin 3 Rengi")
 
 # Senin 3'lü sütun yapın aynen kalıyor
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    # 1. Başlık Vurgusu (Sadece 'Mavi' kelimesi boyalı)
-    st.markdown("""
-    <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
-    """, unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
     
-    st.write("Mavi su ayak izi, bir malı üretmek için ihtiyaç duyulan toplam yüzey ve yeraltı tatlı su hacmidir. Sanayi ve evsel su kullanımları için, yüzey veya yeraltı suyu kaynaklarından çekilen brüt su olarak tariflenebilir.")
-    st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
+    with col1:
+        # 1. Başlık Vurgusu (Sadece 'Mavi' kelimesi boyalı)
+        st.markdown("""
+        <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
+        """, unsafe_allow_html=True)
+        
+        st.write("Mavi su ayak izi, bir malı üretmek için ihtiyaç duyulan toplam yüzey ve yeraltı tatlı su hacmidir. Sanayi ve evsel su kullanımları için, yüzey veya yeraltı suyu kaynaklarından çekilen brüt su olarak tariflenebilir.")
+        st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
+        
+        # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
+        st.markdown("""
+        <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
+        Sulu Tarım = Buharlaşan + Ürüne Dahil Olan + Drenaj
+        </div>
+        """, unsafe_allow_html=True)
     
-    # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
-    st.markdown("""
-    <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-    Sulu Tarım = Buharlaşan + Ürüne Dahil Olan + Drenaj
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
-    """, unsafe_allow_html=True)
+    with col2:
+        st.markdown("""
+        <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
+        """, unsafe_allow_html=True)
+        
+        st.write("Yeşil su ayak izi, toprağa düşen ve bitkiler tarafından terleme/buharlaşma yoluyla tüketilen yağış kaynaklı sudur. Özellikle tarım, bahçe ve orman ürünleri için geçerlidir.")
+        st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
+        
+        st.markdown("""
+        <div style='background-color:#28a745; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
+        Yeşil Su = Buharlaşan Yeşil Su + Ürüne Dahil Olan
+        </div>
+        """, unsafe_allow_html=True)
     
-    st.write("Yeşil su ayak izi, toprağa düşen ve bitkiler tarafından terleme/buharlaşma yoluyla tüketilen yağış kaynaklı sudur. Özellikle tarım, bahçe ve orman ürünleri için geçerlidir.")
-    st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
-    
-    st.markdown("""
-    <div style='background-color:#28a745; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-    Yeşil Su = Buharlaşan Yeşil Su + Ürüne Dahil Olan
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-    <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
-    """, unsafe_allow_html=True)
-    
-    st.write("Gri su ayak izi, kirleticilerin özümsenerek su kalitesi standartlarının sağlanması için gereken tatlı su miktarıdır. Kirlilik yükünün bertarafı için hesaplanır.")
-    st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
-    
-    st.markdown("""
-    <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-    Gri Su = Kirlilik Yükü / (C_max - C_nat)
-    </div>
-    """, unsafe_allow_html=True)
+    with col3:
+        st.markdown("""
+        <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
+        """, unsafe_allow_html=True)
+        
+        st.write("Gri su ayak izi, kirleticilerin özümsenerek su kalitesi standartlarının sağlanması için gereken tatlı su miktarıdır. Kirlilik yükünün bertarafı için hesaplanır.")
+        st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
+        
+        st.markdown("""
+        <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
+        Gri Su = Kirlilik Yükü / (C_max - C_nat)
+        </div>
+        """, unsafe_allow_html=True)
         
     st.markdown("---")
 
