@@ -477,7 +477,7 @@ def show_home_page():
         <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
         
-        st.write("Mavi su ayak izi, bir malı üretmek için ihtiyaç duyulan toplam yüzey ve yeraltı tatlı su hacmidir. Sanayi ve evsel su kullanımları için, yüzey veya yeraltı suyu kaynaklarından çekilen brüt su olarak tariflenebilir.")
+        st.write("Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Bu, suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.")
         st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
         
         # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
@@ -492,7 +492,7 @@ def show_home_page():
         <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
         
-        st.write("Yeşil su ayak izi, toprağa düşen ve bitkiler tarafından terleme/buharlaşma yoluyla tüketilen yağış kaynaklı sudur. Özellikle tarım, bahçe ve orman ürünleri için geçerlidir.")
+        st.write("Yeşil su ayak izi, bitkilerin büyümesi için kullanılan yağış suyunu ifade eder. Bu, toprak tarafından emilen ve bitkiler tarafından kullanılan su miktarını kapsar ve suyun doğal döngüsü içinde yer aldığı süreçleri değerlendirir.")
         st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
         
         st.markdown("""
@@ -506,7 +506,7 @@ def show_home_page():
         <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
         
-        st.write("Gri su ayak izi, kirleticilerin özümsenerek su kalitesi standartlarının sağlanması için gereken tatlı su miktarıdır. Kirlilik yükünün bertarafı için hesaplanır.")
+        st.write("Oluşan kirliliği, su kalitesi standartlarına (doğal konsantrasyona) seyreltmek için gereken teorik temiz su miktarıdır. Bu, bir ürün veya süreç nedeniyle kirlenen suyun doğrudan veya dolaylı olarak temizlenmesi gereken su miktarını hesaplar.")
         st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
         
         st.markdown("""
