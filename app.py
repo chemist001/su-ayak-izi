@@ -199,7 +199,7 @@ if 'sorumlular_tablosu' not in st.session_state:
 # 1. GÖRSEL TASARIM VE CSS
 # ==========================================
 def add_bg_from_url():
-    st.sidebar.markdown(
+    st.markdown(
          f"""
          <style>
          .stApp {{
