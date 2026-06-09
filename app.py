@@ -544,6 +544,7 @@ def show_home_page():
         * ✅ **Sektörel Rehberler:** NACE Koduna uygun tekniklerin uygulanması.
         * ✅ **Yönetim Sistemi:** *TS ISO 46001 Belgesine sahip olunması.
         """)
+        st.warning("Bu kriter ilk yeşil belge başvurusunda aranmayacak, yeşil belge yenileme başvurusunda zorunlu olacaktır.")
         st.warning("OSB'ler için yağmur suyu hasadı ve gri su kullanımı zorunludur.")
 
     with tab_turkuaz:
