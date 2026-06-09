@@ -553,10 +553,10 @@ def show_home_page():
         **Endüstriyel Tesisler İçin Kriterler**
         * ✅ **Geri Kazanım:** Atık suyun en az **%20'sinin** geri kazanılarak yeniden kullanılması.
         * ✅ **Su Ayak İzi:** **TS EN ISO 14046 Su Ayak İzi** standardı kapsamında belgenin olması.
-        * ✅ **NACE koduna uygun su verimliliği rehber dokümanlarında yer alan tekniklerin uygulanması.
-        * ✅ **TSE tarafından verilen TS ISO 46001 Su Verimliliği Yönetim Sistemi Belgesine sahip olması.
+        * ✅ NACE koduna uygun su verimliliği rehber dokümanlarında yer alan tekniklerin uygulanması.
+        * ✅ TSE tarafından verilen TS ISO 46001 Su Verimliliği Yönetim Sistemi Belgesine sahip olması.
         """)
-        st.success("🌟 Bu uygulama, Turkuaz Belge için zorunlu olan **ISO 14046** hesaplamalarını yapar.")
+
 
 # --- ANA SAYFA ZENGİNLEŞTİRME BLOKLARI (KOPYALA - YAPIŞTIR) ---
         
