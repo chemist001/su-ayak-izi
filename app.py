@@ -2055,15 +2055,10 @@ def sayfa_performans_kpi():
     st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini ölçebilirsiniz.")
 
     st.subheader("1. Üretim ve Personel Verileri")
-    
-    # Sütun yapısını 4'e çıkarıyoruz ki birim seçici kutusu da şık bir şekilde sığsın
-    # [2, 1, 2, 2] oranları ile kutu genişliklerini estetik olarak ayarlıyoruz
     col1, col2, col3, col4 = st.columns([2, 1, 2, 2]) 
-    
     uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=1.0, value=st.session_state.get('uretim_miktari', 1000.0))
     
-    # --- YENİ EKLENEN BİRİM SEÇİCİ KUTUSU ---
-    birim_secenekleri = ["ton", "kg", "adet", "metre", "m²", "m³", "litre", "kutu"]
+    birim_secenekleri = ["ton", "kg", "adet", "m²", "m³", "litre", "kutu"]
     varsayilan_birim = st.session_state.get('uretim_birimi', 'ton')
     secili_index = birim_secenekleri.index(varsayilan_birim) if varsayilan_birim in birim_secenekleri else 0
     uretim_birimi = col2.selectbox("Birim", options=birim_secenekleri, index=secili_index)
@@ -2071,16 +2066,22 @@ def sayfa_performans_kpi():
     calisma_gunu = col3.number_input("Yıllık Çalışma Günü", min_value=1, value=st.session_state.get('calisma_gunu', 300))
     personel_sayisi = col4.number_input("Personel Sayısı", min_value=1, value=st.session_state.get('personel_sayisi', 50))
 
-    st.subheader("2. Evsel Su ve Atıksu Verileri")
-    col5, col6 = st.columns(2)
-    evsel_su = col5.number_input("Yıllık Evsel Su Tüketimi (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
-    evsel_atiksu = col6.number_input("Yıllık Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
+    # --- YENİ: TABLOYA GÖRE KAPSAM DIŞI SULAR ---
+    st.subheader("2. Evsel Su ve Kapsam Dışı Kullanımlar")
+    st.write("Spesifik üretim hesabı (Net Proses Suyu) bulunurken aşağıdaki kullanımlar toplam tüketimden düşülecektir.")
+    
+    col5, col6, col7 = st.columns(3)
+    evsel_su = col5.number_input("Evsel Su (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
+    sulama_suyu = col6.number_input("Yeşil Alan Sulama (m³/yıl)", min_value=0.0, value=st.session_state.get('sulama_suyu', 0.0))
+    diger_haric = col7.number_input("Yangın/Zemin Yıkama (m³/yıl)", min_value=0.0, value=st.session_state.get('diger_haric', 0.0))
+    
+    evsel_atiksu = st.number_input("Yıllık Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
 
     # Ana hafızadan proses (endüstriyel) su verilerini otomatik çekiyoruz
     sebeke = st.session_state.get('sebeke_suyu', 0.0)
     kuyu = st.session_state.get('kuyu_suyu', 0.0)
     diger = st.session_state.get('diger_su', 0.0)
-    toplam_proses_suyu = sebeke + kuyu + diger
+    toplam_giren_su = sebeke + kuyu + diger
     toplam_proses_atiksu = st.session_state.get('desarj', 0.0)
 
     st.divider()
@@ -2092,39 +2093,42 @@ def sayfa_performans_kpi():
         st.session_state['calisma_gunu'] = calisma_gunu
         st.session_state['personel_sayisi'] = personel_sayisi
         st.session_state['evsel_su'] = evsel_su
+        st.session_state['sulama_suyu'] = sulama_suyu
+        st.session_state['diger_haric'] = diger_haric
         st.session_state['evsel_atiksu'] = evsel_atiksu
 
-        # Matematiksel Hesaplamalar
-        spesifik_su = toplam_proses_suyu / uretim_miktari if uretim_miktari > 0 else 0
+        # --- YENİ HESAPLAMA MANTIĞI ---
+        # Toplam giren sudan tabloya göre dahil edilmeyecekleri çıkarıyoruz
+        net_proses_suyu = max(0.0, toplam_giren_su - (evsel_su + sulama_suyu + diger_haric))
+
+        # KPI Hesaplamaları
+        spesifik_su = net_proses_suyu / uretim_miktari if uretim_miktari > 0 else 0
         spesifik_atiksu = toplam_proses_atiksu / uretim_miktari if uretim_miktari > 0 else 0
         
         payda_kisi_gun = calisma_gunu * personel_sayisi
         spesifik_evsel_su = (evsel_su * 1000) / payda_kisi_gun if payda_kisi_gun > 0 else 0
         spesifik_evsel_atiksu = (evsel_atiksu * 1000) / payda_kisi_gun if payda_kisi_gun > 0 else 0
 
-        # Hesaplanan KPI'ları hafızaya alma
+        # Hafızaya alma
+        st.session_state['kpi_net_proses'] = net_proses_suyu
         st.session_state['kpi_spesifik_su'] = spesifik_su
         st.session_state['kpi_spesifik_atiksu'] = spesifik_atiksu
         st.session_state['kpi_evsel_su'] = spesifik_evsel_su
         st.session_state['kpi_evsel_atiksu'] = spesifik_evsel_atiksu
-        
-        # KRİTİK NOKTA: Hesaplamanın yapıldığını sisteme not ediyoruz
         st.session_state['kpi_hesaplandi'] = True
 
-    # ========================================================
-    # GÖRÜNTÜLEME KISMI (BUTONUN DIŞINA ÇIKARDIK)
-    # Eğer hafızada hesaplama yapıldığına dair not varsa, ekrana sürekli bas!
-    # ========================================================
     if st.session_state.get('kpi_hesaplandi', False):
         st.success("✅ Verimlilik Göstergeleri Başarıyla Hesaplandı ve Hafızaya Alındı!")
         
         st.markdown("#### Proses (Üretim) Verimliliği")
         c1, c2 = st.columns(2)
-        
-        # Birimi hafızadan çekiyoruz
         birim = st.session_state.get('uretim_birimi', 'ton')
         
-        c1.metric(label="Spesifik Su Tüketimi", value=f"{st.session_state['kpi_spesifik_su']:,.2f} m³/{birim}")
+        # Kullanıcının arka planda dönen hesabı anlaması için Net Proses Suyunu ufak bir not olarak (delta) ekliyoruz
+        c1.metric(label="Spesifik Su Tüketimi", 
+                  value=f"{st.session_state['kpi_spesifik_su']:,.2f} m³/{birim}", 
+                  delta=f"Hesaba Katılan Net Proses Suyu: {st.session_state['kpi_net_proses']:,.1f} m³", 
+                  delta_color="off")
         c2.metric(label="Spesifik Atıksu Oluşumu", value=f"{st.session_state['kpi_spesifik_atiksu']:,.2f} m³/{birim}")
 
         st.markdown("#### Evsel (Personel) Verimliliği")
