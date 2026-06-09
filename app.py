@@ -199,8 +199,8 @@ if 'sorumlular_tablosu' not in st.session_state:
 # 1. GÖRSEL TASARIM VE CSS
 # ==========================================
 def add_bg_from_url():
-    st.html(
-         """
+    st.sidebar.markdown(
+         f"""
          <style>
          .stApp {{
              background-image: url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2070&auto=format&fit=crop");
