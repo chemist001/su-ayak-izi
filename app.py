@@ -510,7 +510,7 @@ def show_home_page():
         
         st.markdown("""
         <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
-        Gri Su Ayakizi = Kirletici Yükü / (C_max - C_nat)
+        Gri Su Ayakizi = Kirletici Yükü / (C<sub>max</sub> - C<sub>nat</sub>)
         </div>
         """, unsafe_allow_html=True)
         
