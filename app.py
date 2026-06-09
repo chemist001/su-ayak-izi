@@ -446,9 +446,8 @@ def create_pie_chart(data_dict, title):
     return buf
 
 # ==========================================
-# 5. SAYFA İÇERİKLERİ (ESKİ TASARIM + YENİ ÖZELLİKLER)
+# 5. SAYFA İÇERİKLERİ 
 # ==========================================
-
 def show_home_page():
     """Ana Sayfa - Su Ayak İzi Nedir?"""
     st.title("💧 Su Ayak İzi Nedir?")
