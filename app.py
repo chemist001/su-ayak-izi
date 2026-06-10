@@ -202,41 +202,40 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 4 NUMARALI TASARIM: NOTION MİNİMALİZMİ (Pürüzsüz Odak) */
+        /* 5 NUMARALI TASARIM: ENERJİK KURUMSAL (Teal & Ocean) */
         .stApp {
-            background-color: #F7F7F5; /* Göz yormayan ikonik Notion krem/kırık beyaz tonu */
+            background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Notion stili: Keskin beyaz, ince çerçeve ve ultra hafif gölge) */
+        /* Kart Tasarımları (Canlı arka planda öne çıkması için beyaz ve net gölgeli) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: #FFFFFF; /* Arka plandan ayrışması için tam beyaz */
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 25px;
-            border-radius: 8px; /* Biraz daha keskin köşeler */
-            border: 1px solid #E9E9E7; /* Çok zarif, açık gri sınır çizgisi */
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); /* Sadece hissedilen minimal gölge */
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Temaya uygun yumuşak ama belirgin gölge */
         }
         
-        /* Sidebar (Kenar Çubuğu - Arka planla kusursuz bütünlük) */
+        /* Sidebar (Kenar Çubuğu - Temaya uygun hafif mavimsi beyaz) */
         [data-testid="stSidebar"] {
-            background-color: #F7F7F5;
-            border-right: 1px solid #E9E9E7;
+            background-color: rgba(245, 247, 250, 0.95);
+            border-right: 1px solid #d1d9e6;
         }
         
-        /* Başlık Renkleri (Temiz bir görünüm için biraz daha koyu, mat tonlar) */
-        h1 { color: #111827 !important; }
-        h2 { color: #1F2937 !important; }
-        h3 { color: #374151 !important; }
+        /* Başlık Renkleri (Enerjik temaya uygun derin deniz mavisi tonları) */
+        h1 { color: #1e3a8a !important; }
+        h2 { color: #2563eb !important; }
+        h3 { color: #3b82f6 !important; }
 
-        /* Rapor Başlıkları (Minimalist gri/mavi uyumu) */
+        /* Rapor Başlıkları */
         .report-header {
-            background-color: #F0F2F6;
+            background-color: #f0f4f8;
             padding: 10px;
-            border-radius: 4px;
-            border-left: 4px solid #4B5563; /* Mat gri/mavi şerit */
+            border-radius: 5px;
+            border-left: 5px solid #2563eb; /* Canlı mavi vurgu çizgisi */
             margin-bottom: 10px;
-            font-weight: 600;
-            color: #111827;
+            font-weight: bold;
+            color: #1e293b;
         }
         </style>
         """
