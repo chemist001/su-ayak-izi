@@ -199,17 +199,19 @@ if 'sorumlular_tablosu' not in st.session_state:
 # 1. GÖRSEL TASARIM VE CSS
 # ==========================================
 def add_bg_from_url():
-    # st.html kullanarak o sinir bozucu hayalet kutunun oluşmasını sonsuza dek engelliyoruz!
     st.html(
         """
         <style>
-        /* 1. YENİ ARKA PLAN (Sakin Su Yüzeyi) */
+        /* 1 NUMARALI TASARIM: MODERN MESH GRADIENT */
         .stApp {
-            background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 50%, #bae6fd 100%);
+            background-color: #f0f9ff;
+            background-image: 
+                radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), 
+                radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* 2. SENİN EFSANE KART TASARIMLARIN (Aynen korundu) */
+        /* Kart Tasarımları (Beyaz, hafif şeffaf ve gölgeli) */
         div[data-testid="stVerticalBlock"] > div {
             background-color: rgba(255, 255, 255, 0.96);
             padding: 25px;
@@ -217,15 +219,18 @@ def add_bg_from_url():
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
+        /* Sidebar (Kenar Çubuğu) */
         [data-testid="stSidebar"] {
             background-color: rgba(240, 248, 255, 0.95);
             border-right: 1px solid #b0c4de;
         }
         
+        /* Başlık Renkleri */
         h1 { color: #003366 !important; }
         h2 { color: #004e92 !important; }
         h3 { color: #006994 !important; }
 
+        /* Rapor Başlıkları */
         .report-header {
             background-color: #f0f2f6;
             padding: 10px;
@@ -238,7 +243,6 @@ def add_bg_from_url():
         </style>
         """
     )
-
 # ==========================================
 # 2. HESAPLAMA MOTORU (BACKEND)
 # ==========================================
