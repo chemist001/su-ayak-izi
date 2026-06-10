@@ -738,17 +738,30 @@ def show_calculator_page():
         
           # 739. satırdan itibaren silip şunu yapıştır:
 
+        # 1. Aşama: Veriyi hafızadan çek (eğer yoksa boş bir tablo yarat)
+        if 'sorumlu_kisiler_tablosu' not in st.session_state:
+            st.session_state['sorumlu_kisiler_tablosu'] = pd.DataFrame(
+                columns=["Sorumlu Kişi", "Görev", "İletişim"]
+            )
+        
+        # 2. Aşama: Editörü kullanarak geçici bir tablo oluştur
         gecici_sorumlu_df = st.data_editor(
             st.session_state['sorumlu_kisiler_tablosu'],
+            column_config={
+                "Sorumlu Kişi": st.column_config.TextColumn("Sorumlu Kişi", required=True),
+                "Görev": st.column_config.TextColumn("Görev"),
+                "İletişim": st.column_config.TextColumn("İletişim")
+            },
             num_rows="dynamic",
             use_container_width=True,
-            key="sorumlular_tablo_editor"
+            hide_index=True
         )
         
+        # 3. Aşama: "Kaydet" butonu
         if st.button("💾 Sorumluları Kaydet"):
             st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
-            st.success("Sorumlu bilgileri başarıyla kaydedildi!")
-            st.rerun() # Sayfayı yenileyerek veriyi kesinleştir
+            st.success("Sorumlu bilgileri başarıyla güncellendi!")
+            st.rerun()
 
     # --- 2. MAVİ SU (Kütle Denkliği ile Düzeltilmiş Yapı) ---
     with tab_mavi:
