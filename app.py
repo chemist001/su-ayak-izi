@@ -202,40 +202,42 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 5 NUMARALI TASARIM: ENERJİK KURUMSAL (Teal & Ocean) */
+        /* 6 NUMARALI TASARIM: DERİN OKYANUS (Luxury Dark) */
         .stApp {
-            background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            background-image: url("https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=2560&auto=format&fit=crop");
+            background-size: cover;
+            background-position: center;
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Canlı arka planda öne çıkması için beyaz ve net gölgeli) */
+        /* Kart Tasarımları (Karanlık okyanus üzerinde patlayan beyaz, şık paneller) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.95); /* Arkadaki okyanusu %5 oranında gösteren beyaz cam */
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Temaya uygun yumuşak ama belirgin gölge */
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5); /* Karanlık temaya özel, havada asılı tutan derin gölge */
         }
         
-        /* Sidebar (Kenar Çubuğu - Temaya uygun hafif mavimsi beyaz) */
+        /* Sidebar (Kenar Çubuğu - Genel bütünlüğü bozmaması için mat beyaz) */
         [data-testid="stSidebar"] {
-            background-color: rgba(245, 247, 250, 0.95);
-            border-right: 1px solid #d1d9e6;
+            background-color: rgba(255, 255, 255, 0.93);
+            border-right: none;
         }
         
-        /* Başlık Renkleri (Enerjik temaya uygun derin deniz mavisi tonları) */
-        h1 { color: #1e3a8a !important; }
-        h2 { color: #2563eb !important; }
-        h3 { color: #3b82f6 !important; }
+        /* Başlık Renkleri (Okyanus konseptine uygun karizmatik lacivert/antrasit tonları) */
+        h1 { color: #0f172a !important; }
+        h2 { color: #1e293b !important; }
+        h3 { color: #334155 !important; }
 
         /* Rapor Başlıkları */
         .report-header {
-            background-color: #f0f4f8;
+            background-color: #f8fafc;
             padding: 10px;
             border-radius: 5px;
-            border-left: 5px solid #2563eb; /* Canlı mavi vurgu çizgisi */
+            border-left: 5px solid #0f172a; /* Keskin koyu lacivert vurgu çizgisi */
             margin-bottom: 10px;
             font-weight: bold;
-            color: #1e293b;
+            color: #0f172a;
         }
         </style>
         """
