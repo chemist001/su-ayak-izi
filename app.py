@@ -835,51 +835,54 @@ def show_calculator_page():
             st.success(f"✅ Yeşil Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_yesil:.2f} m³/yıl")
 
     # --- 4. GRİ SU ---
-    with tab_gri:
+      with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
-        st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz. Sistem en kritik olanı seçecektir.")
+        st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
         
-        # Tabloyu doğrudan kalıcı hafızadan çağırıyor ve değişiklikleri kasaya kilitliyoruz
-        duzenlenmis_df = st.data_editor(st.session_state['gri_tablo'], num_rows="dynamic", use_container_width=True)
-       # --- GRİ SU HESAPLAMA BUTONU ---
-        # Tabloda yapılan son değişiklikleri garanti olsun diye tekrar hafızaya alıyoruz
-        st.session_state['gri_tablo'] = duzenlenmis_df 
+        # 1. Editör (Hafızadan okuyor ama anlık kaydetmiyor)
+        duzenlenmis_df = st.data_editor(
+            st.session_state['gri_tablo'], 
+            num_rows="dynamic", 
+            use_container_width=True,
+            key="gri_editor_key" # Benzersiz bir key ekledik
+        )
         
         st.divider()
+    
+        # 2. Butona basılınca hem hafızayı güncelle hem hesapla
         if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
+            # Önce tabloyu hafızaya kesin olarak kaydedelim
+            st.session_state['gri_tablo'] = duzenlenmis_df 
+            
             hesaplanan_gri = 0.0
             kritik_kirletici = "Belirlenmedi"
             
-            # Eğer tablo boş değilse hesaplama yap
             if not duzenlenmis_df.empty:
                 try:
-                    # 1. Tablodaki satırları, senin hesaplama motorunun istediği formata (liste içine sözlük) çeviriyoruz
                     pollutants_list = []
                     for index, row in duzenlenmis_df.iterrows():
                         pollutants_list.append({
-                            "name": row["Parametre"],
+                            "name": str(row["Parametre"]),
                             "load": float(row["Yük (kg/yıl)"]),
                             "c_max": float(row["C_max Limit (kg/m³)"]),
                             "c_nat": float(row["C_nat Doğal (kg/m³)"])
                         })
                     
-                    # 2. Senin gerçek hesaplama motorunu (Sınıfı) çağırıyoruz
                     calc = WaterFootprintCalculator()
                     res_grey_dict = calc.calculate_grey_water(pollutants_list)
                     
-                    # 3. Sonuçları alıyoruz
                     hesaplanan_gri = res_grey_dict["value_m3"]
                     kritik_kirletici = res_grey_dict["critical_pollutant"]
                     
-                except Exception as e:
-                    st.warning(f"Hesaplama sırasında bir hata oluştu. Lütfen tablodaki verileri kontrol edin. Hata Detayı: {str(e)}")
+                    st.session_state.gri_su_sonuc = hesaplanan_gri
+                    st.session_state.kritik_kirletici_isim = kritik_kirletici
                     
-            # 4. Çıkan sonucu ANA HAFIZAYA atıyoruz
-            st.session_state.gri_su_sonuc = hesaplanan_gri
-            st.session_state.kritik_kirletici_isim = kritik_kirletici # İsmi de kaydediyoruz ki raporda kullanılabilsin
-            
-            # 5. Kullanıcıya ekranda gösteriyoruz
-            st.success(f"✅ Gri Su Ayak İzi Başarıyla Hesaplandı!\n\nKritik Kirletici: **{kritik_kirletici}** \nHacim: **{hesaplanan_gri:,.2f} m³/yıl**")
+                    st.success(f"✅ Hesaplandı! Kritik Kirletici: **{kritik_kirletici}** | Hacim: **{hesaplanan_gri:,.2f} m³/yıl**")
+                    
+                except Exception as e:
+                    st.warning(f"Hesaplama hatası: {str(e)}")
+            else:
+                st.error("Tablo boş, lütfen veri girişi yapın.")
             
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
