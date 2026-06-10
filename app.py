@@ -202,30 +202,27 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 1 NUMARALI TASARIM: MODERN MESH GRADIENT */
+        /* 2 NUMARALI TASARIM: EXECUTIVE DARK (Üst Düzey Yönetici Raporu) */
         .stApp {
-            background-color: #f0f9ff;
-            background-image: 
-                radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), 
-                radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Beyaz, hafif şeffaf ve gölgeli) */
+        /* Kart Tasarımları (Koyu arka planda efsane kontrast için beyaz ve derin gölgeli) */
         div[data-testid="stVerticalBlock"] > div {
             background-color: rgba(255, 255, 255, 0.96);
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Karanlık temaya özel daha derin gölge */
         }
         
-        /* Sidebar (Kenar Çubuğu) */
+        /* Sidebar (Kenar Çubuğu - Beyaz kartlarla uyumlu) */
         [data-testid="stSidebar"] {
             background-color: rgba(240, 248, 255, 0.95);
-            border-right: 1px solid #b0c4de;
+            border-right: 1px solid #1a2a32;
         }
         
-        /* Başlık Renkleri */
+        /* Başlık Renkleri (Beyaz kartın üzerinde oldukları için orijinal renklerini koruduk) */
         h1 { color: #003366 !important; }
         h2 { color: #004e92 !important; }
         h3 { color: #006994 !important; }
