@@ -198,59 +198,9 @@ if 'sorumlular_tablosu' not in st.session_state:
 # ==========================================
 # 1. GÖRSEL TASARIM VE CSS
 # ==========================================
-def add_bg_from_url():
-    st.html(
-        """
-        <style>
-        /* 8 NUMARALI TASARIM: KUŞBAKIŞI MAVİ BUZUL (Ultra Şeffaf / Buzlu Cam) */
-        .stApp {
-           background-color: #f0f9ff;
-            background-image: radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
-            background-attachment: fixed;
-        }
-
-        /* DAHA ŞEFFAF KART TASARIMLARI (Buzul üzerinde eriyen cam efekti) */
-        div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.25); /* Beyazlığı çok düşürdük, buzul manzarası içeri girdi */
-            backdrop-filter: blur(16px); /* Arka planı puslu yaparak yazıların jilet gibi okunmasını sağladık */
-            -webkit-backdrop-filter: blur(16px);
-            padding: 25px;
-            border-radius: 16px; /* Daha premium yumuşak köşeler */
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); /* Havada asılı hissi veren derin gölge */
-            border: 1px solid rgba(255, 255, 255, 0.4); /* Gerçekçi bir buz/cam sınırı */
-        }
-        
-        /* Sidebar (Kenar Çubuğu - Kartlarla aynı şeffaf ferahlık) */
-        [data-testid="stSidebar"] {
-            background-color: rgba(255, 255, 255, 0.20);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Başlık Renkleri (Şeffaf buzul zemininde çok şık duran derin okyanus mavileri) */
-        h1 { color: #0c4a6e !important; } 
-        h2 { color: #075985 !important; }
-        h3 { color: #0369a1 !important; }
-
-        /* Rapor Başlıkları */
-        .report-header {
-            background-color: rgba(255, 255, 255, 0.4); /* Bu kısmı da şeffaflaştırdık */
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 5px solid #0284c7; /* Canlı mavi vurgu */
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #0c4a6e;
-        }
-        
-        /* Tabloların (Dataframe/DataEditor) çok saydam olup okunmaz olmasını engellemek için denge ayarı */
-        .stDataFrame, .stDataEditor {
-            background-color: rgba(255, 255, 255, 0.55) !important;
-        }
-        </style>
-        """
-    )
+background-color: #f0f9ff;
+background-image: radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
+background-attachment: fixed;
 # ==========================================
 # 2. HESAPLAMA MOTORU (BACKEND)
 # ==========================================
