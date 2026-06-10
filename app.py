@@ -2076,15 +2076,15 @@ def sayfa_performans_kpi():
     # --- EKSİK OLAN 1. KISIM: ÜRETİM VE PERSONEL VERİLERİ EKLENDİ ---
     st.subheader("1. Üretim ve Personel Verileri")
     col1, col2, col3, col4 = st.columns([2, 1, 2, 2]) 
-    uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=1.0, value=st.session_state.get('uretim_miktari', 0.0))
+    uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=0.0, value=st.session_state.get('uretim_miktari', 0.0))
     
     birim_secenekleri = ["ton", "kg", "adet", "metre" "m²", "m³", "litre", "kutu"]
     varsayilan_birim = st.session_state.get('uretim_birimi', 'ton')
     secili_index = birim_secenekleri.index(varsayilan_birim) if varsayilan_birim in birim_secenekleri else 0
     uretim_birimi = col2.selectbox("Birim", options=birim_secenekleri, index=secili_index)
     
-    calisma_gunu = col3.number_input("Yıllık Çalışma Günü", min_value=1, value=st.session_state.get('calisma_gunu', 0.0))
-    personel_sayisi = col4.number_input("Personel Sayısı", min_value=1, value=st.session_state.get('personel_sayisi', 0.0))
+    calisma_gunu = col3.number_input("Yıllık Çalışma Günü", min_value=0.0, value=st.session_state.get('calisma_gunu', 0.0))
+    personel_sayisi = col4.number_input("Personel Sayısı", min_value=0.0, value=st.session_state.get('personel_sayisi', 0.0))
 
     # --- 2. KISIM: SENİN HARİKA EKLENTİLERİN ---
     st.subheader("2. Evsel Su ve Diğer Su Tüketimleri")
