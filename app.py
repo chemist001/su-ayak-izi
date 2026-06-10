@@ -202,47 +202,44 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 7 NUMARALI TASARIM: 3D SOYUT İPEKSİ SU DALGASI (Apple Mac Stili) */
+        /* 8 NUMARALI TASARIM: KUŞBAKIŞI MAVİ BUZUL (Doğal Sürdürülebilirlik) */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2560&auto=format&fit=crop");
+            background-image: url("https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?q=80&w=2560&auto=format&fit=crop");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Glassmorphism - Apple tarzı buzlu cam efekti) */
+        /* Kart Tasarımları (Buzul temasına uygun ferah ve temiz beyaz kartlar) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.85); /* Arkadaki dalgaları hafif gösteren şeffaflık */
-            backdrop-filter: blur(12px); /* Gerçek buzlu cam bulanıklığı */
-            -webkit-backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.92); /* Doğal manzarayı çok hafif hissettiren şeffaflık */
             padding: 25px;
-            border-radius: 16px; /* Apple tarzı daha yumuşak köşeler */
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15); /* Zarif ve genişleyen gölge */
-            border: 1px solid rgba(255, 255, 255, 0.4); /* İncecik cam yansıması çizgisi */
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Çok hafif, uçuşan gölge */
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
         
-        /* Sidebar (Kenar Çubuğu - Genel bütünlüğe uygun buzlu cam) */
+        /* Sidebar (Kenar Çubuğu - Temiz ve ferah) */
         [data-testid="stSidebar"] {
-            background-color: rgba(255, 255, 255, 0.80);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(255, 255, 255, 0.5);
+            background-color: rgba(245, 250, 255, 0.90); /* Hafif buz mavisi alt tonlu beyaz */
+            backdrop-filter: blur(5px);
+            border-right: 1px solid #e0f2fe;
         }
         
-        /* Başlık Renkleri (Modern ve pürüzsüz koyu griler) */
-        h1 { color: #1d1d1f !important; }
-        h2 { color: #333336 !important; }
-        h3 { color: #434347 !important; }
+        /* Başlık Renkleri (Sürdürülebilirlik ve su temasına uygun okyanus mavileri) */
+        h1 { color: #0284c7 !important; } /* Canlı gökyüzü/okyanus mavisi */
+        h2 { color: #0369a1 !important; }
+        h3 { color: #075985 !important; }
 
         /* Rapor Başlıkları */
         .report-header {
-            background-color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(240, 249, 255, 0.85);
             padding: 10px;
-            border-radius: 8px;
-            border-left: 5px solid #0071e3; /* Apple'ın ikonik mavi vurgusu */
+            border-radius: 6px;
+            border-left: 5px solid #0284c7; /* Buzul mavisi vurgu */
             margin-bottom: 10px;
             font-weight: bold;
-            color: #1d1d1f;
+            color: #0c4a6e;
         }
         </style>
         """
