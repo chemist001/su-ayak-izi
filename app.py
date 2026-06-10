@@ -1033,14 +1033,22 @@ def sayfa_raporlama():
                             
                         sistem_talimati = "Sen kıdemli bir sürdürülebilirlik denetçisisin. Yukarıdaki tesis verilerini analiz et. Vereceğin yanıta 'Merhaba, ben kıdemli yapay zeka asistanınız olarak paylaştığınız verileri derinlemesine analiz ettim.' cümlesi ile başla "
                         tam_soru = f"{sistem_talimati}\n\n{tesis_verileri}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
+                        
+                        # --- İŞTE BURAYA GÜVENLİK AĞINI (TRY-EXCEPT) EKLİYORUZ ---
+                        try:
+                            response = client.models.generate_content(
+                                model='gemini-1.5-flash', # Model adını daha kararlı olan sürümle güncelledik
+                                contents=tam_soru
+                            )
+                                
+                            st.success("Analiz Tamamlandı!")
+                            st.markdown(response.text)
                             
-                        response = client.models.generate_content(
-                            model='gemini-flash-latest',
-                            contents=tam_soru
-                        )
+                        except Exception as e:
+                            # Sunucu hatası (503 vb.) verirse kırmızı ekran çıkmaz, bu tatlı uyarı çıkar
+                            st.warning("⏳ Yapay zeka sunucularında anlık bir yoğunluk yaşanıyor (High Demand). Lütfen 1-2 dakika sonra tekrar deneyin.")
+                            st.info(f"Teknik Detay: {str(e)}")
                             
-                        st.success("Analiz Tamamlandı!")
-                        st.markdown(response.text)
                 else:
                     st.warning("Lütfen bir soru girin.")
                 
