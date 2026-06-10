@@ -1489,7 +1489,7 @@ def sayfa_raporlama():
                     pdf_bytes = pdf_dosyasi.read()
                     
                 st.download_button(
-                    label="📥 Raporu PDF Olarak İndir",
+                    label="Raporu PDF Olarak İndir",
                     data=pdf_bytes,
                     file_name=f"Su_Ayak_Izi_Raporu_{str(company_name)}.pdf",
                     mime="application/pdf",
@@ -1502,14 +1502,14 @@ def sayfa_raporlama():
             except Exception as e:
                 st.error(f"Profesyonel PDF Oluşturma Hatası: {str(e)}")
             st.markdown("---")
-            st.subheader("💾 Raporu Veritabanına Kaydet")
+            st.subheader("Raporu Veritabanına Kaydet")
             st.info("Hesaplamalarınızı ve tesis verilerinizi güvenli bulut sistemine kaydetmek için aşağıdaki butonu kullanın.")
             
             # Kullanıcıya rapor ismini değiştirebilme imkanı sunuyoruz
             kayit_adi = st.text_input("Rapor Başlığı (Veritabanında bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
             
             # Kaydet butonu (Diğer butonlarla karışmasın diye özel key atadık)
-            if st.button("🚀 Raporu Kaydet", type="primary", key="btn_bulut_kayit_son"):
+            if st.button("Raporu Kaydet", type="primary", key="btn_bulut_kayit_son"):
                 # En tepeye yazdığımız fonksiyonu çağırıp motorun sonuçlarını içine atıyoruz
                 raporu_kaydet(
                     tesis_adi=kayit_adi,
