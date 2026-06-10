@@ -1037,7 +1037,7 @@ def sayfa_raporlama():
                         # --- İŞTE BURAYA GÜVENLİK AĞINI (TRY-EXCEPT) EKLİYORUZ ---
                         try:
                             response = client.models.generate_content(
-                                model='gemini-1.5-flash', # Model adını daha kararlı olan sürümle güncelledik
+                                model='gemini-flash-latest', # Senin orijinal ve çalışan model ismine geri döndük!
                                 contents=tam_soru
                             )
                                 
