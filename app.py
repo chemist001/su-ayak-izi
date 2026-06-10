@@ -202,52 +202,53 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* OKYANUS TEMALI ULTRA ŞEFFAF TASARIM */
+        /* 1 NUMARALI TASARIM: MESH GRADIENT + ULTRA ŞEFFAF CAM EFEKTİ */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=2560&auto=format&fit=crop");
-            background-size: cover;
-            background-position: center;
+            background-color: #f0f9ff;
+            background-image: 
+                radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), 
+                radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* ULTRA ŞEFFAF KARTLAR (Buzlu Cam Etkisi) */
+        /* DAHA ŞEFFAF KART TASARIMLARI (Pürüzsüz Glassmorphism) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.25); /* Çok yüksek şeffaflık */
-            backdrop-filter: blur(18px); /* Derin bulanıklık sayesinde yazıların netliği korunur */
-            -webkit-backdrop-filter: blur(18px);
+            background-color: rgba(255, 255, 255, 0.45); /* Arka planın maviliğini tatlıca içeri alan şeffaflık */
+            backdrop-filter: blur(12px); /* Yazıların okunabilirliğini garantileyen cam bulanıklığı */
+            -webkit-backdrop-filter: blur(12px);
             padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Okyanusun karanlığına uygun yumuşak gölge */
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px; /* Daha premium, yumuşak köşeler */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); /* Temiz zemine uygun çok hafif, zarif gölge */
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Gerçekçi cam parlaması sınırı */
         }
         
-        /* Sidebar (Kenar Çubuğu - Aynı şeffaf estetik) */
+        /* Sidebar (Kenar Çubuğu - Kartlarla aynı şeffaf ferahlık) */
         [data-testid="stSidebar"] {
-            background-color: rgba(255, 255, 255, 0.20);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(240, 248, 255, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
         }
         
-        /* Yazı Renkleri (Okyanusun derinliğinde en iyi okunan beyaz-gri tonları) */
-        h1, h2, h3, p, div { 
-            color: #ffffff !important; /* Yazıları beyaz yaparak okyanus üzerinde patlamasını sağladık */
-        }
+        /* Başlık Renkleri (Aydınlık cam üzerinde muazzam okunan lacivert tonları) */
+        h1 { color: #003366 !important; }
+        h2 { color: #004e92 !important; }
+        h3 { color: #006994 !important; }
 
-        /* Rapor Başlıkları (Şeffaf beyaz vurgu) */
+        /* Rapor Başlıkları */
         .report-header {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(240, 242, 246, 0.6); /* Şeffaf gri tonu */
             padding: 10px;
             border-radius: 8px;
-            border-left: 5px solid #60a5fa; /* Parlak bir su mavisi vurgusu */
+            border-left: 5px solid #004e92; /* Vurgulu profesyonel mavi */
             margin-bottom: 10px;
             font-weight: bold;
+            color: #111827; /* Okunabilir siyah/antrasit */
         }
         
-        /* Tablo Denge Ayarı */
+        /* Tabloların çok saydam olup veri girişini zorlaştırmaması için denge ayarı */
         .stDataFrame, .stDataEditor {
-            background-color: rgba(255, 255, 255, 0.3) !important;
-            color: white !important;
+            background-color: rgba(255, 255, 255, 0.7) !important;
         }
         </style>
         """
