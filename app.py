@@ -758,7 +758,7 @@ def show_calculator_page():
         )
         
         # 3. Aşama: "Kaydet" butonu
-        if st.button("💾 Sorumluları Kaydet"):
+        if st.button("Kaydet"):
             st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
             st.success("Sorumlu bilgileri başarıyla güncellendi!")
             st.rerun()
