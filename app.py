@@ -198,67 +198,60 @@ if 'sorumlular_tablosu' not in st.session_state:
 # ==========================================
 # 1. GÖRSEL TASARIM VE CSS
 # ==========================================
-background-color: #f0f9ff;
-background-image: radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
-background-attachment: fixed;
-# ==========================================
-# 2. HESAPLAMA MOTORU (BACKEND)
-# ==========================================
-class WaterFootprintCalculator:
-    
-    def calculate_blue_water(self, v_in=0.0, v_discharge=0.0, same_basin=True, 
-                            evaporation=0.0, incorporation=0.0, lost_return=0.0):
+def add_bg_from_url():
+    st.html(
         """
-        WFN Mavi Su Ayak İzi Hesaplaması
-        Öncelik Kütle Denkliğindedir (Mass Balance). 
-        """
-     
-        # 1. Yaklaşım: Kütle Denkliği (Giren ve çıkan su biliniyorsa)
-        if v_in > 0 and v_discharge >= 0:
-            if same_basin:
-                # Aynı havzaya dönüyorsa, aradaki kayıp tüketimdir (Mavi Su)
-                return max(0.0, v_in - v_discharge)
-            else:
-                # Farklı havzaya gidiyorsa, giren suyun tamamı kaybedilmiş (Mavi Su) sayılır
-                return v_in
-                
-        # 2. Yaklaşım: Doğrudan WFN Temel Formülü (Eğer doğrudan sahadan bu veriler toplanabilmişse)
-        return evaporation + incorporation + lost_return
-
-    def calculate_green_water(self, evaporation=0.0, incorporation=0.0):
-        """
-        Yeşil Su Ayak İzi (Tesis içi açık alan yağmur suyu kullanımı)
-        """
-        return evaporation + incorporation
-
-    def calculate_grey_water(self, pollutants):
-        """
-        Kritik Kirletici Algoritması:
-        Tüm kirleticileri hesaplar ve en yüksek olanı seçer.
-        """
-        max_grey_water = 0.0
-        critical_pollutant_name = "Kirlilik Yok / Veri Girilmedi"
-        
-        for p in pollutants:
-            name = p.get("name", "Bilinmeyen Kirletici")
-            load = p.get("load", 0.0)      
-            c_max = p.get("c_max", 1.0)    
-            c_nat = p.get("c_nat", 0.0)    
-            
-            # Güvenlik Kontrolü: Doğal kirlilik, yasal limitten büyük/eşitse atla
-            if c_max <= c_nat or load == 0:
-                continue 
-                
-            current_grey = load / (c_max - c_nat)
-            
-            if current_grey > max_grey_water:
-                max_grey_water = current_grey
-                critical_pollutant_name = name
-                
-        return {
-            "value_m3": max_grey_water,
-            "critical_pollutant": critical_pollutant_name
+        <style>
+        /* OKYANUS TEMALI ULTRA ŞEFFAF TASARIM */
+        .stApp {
+            background-image: url("https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=2560&auto=format&fit=crop");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
+
+        /* ULTRA ŞEFFAF KARTLAR (Buzlu Cam Etkisi) */
+        div[data-testid="stVerticalBlock"] > div {
+            background-color: rgba(255, 255, 255, 0.25); /* Çok yüksek şeffaflık */
+            backdrop-filter: blur(18px); /* Derin bulanıklık sayesinde yazıların netliği korunur */
+            -webkit-backdrop-filter: blur(18px);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Okyanusun karanlığına uygun yumuşak gölge */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Sidebar (Kenar Çubuğu - Aynı şeffaf estetik) */
+        [data-testid="stSidebar"] {
+            background-color: rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Yazı Renkleri (Okyanusun derinliğinde en iyi okunan beyaz-gri tonları) */
+        h1, h2, h3, p, div { 
+            color: #ffffff !important; /* Yazıları beyaz yaparak okyanus üzerinde patlamasını sağladık */
+        }
+
+        /* Rapor Başlıkları (Şeffaf beyaz vurgu) */
+        .report-header {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 5px solid #60a5fa; /* Parlak bir su mavisi vurgusu */
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        /* Tablo Denge Ayarı */
+        .stDataFrame, .stDataEditor {
+            background-color: rgba(255, 255, 255, 0.3) !important;
+            color: white !important;
+        }
+        </style>
+        """
+    )
 
 # ==========================================
 # 3. PDF RAPOR MOTORU (YENİ SİSTEM)
