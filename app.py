@@ -204,9 +204,8 @@ def add_bg_from_url():
         <style>
         /* 8 NUMARALI TASARIM: KUŞBAKIŞI MAVİ BUZUL (Ultra Şeffaf / Buzlu Cam) */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?q=80&w=2560&auto=format&fit=crop");
-            background-size: cover;
-            background-position: center;
+           background-color: #f0f9ff;
+            background-image: radial-gradient(at 80% 0%, #e0f2fe 0px, transparent 50%), radial-gradient(at 0% 50%, #bae6fd 0px, transparent 50%);
             background-attachment: fixed;
         }
 
