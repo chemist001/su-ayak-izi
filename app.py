@@ -202,44 +202,45 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 8 NUMARALI TASARIM: KUŞBAKIŞI MAVİ BUZUL (Doğal Sürdürülebilirlik) */
+        /* 10 NUMARALI TASARIM: SIVI METALİK MAVİ (Fütüristik) */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?q=80&w=2560&auto=format&fit=crop");
+            background-image: url("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2560&auto=format&fit=crop");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Buzul temasına uygun ferah ve temiz beyaz kartlar) */
+        /* Kart Tasarımları (Fütüristik, parlak zeminde keskin duran beyaz paneller) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.92); /* Doğal manzarayı çok hafif hissettiren şeffaflık */
+            background-color: rgba(255, 255, 255, 0.93); /* Arka planın enerjisini hafif içeri alan şeffaflık */
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Çok hafif, uçuşan gölge */
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); /* Derin ve vurgulu gölge */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* İnce teknolojik çerçeve */
         }
         
-        /* Sidebar (Kenar Çubuğu - Temiz ve ferah) */
+        /* Sidebar (Kenar Çubuğu - Yarı saydam teknolojik panel) */
         [data-testid="stSidebar"] {
-            background-color: rgba(245, 250, 255, 0.90); /* Hafif buz mavisi alt tonlu beyaz */
-            backdrop-filter: blur(5px);
-            border-right: 1px solid #e0f2fe;
+            background-color: rgba(245, 247, 250, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        /* Başlık Renkleri (Sürdürülebilirlik ve su temasına uygun okyanus mavileri) */
-        h1 { color: #0284c7 !important; } /* Canlı gökyüzü/okyanus mavisi */
-        h2 { color: #0369a1 !important; }
-        h3 { color: #075985 !important; }
+        /* Başlık Renkleri (Sıvı metal konseptiyle uyumlu karizmatik koyu lacivert/gri tonlar) */
+        h1 { color: #0f172a !important; } 
+        h2 { color: #1e293b !important; }
+        h3 { color: #334155 !important; }
 
         /* Rapor Başlıkları */
         .report-header {
-            background-color: rgba(240, 249, 255, 0.85);
+            background-color: rgba(241, 245, 249, 0.85);
             padding: 10px;
             border-radius: 6px;
-            border-left: 5px solid #0284c7; /* Buzul mavisi vurgu */
+            border-left: 5px solid #3b82f6; /* Parlak teknolojik mavi vurgu */
             margin-bottom: 10px;
             font-weight: bold;
-            color: #0c4a6e;
+            color: #0f172a;
         }
         </style>
         """
