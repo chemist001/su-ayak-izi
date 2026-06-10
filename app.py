@@ -202,44 +202,52 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 8 NUMARALI TASARIM: KUŞBAKIŞI MAVİ BUZUL (Doğal Sürdürülebilirlik) */
+        /* 9 NUMARALI TASARIM: FROSTED GLASS (Buzlu Cam / Yağmur) */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?q=80&w=2560&auto=format&fit=crop");
+            background-image: url("https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=2560&auto=format&fit=crop");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Buzul temasına uygun ferah ve temiz beyaz kartlar) */
+        /* DAHA ŞEFFAF KART TASARIMLARI (Glassmorphism Efekti) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.92); /* Doğal manzarayı çok hafif hissettiren şeffaflık */
+            background-color: rgba(255, 255, 255, 0.35); /* Beyazlığı %95'ten %35'e düşürdük, tamamen şeffaflaştı */
+            backdrop-filter: blur(16px); /* Arka planı puslu yaparak yazıların net okunmasını sağladık */
+            -webkit-backdrop-filter: blur(16px);
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Çok hafif, uçuşan gölge */
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px; /* Daha yumuşak, premium köşeler */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Hafif gölge ile derinlik */
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Zarif, incecik bir cam sınırı */
         }
         
-        /* Sidebar (Kenar Çubuğu - Temiz ve ferah) */
+        /* Sidebar (Kenar Çubuğu - Kartlarla aynı ultra şeffaf cam efekti) */
         [data-testid="stSidebar"] {
-            background-color: rgba(245, 250, 255, 0.90); /* Hafif buz mavisi alt tonlu beyaz */
-            backdrop-filter: blur(5px);
-            border-right: 1px solid #e0f2fe;
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
         }
         
-        /* Başlık Renkleri (Sürdürülebilirlik ve su temasına uygun okyanus mavileri) */
-        h1 { color: #0284c7 !important; } /* Canlı gökyüzü/okyanus mavisi */
-        h2 { color: #0369a1 !important; }
-        h3 { color: #075985 !important; }
+        /* Başlık Renkleri (Şeffaf zeminde daha net durmaları için koyu antrasit tonlar) */
+        h1 { color: #111827 !important; }
+        h2 { color: #1f2937 !important; }
+        h3 { color: #374151 !important; }
 
         /* Rapor Başlıkları */
         .report-header {
-            background-color: rgba(240, 249, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.5); /* Bu kısmı da şeffaflaştırdık */
             padding: 10px;
-            border-radius: 6px;
-            border-left: 5px solid #0284c7; /* Buzul mavisi vurgu */
+            border-radius: 8px;
+            border-left: 5px solid #4b5563; /* Şık bir koyu gri vurgu */
             margin-bottom: 10px;
             font-weight: bold;
-            color: #0c4a6e;
+            color: #111827;
+        }
+        
+        /* Tabloların için ekstra şeffaflık ayarı (İsteğe bağlı) */
+        .stDataFrame, .stDataEditor {
+            background-color: rgba(255, 255, 255, 0.6) !important;
         }
         </style>
         """
