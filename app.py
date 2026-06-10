@@ -839,27 +839,28 @@ def show_calculator_page():
         st.header("Gri Su Verileri (Kritik Kirletici)")
         st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
         
-        # 1. Editör (Hafızadan okuyor ama anlık kaydetmiyor)
+        # 1. Editör (Kalıcı hafızayı gösterir)
         duzenlenmis_df = st.data_editor(
             st.session_state['gri_tablo'], 
             num_rows="dynamic", 
             use_container_width=True,
-            key="gri_editor_key" # Benzersiz bir key ekledik
+            key="gri_editor_key" 
         )
         
         st.divider()
     
-        # 2. Butona basılınca hem hafızayı güncelle hem hesapla
+        # 2. Butona basılınca çalışacak "Mühürleme ve Hesaplama" bloğu
         if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
-            # Önce tabloyu hafızaya kesin olarak kaydedelim
+            # ÖNEMLİ: Tablodaki en son veriyi anında hafızaya alıyoruz
             st.session_state['gri_tablo'] = duzenlenmis_df 
             
-            hesaplanan_gri = 0.0
-            kritik_kirletici = "Belirlenmedi"
-            
-            if not duzenlenmis_df.empty:
+            # Eğer tablo boşsa veya veriler None ise uyarı ver
+            if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
+                st.warning("Lütfen tabloda boş hücre bırakmayın ve verileri tam girin.")
+            else:
                 try:
                     pollutants_list = []
+                    # Burada 'Parametre' gibi isimlerin tablonla tam eşleştiğinden emin ol!
                     for index, row in duzenlenmis_df.iterrows():
                         pollutants_list.append({
                             "name": str(row["Parametre"]),
@@ -868,21 +869,18 @@ def show_calculator_page():
                             "c_nat": float(row["C_nat Doğal (kg/m³)"])
                         })
                     
+                    # Hesaplama motorunu çalıştır
                     calc = WaterFootprintCalculator()
                     res_grey_dict = calc.calculate_grey_water(pollutants_list)
                     
-                    hesaplanan_gri = res_grey_dict["value_m3"]
-                    kritik_kirletici = res_grey_dict["critical_pollutant"]
+                    # Sonuçları hafızaya yaz
+                    st.session_state.gri_su_sonuc = res_grey_dict["value_m3"]
+                    st.session_state.kritik_kirletici_isim = res_grey_dict["critical_pollutant"]
                     
-                    st.session_state.gri_su_sonuc = hesaplanan_gri
-                    st.session_state.kritik_kirletici_isim = kritik_kirletici
-                    
-                    st.success(f"✅ Hesaplandı! Kritik Kirletici: **{kritik_kirletici}** | Hacim: **{hesaplanan_gri:,.2f} m³/yıl**")
+                    st.success(f"✅ Hesaplandı! Kritik Kirletici: **{st.session_state.kritik_kirletici_isim}** | Hacim: **{st.session_state.gri_su_sonuc:,.2f} m³/yıl**")
                     
                 except Exception as e:
-                    st.warning(f"Hesaplama hatası: {str(e)}")
-            else:
-                st.error("Tablo boş, lütfen veri girişi yapın.")
+                    st.error(f"Hesaplama hatası (Veri tiplerini kontrol edin): {str(e)}")
             
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
