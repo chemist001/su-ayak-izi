@@ -202,27 +202,29 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 2 NUMARALI TASARIM: EXECUTIVE DARK (Üst Düzey Yönetici Raporu) */
+        /* 3 NUMARALI TASARIM: TECH GRID (Noktalı Siber Ağ - Koyu Tema) */
         .stApp {
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            background-color: #111827;
+            background-image: radial-gradient(#374151 1px, transparent 1px);
+            background-size: 20px 20px;
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Koyu arka planda efsane kontrast için beyaz ve derin gölgeli) */
+        /* Kart Tasarımları (Koyu arka planda mükemmel kontrast için beyaz ve derin gölgeli) */
         div[data-testid="stVerticalBlock"] > div {
             background-color: rgba(255, 255, 255, 0.96);
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Karanlık temaya özel daha derin gölge */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Karanlık temaya uygun derinlik */
         }
         
-        /* Sidebar (Kenar Çubuğu - Beyaz kartlarla uyumlu) */
+        /* Sidebar (Kenar Çubuğu - Teknik temaya uygun ince sınır çizgisi) */
         [data-testid="stSidebar"] {
             background-color: rgba(240, 248, 255, 0.95);
-            border-right: 1px solid #1a2a32;
+            border-right: 1px solid #1f2937;
         }
         
-        /* Başlık Renkleri (Beyaz kartın üzerinde oldukları için orijinal renklerini koruduk) */
+        /* Başlık Renkleri (Orijinal hali korundu) */
         h1 { color: #003366 !important; }
         h2 { color: #004e92 !important; }
         h3 { color: #006994 !important; }
