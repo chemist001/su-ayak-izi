@@ -736,13 +736,19 @@ def show_calculator_page():
         st.subheader("👥 Su Yönetimi Sorumluları")
         st.write("Raporda yer alacak 'Sorumlu Kişilerin İletişim Bilgileri' tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
         
-        duzenlenmis_sorumlular = st.data_editor(
-            st.session_state['sorumlular_tablosu'], 
-            num_rows="dynamic", 
+          # 739. satırdan itibaren silip şunu yapıştır:
+
+        gecici_sorumlu_df = st.data_editor(
+            st.session_state['sorumlu_kisiler_tablosu'],
+            num_rows="dynamic",
             use_container_width=True,
             key="sorumlular_tablo_editor"
         )
-        st.session_state['sorumlular_tablosu'] = duzenlenmis_sorumlular
+        
+        if st.button("💾 Sorumluları Kaydet"):
+            st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
+            st.success("Sorumlu bilgileri başarıyla kaydedildi!")
+            st.rerun() # Sayfayı yenileyerek veriyi kesinleştir
 
     # --- 2. MAVİ SU (Kütle Denkliği ile Düzeltilmiş Yapı) ---
     with tab_mavi:
