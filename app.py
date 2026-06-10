@@ -202,42 +202,47 @@ def add_bg_from_url():
     st.html(
         """
         <style>
-        /* 6 NUMARALI TASARIM: DERİN OKYANUS (Luxury Dark) */
+        /* 7 NUMARALI TASARIM: 3D SOYUT İPEKSİ SU DALGASI (Apple Mac Stili) */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1551244072-5d12893278ab?q=80&w=2560&auto=format&fit=crop");
+            background-image: url("https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2560&auto=format&fit=crop");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Kart Tasarımları (Karanlık okyanus üzerinde patlayan beyaz, şık paneller) */
+        /* Kart Tasarımları (Glassmorphism - Apple tarzı buzlu cam efekti) */
         div[data-testid="stVerticalBlock"] > div {
-            background-color: rgba(255, 255, 255, 0.95); /* Arkadaki okyanusu %5 oranında gösteren beyaz cam */
+            background-color: rgba(255, 255, 255, 0.85); /* Arkadaki dalgaları hafif gösteren şeffaflık */
+            backdrop-filter: blur(12px); /* Gerçek buzlu cam bulanıklığı */
+            -webkit-backdrop-filter: blur(12px);
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5); /* Karanlık temaya özel, havada asılı tutan derin gölge */
+            border-radius: 16px; /* Apple tarzı daha yumuşak köşeler */
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15); /* Zarif ve genişleyen gölge */
+            border: 1px solid rgba(255, 255, 255, 0.4); /* İncecik cam yansıması çizgisi */
         }
         
-        /* Sidebar (Kenar Çubuğu - Genel bütünlüğü bozmaması için mat beyaz) */
+        /* Sidebar (Kenar Çubuğu - Genel bütünlüğe uygun buzlu cam) */
         [data-testid="stSidebar"] {
-            background-color: rgba(255, 255, 255, 0.93);
-            border-right: none;
+            background-color: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255, 255, 255, 0.5);
         }
         
-        /* Başlık Renkleri (Okyanus konseptine uygun karizmatik lacivert/antrasit tonları) */
-        h1 { color: #0f172a !important; }
-        h2 { color: #1e293b !important; }
-        h3 { color: #334155 !important; }
+        /* Başlık Renkleri (Modern ve pürüzsüz koyu griler) */
+        h1 { color: #1d1d1f !important; }
+        h2 { color: #333336 !important; }
+        h3 { color: #434347 !important; }
 
         /* Rapor Başlıkları */
         .report-header {
-            background-color: #f8fafc;
+            background-color: rgba(255, 255, 255, 0.6);
             padding: 10px;
-            border-radius: 5px;
-            border-left: 5px solid #0f172a; /* Keskin koyu lacivert vurgu çizgisi */
+            border-radius: 8px;
+            border-left: 5px solid #0071e3; /* Apple'ın ikonik mavi vurgusu */
             margin-bottom: 10px;
             font-weight: bold;
-            color: #0f172a;
+            color: #1d1d1f;
         }
         </style>
         """
