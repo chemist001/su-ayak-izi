@@ -254,6 +254,26 @@ def add_bg_from_url():
         """
     )
 
+class WaterFootprintCalculator:
+    def calculate_blue_water(self, v_in, v_discharge, same_basin):
+        return max(0.0, v_in - v_discharge) if same_basin else v_in
+
+    def calculate_green_water(self, evap, incorp):
+        return evap + incorp
+
+    def calculate_grey_water(self, pollutants):
+        # Örnek hesaplama mantığı (kendi formülünüze göre düzenleyin)
+        max_footprint = 0.0
+        critical_pollutant = "Yok"
+        for p in pollutants:
+            # Sıfıra bölünmeyi önlemek için küçük bir kontrol ekleyin
+            c_diff = p["c_max"] - p["c_nat"]
+            if c_diff > 0:
+                val = p["load"] / c_diff
+                if val > max_footprint:
+                    max_footprint = val
+                    critical_pollutant = p["name"]
+        return {"value_m3": max_footprint, "critical_pollutant": critical_pollutant}
 # ==========================================
 # 3. PDF RAPOR MOTORU (YENİ SİSTEM)
 # ==========================================
