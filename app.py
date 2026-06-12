@@ -920,6 +920,11 @@ def sayfa_raporlama():
 
     # PDF'in içine basılacak olan tabloları çekiyoruz (Boşsalar çökmesin diye yedekli)
     duzenlenmis_sorumlular = st.session_state.get('sorumlular_tablosu', pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"]))
+    st.subheader("Sorumlu Kişiler Listesi")
+    if not duzenlenmis_sorumlular.empty:
+        st.dataframe(duzenlenmis_sorumlular, use_container_width=True)
+    else:
+        st.warning("Henüz sorumlu kişi girişi yapılmamış.")
     sistem_siniri_tablosu = st.session_state.get('sistem_siniri_tablosu', pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]))
     duzenlenmis_hedefler = st.session_state.get('hedef_tablosu', pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"]))
     
