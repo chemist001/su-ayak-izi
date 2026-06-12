@@ -1208,7 +1208,7 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="1.3. Kurulus Su Yonetimi ve Sorumlular", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt=f"{str(company_name)} olarak raporlama yilinda Mavi su olarak; insani kullanim ve uretim amaciyla sebeke, kuyu ogre diger tatli su kaynaklari temin edilmektedir. Mavi su ayak izi hesabinda sayac tuketimleri ve faturalar kabul edilerek hesap yapilmaktadir.\n\nGri su olarak; uretim amaciyla proseste kullanilan suyun endustriyel nitelikli atiksu faaliyeti sonucunda aritma tesislerine veya kanalizasyona desarji baz alinmaktadir.")
+                pdf.multi_cell(190, 6, txt=f"{str(company_name)} olarak raporlama yilinda Mavi su olarak; insani kullanim ve uretim amaciyla şebeke, kuyu ogre diger tatli su kaynaklari temin edilmektedir. Mavi su ayak izi hesabinda sayac tuketimleri ve faturalar kabul edilerek hesap yapilmaktadir.\n\nGri su olarak; uretim amaciyla proseste kullanilan suyun endustriyel nitelikli atiksu faaliyeti sonucunda aritma tesislerine veya kanalizasyona desarji baz alinmaktadir.")
                 
                 pdf.ln(5)
                 pdf.set_font(f_isim, size=11, style='B')
