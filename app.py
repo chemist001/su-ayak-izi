@@ -1490,7 +1490,7 @@ def sayfa_raporlama():
             st.info("Hesaplamalarınızı ve tesis verilerinizi kaydetmek için aşağıdaki butonu kullanın.")
             
             # Kullanıcıya rapor ismini değiştirebilme imkanı sunuyoruz
-            kayit_adi = st.text_input("Raporunuz **Geçmiş Raporlar** bölümünde bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
+            kayit_adi = st.text_input("Raporunuz **Geçmiş Raporlar** bölümünde bu isimle görünecek", value=f"{company_name} - 2026 Raporu")
             
             # Kaydet butonu (Diğer butonlarla karışmasın diye özel key atadık)
             if st.button("Raporu Kaydet", type="primary", key="btn_bulut_kayit_son"):
