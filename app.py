@@ -892,7 +892,16 @@ def sayfa_veri_kalitesi():
 try:
                 import datetime
                 import os
-                from fpdf import FPDF # fpdf2 kullanmanızı öneririm
+                from fpdf import FPDF
+                
+                # --- EKSİK DEĞİŞKENLERİ BURADA GARANTİ ALTINA ALIYORUZ ---
+                company_name = st.session_state.get('firma_adi', 'Belirtilmeyen Firma')
+                address = st.session_state.get('adres', 'Belirtilmedi')
+                sector = st.session_state.get('sektor', 'Belirtilmedi')
+                c_phone = st.session_state.get('telefon', 'Belirtilmedi')
+                email = st.session_state.get('email', 'Belirtilmedi')
+                contact_person = st.session_state.get('yetkili', 'Belirtilmedi')
+                # --------------------------------------------------------
                 
                 logo_firma = "logos/firma_logo.png" 
                 logo_adaso = "logos/adaso_logo.png"
