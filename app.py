@@ -1263,46 +1263,46 @@ def sayfa_raporlama():
                 pdf.ln(5)
     
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="2.1. Raporun Sahibi Olan Kurulus ve Raporlama Donemi", ln=True)
+                pdf.cell(190, 8, txt="2.1. Raporun Sahibi Olan Kuruluş ve Raporlama Dönemi", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt=f"Raporun sahibi {str(company_name)} olup, rapor 01 Ocak {current_year} - 31 Aralik {current_year} tarih araligi icin hazirlanmistir.")
+                pdf.multi_cell(190, 6, txt=f"Raporun sahibi {str(company_name)} olup, rapor 01 Ocak {current_year} - 31 Aralık {current_year} tarih aralığı için hazırlanmıştır.")
     
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="2.2. Operasyonel Sinirlar", ln=True)
+                pdf.cell(190, 8, txt="2.2. Operasyonel Sınırlar", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt=f"Raporun Kurulus bilgilerinde belirtilmis olan adresimizdeki tum operasyonlar sistem sinirlarina dahil edilmistir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanim ve su desarjinin %100'u hesaplamalara dahil edilmistir.\nBu calismada kapidan kapiya (Gate-to-Gate) yaklasimi uygulanmistir.")
+                pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalısmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
     
                 # --- BÖLÜM 3 ---
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
                 pdf.set_font(f_isim, size=14, style='B')
-                pdf.cell(190, 10, txt="3. METODOLOJI", ln=True, align='L', fill=True)
+                pdf.cell(190, 10, txt="3. METODOLOJİ", ln=True, align='L', fill=True)
                 pdf.set_text_color(0, 0, 0)
                 pdf.ln(3)
                 
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="3.1. Veri Kalitesi", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanilan sebeke ve kuyu suyu verisi sayac tuketim kayitlarindan, diger tatli sular ise faturalardan alinmis oldugundan veri kalitesi yuksektir.")
+                pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verisi sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.")
                 pdf.ln(3)
                 
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="3.2. Kabuller", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarinda, uretim sonucu olusan atiksulari hesaplarken laboratuvar analiz sonuclarina gore en yuksek hacmi talep eden 'Kritik Kirletici' baz alinarak birincil veri kullanilmistir.")
+                pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarında, üretim sonucu oluşan atıksuları hesaplarken laboratuvar analiz sonuçlarına göre en yüksek hacmi talep eden 'Kritik Kirletici' baz alınarak birincil veri kullanılmıştır.")
     
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=11, style='B')
-                pdf.cell(190, 8, txt="Tablo 2: Genel Akis - Sistem Siniri", ln=True)
+                pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
                 
                 pdf.set_font(f_isim, size=10, style='B')
                 pdf.set_fill_color(255, 192, 0) 
-                pdf.cell(40, 8, txt="Bilesen", border=1, fill=True, align='C')
+                pdf.cell(40, 8, txt="Bileşen", border=1, fill=True, align='C')
                 pdf.cell(50, 8, txt="Kaynak", border=1, fill=True, align='C')
-                pdf.cell(50, 8, txt="Veri Kaynagi", border=1, fill=True, align='C')
-                pdf.cell(50, 8, txt="Veri Dogrulama", border=1, ln=True, fill=True, align='C')
+                pdf.cell(50, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                pdf.cell(50, 8, txt="Veri Doğrulama", border=1, ln=True, fill=True, align='C')
                 
                 pdf.set_font(f_isim, size=10, style='')
     
@@ -1331,47 +1331,47 @@ def sayfa_raporlama():
                 pdf.ln(5)
     
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="4.1. Mavi Su Ayak Izi Hesaplamalari", ln=True)
+                pdf.cell(190, 8, txt="4.1. Mavi Su Ayak İzi Hesaplamaları", ln=True)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt="Tesisin dogrudan tukettigi, buharlastirdigi veya urune kattigi tatli su miktarini temsil eder. Tesis giris suyu ile desarj arasindaki kutle denkligine gore hesaplanmistir.")
+                pdf.multi_cell(190, 6, txt="Tesisin doğrudan tükettiği, buharlaştırdığı veya ürüne kattığı tatlı su miktarını temsil eder. Tesis giriş suyu ile deşarj arasındaki kütle denkliğine göre hesaplanmıştır.")
                 
                 pdf.ln(3)
                 pdf.set_font(f_isim, size=10, style='B')
                 pdf.set_fill_color(220, 220, 220)
-                pdf.cell(95, 8, txt="Veri Kaynagi", border=1, fill=True, align='C')
-                pdf.cell(95, 8, txt="Toplam Tuketim (m³/yil)", border=1, ln=True, fill=True, align='C')
+                pdf.cell(95, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                pdf.cell(95, 8, txt="Toplam Tüketim (m³/yıl)", border=1, ln=True, fill=True, align='C')
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.cell(95, 8, txt="Tesis Mavi Su Ayak Izi Hacmi", border=1, align='C')
+                pdf.cell(95, 8, txt="Tesis Mavi Su Ayak İzi Hacmi", border=1, align='C')
                 pdf.cell(95, 8, txt=f"{format_num_anlik(res_blue)}", border=1, ln=True, align='C')
     
                 pdf.ln(5)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="4.2. Yesil Su Ayak Izi Hesaplamalari", ln=True)
+                pdf.cell(190, 8, txt="4.2. Yeşil Su Ayak İzi Hesaplamalari", ln=True)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt="Tesis sinirlari icerisinde tuketilen veya urune katilan yagmur suyunu temsil eder.")
+                pdf.multi_cell(190, 6, txt="Tesis sınırları içerisinde tüketilen veya ürüne katılan yağmur suyunu temsil eder.")
                 
                 pdf.ln(3)
                 pdf.set_font(f_isim, size=10, style='B')
                 pdf.set_fill_color(220, 220, 220)
-                pdf.cell(95, 8, txt="Veri Kaynagi", border=1, fill=True, align='C')
-                pdf.cell(95, 8, txt="Toplam Tuketim (m³/yil)", border=1, ln=True, fill=True, align='C')
+                pdf.cell(95, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                pdf.cell(95, 8, txt="Toplam Tüketim (m³/yil)", border=1, ln=True, fill=True, align='C')
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.cell(95, 8, txt="Tesis Yesil Su Ayak Izi Hacmi", border=1, align='C')
+                pdf.cell(95, 8, txt="Tesis Yeşil Su Ayak İzi Hacmi", border=1, align='C')
                 pdf.cell(95, 8, txt=f"{format_num_anlik(res_green)}", border=1, ln=True, align='C')
     
                 pdf.ln(5)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="4.3. Gri Su Ayak Izi Hesaplamalari", ln=True)
+                pdf.cell(190, 8, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt="Tesisten cikan atiksudaki kirlilik yukunun, dogal alici ortam standartlarina kadar seyreltilmesi icin gereken teorik tatli su miktarini temsil eder. En kritik kirletici parametresi baz alinmistir.")
+                pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken teorik tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
                 
                 pdf.ln(3)
                 pdf.set_font(f_isim, size=10, style='B')
                 pdf.set_fill_color(220, 220, 220)
-                pdf.cell(95, 8, txt="Bilesen / Kritik Kirletici", border=1, fill=True, align='C')
-                pdf.cell(95, 8, txt="Gereken Seyreltme Hacmi (m³/yil)", border=1, ln=True, fill=True, align='C')
+                pdf.cell(95, 8, txt="Bileşen / Kritik Kirletici", border=1, fill=True, align='C')
+                pdf.cell(95, 8, txt="Gereken Seyreltme Hacmi (m³/yıl)", border=1, ln=True, fill=True, align='C')
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.cell(95, 8, txt="Endustriyel Atiksu (Kritik Kirletici)", border=1, align='C')
+                pdf.cell(95, 8, txt="Endüstriyel Atıksu (Kritik Kirletici)", border=1, align='C')
                 pdf.cell(95, 8, txt=f"{format_num_anlik(res_grey)}", border=1, ln=True, align='C')
     
                 # --- BÖLÜM 5 ---
@@ -1379,21 +1379,21 @@ def sayfa_raporlama():
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
                 pdf.set_font(f_isim, size=14, style='B')
-                pdf.cell(190, 10, txt="5. SONUC", ln=True, align='L', fill=True)
+                pdf.cell(190, 10, txt="5. SONUÇ", ln=True, align='L', fill=True)
                 pdf.set_text_color(0, 0, 0)
                 pdf.ln(3)
     
                 total_vol = res_blue + res_green + res_grey
                 
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt=f"Toplam Tesis Su Ayak Izi: {format_num_anlik(total_vol)} m³/yil", ln=True)
+                pdf.cell(190, 8, txt=f"Toplam Tesis Su Ayak İzi: {format_num_anlik(total_vol)} m³/yıl", ln=True)
                 pdf.ln(3)
     
                 pdf.set_fill_color(0, 0, 128)
                 pdf.set_text_color(255, 255, 255)
-                pdf.cell(70, 8, txt="Bilesen", border=1, align='C', fill=True)
-                pdf.cell(70, 8, txt="Hacim (m³/yil)", border=1, align='C', fill=True)
-                pdf.cell(50, 8, txt="Dagilim (%)", border=1, ln=True, align='C', fill=True)
+                pdf.cell(70, 8, txt="Bileşen", border=1, align='C', fill=True)
+                pdf.cell(70, 8, txt="Hacim (m³/yıl)", border=1, align='C', fill=True)
+                pdf.cell(50, 8, txt="Dağılım (%)", border=1, ln=True, align='C', fill=True)
                 
                 pdf.set_text_color(0, 0, 0)
                 pdf.set_font(f_isim, size=11, style='')
@@ -1405,7 +1405,7 @@ def sayfa_raporlama():
                 pdf.cell(70, 8, txt=f"{format_num_anlik(res_blue)}", border=1, align='C')
                 pdf.cell(50, 8, txt=f"% {p_blue:,.1f}", border=1, ln=True, align='C')
                 
-                pdf.cell(70, 8, txt="Yesil Su", border=1, align='C')
+                pdf.cell(70, 8, txt="Yeşil Su", border=1, align='C')
                 pdf.cell(70, 8, txt=f"{format_num_anlik(res_green)}", border=1, align='C')
                 pdf.cell(50, 8, txt=f"% {p_green:,.1f}", border=1, ln=True, align='C')
                 
@@ -1421,7 +1421,7 @@ def sayfa_raporlama():
     
                 pdf.ln(6)
     
-                etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
+                etiketler = ['Mavi Su', 'Yeşil Su', 'Gri Su'] 
                 degerler = [res_blue, res_green, res_grey] 
                 renkler = ['#678B99', '#8A9A70', '#C25946']
                 
@@ -1436,7 +1436,7 @@ def sayfa_raporlama():
                                                      wedgeprops=dict(width=0.3, edgecolor='w')) 
                     
                     ax.axis('equal') 
-                    ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
+                    ax.set_title("Toplam Su Ayak Izi Bileşimi", fontsize=12, fontweight='bold', pad=20)
                     
                     total = sum(degerler)
                     ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
@@ -1455,13 +1455,13 @@ def sayfa_raporlama():
                         pdf.set_fill_color(0, 150, 136) 
                         pdf.set_text_color(255, 255, 255) 
                         pdf.set_font(f_isim, size=14, style='B')
-                        pdf.cell(190, 10, txt="6. SURDURULEBILIRLIK HEDEFLERI", ln=True, align='L', fill=True)
+                        pdf.cell(190, 10, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True, align='L', fill=True)
                         pdf.set_text_color(0, 0, 0)
                         pdf.ln(5)
                         
                         pdf.set_font(f_isim, size=11, style='')
                         for i, hedef in enumerate(gecerli_hedefler):
-                            hedef_metni = f"• {hedef['Hedef Yılı']} Yili Hedefi: {hedef['Hedef Açıklaması']}"
+                            hedef_metni = f"• {hedef['Hedef Yılı']} Yılı Hedefi: {hedef['Hedef Açıklaması']}"
                             pdf.multi_cell(190, 6, txt=hedef_metni)
                 except:
                     pass
