@@ -919,7 +919,7 @@ def sayfa_raporlama():
     rapor_tarihi = st.session_state.get('rapor_tarihi', None)
 
     # PDF'in içine basılacak olan tabloları çekiyoruz (Boşsalar çökmesin diye yedekli)
-    duzenlenmis_sorumlular = st.session_state.get('sorumlular_tablosu', pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"]))
+    duzenlenmis_sorumlular = st.session_state.get('sorumlu_kisiler_tablosu', pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"]))
     sistem_siniri_tablosu = st.session_state.get('sistem_siniri_tablosu', pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]))
     duzenlenmis_hedefler = st.session_state.get('hedef_tablosu', pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"]))
     
