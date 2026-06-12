@@ -1231,9 +1231,9 @@ def sayfa_raporlama():
                 try:
                     gecerli_sorumlular = [row for index, row in duzenlenmis_sorumlular.iterrows() if str(row["Görev"]).strip() != ""]
                     for row in gecerli_sorumlular:
-                        sorumlu = str(row["Sorumlu Kişi"])[:30] 
-                        gorev = str(row["Görev"])[:45]
-                        iletisim = str(row["İletişim"])[:25]
+                        sorumlu = str(row["Sorumlu Kisi"])[:30] 
+                        gorev = str(row["Gorev"])[:45]
+                        iletisim = str(row["Iletisim"])[:25]
                         pdf.cell(60, 8, txt=sorumlu, border=1, align='C')
                         pdf.cell(80, 8, txt=gorev, border=1, align='C')
                         pdf.cell(50, 8, txt=iletisim, border=1, ln=True, align='C')
