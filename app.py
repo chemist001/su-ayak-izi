@@ -1316,7 +1316,7 @@ try:
                 if os.path.exists(gecici_dosya_adi): os.remove(gecici_dosya_adi)
                 if os.path.exists("temp_grafik_anlik.png"): os.remove("temp_grafik_anlik.png")
     
- except Exception as e:
+except Exception as e:
                 st.error(f"Profesyonel PDF Oluşturma Hatası: {str(e)}")
             # ------------------------------------------------
     
