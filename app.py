@@ -1120,7 +1120,7 @@ def sayfa_raporlama():
                 
                 pdf.set_text_color(0, 0, 0)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapisi Adana Sanayi Odasi Tarafindan Saglanmistir. Bu Rapor, {str(company_name)} Tarafindan MaviRota Platformu Kullanilarak Hazirlanmistir.", align='C')
+                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapisi Adana Sanayi Odasi Tarafindan Saglanmistir. Bu Rapor, {str(company_name)} Tarafindan H2Odenge Platformu Kullanilarak Hazirlanmistir.", align='C')
     
                 # --- İÇİNDEKİLER ---
                 pdf.add_page()
