@@ -1238,21 +1238,21 @@ def sayfa_raporlama():
                 # --- BÖLÜM 1 DEVAMI VE BÖLÜM 2 ---
                 pdf.add_page()
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="1.4. Amac ve Kapsam", ln=True)
+                pdf.cell(190, 8, txt="1.4. Amaç ve Kapsam", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt=f"{str(company_name)} bunyesinde su kullanimi ve su guvenligini saglamak icin olusturulan hedeflere ulasmak amaciyla kurulus bazinda bu rapor hazirlanmistir.\nRaporun amaci; {current_year} yili su kullanimi ve desarjina dair hesaplamalardan elde edilen miktarlarin dogrulanmasi ve seffaf bir surec olusturulmasidir.")
+                pdf.multi_cell(190, 6, txt=f"{str(company_name)} bünyesinde su kullanımı ve su güvenliğini sağlamak için oluşturulan hedeflere ulaşmak amacıyla kuruluş bazında bu rapor hazırlanmıştır.\nRaporun amacı; {current_year} yılı su kullanımı ve deşarjına dair hesaplamalardan elde edilen miktarların doğrulanması ve şeffaf bir süreç oluşturulmasıdır.")
                 
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="1.5. Hedef Kullanici", ln=True)
+                pdf.cell(190, 8, txt="1.5. Hedef Kullanıcı", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt="Su ayak izi raporu hedef kullanicilari; Firmamiz Ust Yonetimi, Calisanlar, Tedarikciler ve Diger Paydaslardir.\nRapor, resmi kurumlarin talebi durumunda, surdurulebilirlik raporlarina veri talebi durumunda ve kuresel organizasyonlarin talebi durumunda ilgili kitlelere iletilir.")
+                pdf.multi_cell(190, 6, txt="Su ayak izi raporu hedef kullanıcıları; Firmamız Üst Yönetimi, Çalışanlar, Tedarikçiler ve Diğer Paydaşlardır.\nRapor, resmi kurumların talebi durumunda, sürdürülebilirlik raporlarına veri talebi durumunda ve küresel organizasyonların talebi durumunda ilgili kitlelere iletilir.")
     
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="1.6. Raporun ISO 14046:2014'e Uygunluguna Dair Aciklama", ln=True)
+                pdf.cell(190, 8, txt="1.6. Raporun ISO 14046:2014'e Uygunluğuna Dair Açıklama", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt="Su Ayakizi Raporu 'ISO 14046:2014 Water Footprint - Principles, Requirements and Guidelines' gereklerine uygun olarak yazilimimiz tarafindan otomatik hazirlanmistir.")
+                pdf.multi_cell(190, 6, txt="Su Ayakizi Raporu 'ISO 14046:2014 Water Footprint - Principles, Requirements and Guidelines' gereklerine uygun olarak yazılımımız tarafından otomatik hazırlanmıştır.")
     
                 pdf.ln(6)
                 pdf.set_fill_color(0, 150, 136) 
