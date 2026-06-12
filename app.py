@@ -1486,11 +1486,11 @@ def sayfa_raporlama():
             except Exception as e:
                 st.error(f"Profesyonel PDF Oluşturma Hatası: {str(e)}")
             st.markdown("---")
-            st.subheader("Raporu Veritabanına Kaydet")
-            st.info("Hesaplamalarınızı ve tesis verilerinizi güvenli bulut sistemine kaydetmek için aşağıdaki butonu kullanın.")
+            st.subheader("Raporu Kaydet")
+            st.info("Hesaplamalarınızı ve tesis verilerinizi kaydetmek için aşağıdaki butonu kullanın.")
             
             # Kullanıcıya rapor ismini değiştirebilme imkanı sunuyoruz
-            kayit_adi = st.text_input("Rapor Başlığı (Veritabanında bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
+            kayit_adi = st.text_input("Raporunuz **Geçmiş Raporlar** bölümünde bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
             
             # Kaydet butonu (Diğer butonlarla karışmasın diye özel key atadık)
             if st.button("Raporu Kaydet", type="primary", key="btn_bulut_kayit_son"):
