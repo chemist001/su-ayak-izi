@@ -1244,7 +1244,7 @@ def sayfa_raporlama():
                 
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="1.5. Hedef Kullanici", ln=True)
+                pdf.cell(190, 8, txt="1.5. Hedef Kullanıcı", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
                 pdf.multi_cell(190, 6, txt="Su ayak izi raporu hedef kullanıcıları; Firmamız Üst Yönetimi, Çalışanlar, Tedarikçiler ve Diğer Paydaşlardır.\nRapor, resmi kurumların talebi durumunda, sürdürülebilirlik raporlarına veri talebi durumunda ve küresel organizasyonların talebi durumunda ilgili kitlelere iletilir.")
     
@@ -1269,7 +1269,7 @@ def sayfa_raporlama():
     
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="2.2. Operasyonel Sinirlar", ln=True)
+                pdf.cell(190, 8, txt="2.2. Operasyonel Sınırlar", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
                 pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalısmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
     
@@ -1436,7 +1436,7 @@ def sayfa_raporlama():
                                                      wedgeprops=dict(width=0.3, edgecolor='w')) 
                     
                     ax.axis('equal') 
-                    ax.set_title("Toplam Tesis Su Ayak İzi Bileşimi", fontsize=12, fontweight='bold', pad=20)
+                    ax.set_title("Toplam Su Ayak İzi Bileşimi", fontsize=12, fontweight='bold', pad=20)
                     
                     total = sum(degerler)
                     ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
