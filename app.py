@@ -1101,7 +1101,7 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=24, style='B')
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
-                pdf.cell(190, 20, txt="SU AYAK IZI RAPORU", ln=True, align='C', fill=True)
+                pdf.cell(190, 20, txt="SU AYAK İZİ RAPORU", ln=True, align='C', fill=True)
                 
                 pdf.set_text_color(0, 0, 0) 
                 pdf.ln(10)
@@ -1120,7 +1120,7 @@ def sayfa_raporlama():
                 
                 pdf.set_text_color(0, 0, 0)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapisi Adana Sanayi Odasi Tarafindan Saglanmistir. Bu Rapor, {str(company_name)} Tarafindan H2Odenge Platformu Kullanilarak Hazirlanmistir.", align='C')
+                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından H2Odenge Platformu Kullanılarak Hazırlanmıştır.", align='C')
     
                 # --- İÇİNDEKİLER ---
                 pdf.add_page()
