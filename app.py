@@ -1080,7 +1080,7 @@ def sayfa_raporlama():
                     def footer(self):
                         self.set_y(-20)
                         self.set_font("helvetica", style='', size=8) 
-                        self.cell(100, 10, txt="Su Ayak İzi Raporu", ln=False, align='L')
+                        self.cell(100, 10, txt="Su Ayak Izi Raporu", ln=False, align='L')
                         self.cell(90, 10, txt=f"Sayfa {self.page_no()}/{{nb}}", ln=False, align='R')
     
                 pdf = ProfessionalPDF_Anlik()
