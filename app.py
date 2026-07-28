@@ -817,44 +817,44 @@ def show_calculator_page():
 
     # --- 4. GRİ SU ---
     with tab_gri:
-    st.header("Gri Su Verileri (Kritik Kirletici)")
-    st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
-    
-    # 1. Editör (Kalıcı hafızayı gösterir)
-    duzenlenmis_df = st.data_editor(
-        st.session_state['gri_tablo'], 
-        num_rows="dynamic", 
-        use_container_width=True,
-        key="gri_editor_key",
-        column_config={
-            "Yük (kg/yıl)": st.column_config.NumberColumn(
-                "Yük (kg/yıl)",
-                help="Analiz sonuçları (mg/L) ile debiyi (m3/yıl) çarpıp, sonucu 1000'e bölünüz. Çıkan sonucu (kg/yıl) buraya yazınız."
-            )
-        }
-    )
-    
-    st.divider()
-
-    # 2. Butona basılınca çalışacak "Mühürleme ve Hesaplama" bloğu
-    if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
-        # ÖNEMLİ: Tablodaki en son veriyi anında hafızaya alıyoruz
-        st.session_state['gri_tablo'] = duzenlenmis_df 
+        st.header("Gri Su Verileri (Kritik Kirletici)")
+        st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
         
-        # Eğer tablo boşsa veya veriler None ise uyarı ver
-        if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
-            st.warning("Lütfen tabloda boş hücre bırakmayın ve verileri tam girin.")
-        else:
-            try:
-                pollutants_list = []
-                # Burada 'Parametre' gibi isimlerin tablonla tam eşleştiğinden emin ol!
-                for index, row in duzenlenmis_df.iterrows():
-                    pollutants_list.append({
-                        "name": str(row["Parametre"]),
-                        "load": float(row["Yük (kg/yıl)"]),
-                        "c_max": float(row["C_max Limit (kg/m³)"]),
-                        "c_nat": float(row["C_nat Doğal (kg/m³)"])
-                    })
+        # 1. Editör (Kalıcı hafızayı gösterir)
+        duzenlenmis_df = st.data_editor(
+            st.session_state['gri_tablo'], 
+            num_rows="dynamic", 
+            use_container_width=True,
+            key="gri_editor_key",
+            column_config={
+                "Yük (kg/yıl)": st.column_config.NumberColumn(
+                    "Yük (kg/yıl)",
+                    help="Analiz sonuçları (mg/L) ile debiyi (m3/yıl) çarpıp, sonucu 1000'e bölünüz. Çıkan sonucu (kg/yıl) buraya yazınız."
+                )
+            }
+        )
+        
+        st.divider()
+    
+        # 2. Butona basılınca çalışacak "Mühürleme ve Hesaplama" bloğu
+        if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
+            # ÖNEMLİ: Tablodaki en son veriyi anında hafızaya alıyoruz
+            st.session_state['gri_tablo'] = duzenlenmis_df 
+            
+            # Eğer tablo boşsa veya veriler None ise uyarı ver
+            if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
+                st.warning("Lütfen tabloda boş hücre bırakmayın ve verileri tam girin.")
+            else:
+                try:
+                    pollutants_list = []
+                    # Burada 'Parametre' gibi isimlerin tablonla tam eşleştiğinden emin ol!
+                    for index, row in duzenlenmis_df.iterrows():
+                        pollutants_list.append({
+                            "name": str(row["Parametre"]),
+                            "load": float(row["Yük (kg/yıl)"]),
+                            "c_max": float(row["C_max Limit (kg/m³)"]),
+                            "c_nat": float(row["C_nat Doğal (kg/m³)"])
+                        })
                     
                     # Hesaplama motorunu çalıştır
                     calc = WaterFootprintCalculator()
