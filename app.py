@@ -819,19 +819,13 @@ def show_calculator_page():
     with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
         st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
-        
+        st.info("💡 **Nasıl Hesaplanır?** Analiz sonuçları (mg/L) ile debiyi (m³/yıl) çarpıp, sonucu 1000'e bölünüz. Çıkan sonucu (kg/yıl) tabloda 'Yük' sütununa yazınız.")
         # 1. Editör (Kalıcı hafızayı gösterir)
         duzenlenmis_df = st.data_editor(
             st.session_state['gri_tablo'], 
             num_rows="dynamic", 
             use_container_width=True,
             key="gri_editor_key",
-            column_config={
-                "Yük (kg/yıl)": st.column_config.NumberColumn(
-                    "Yük (kg/yıl)",
-                    help="Analiz sonuçları (mg/L) ile debiyi (m3/yıl) çarpıp, sonucu 1000'e bölünüz. Çıkan sonucu (kg/yıl) buraya yazınız."
-                )
-            }
         )
         
         st.divider()
