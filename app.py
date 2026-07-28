@@ -752,7 +752,7 @@ def show_calculator_page():
         kuyu_suyu = c2.number_input("Kuyu Suyu (m³/yıl)", min_value=0.0, value=st.session_state['kuyu_suyu'])
         st.session_state['kuyu_suyu'] = kuyu_suyu
         
-         diger_su = c3.number_input(
+        diger_su = c3.number_input(
             "Taşıma/Kaynak Suyu (m³/yıl)", 
             min_value=0.0, 
             value=st.session_state['diger_su'],
