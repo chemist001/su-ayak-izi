@@ -753,7 +753,7 @@ def show_calculator_page():
         st.session_state['kuyu_suyu'] = kuyu_suyu
         
         diger_su = c3.number_input(
-            "Taşıma/Kaynak Suyu (m³/yıl), 
+            "Taşıma/Kaynak Suyu (m³/yıl)", 
             min_value=0.0, 
             value=st.session_state['diger_su'],
             help="damacana, bardak su vb."
