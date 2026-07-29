@@ -441,7 +441,28 @@ def show_home_page():
     
     st.markdown("### Su Ayak İzinin 3 Rengi")
 
-# Senin 3'lü sütun yapın aynen kalıyor
+    # Sütunların ve içindeki elemanların kusursuz hizalanması için CSS sihirbazı
+    st.html("""
+    <style>
+    /* Streamlit'in 3'lü kolon bloğunu esnek (flex) yapıya dönüştürür */
+    [data-testid="column"] {
+        display: flex;
+        flex-direction: column;
+    }
+    /* Sütun içindeki ana kutunun tüm yüksekliği kaplamasını sağlar */
+    [data-testid="column"] > div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    /* En alttaki renkli formül bandını otomatik olarak en alta iter */
+    [data-testid="column"] > div > div:last-child {
+        margin-top: auto;
+    }
+    </style>
+    """)
+
+    # Senin 3'lü sütun yapın aynen kalıyor
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -453,7 +474,7 @@ def show_home_page():
         st.write("Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Bu, suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.")
         st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
         
-        # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
+        # 2. Renkli Formül Bandı (Kartın en altına yapışık duracak)
         st.markdown("""
         <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Mavi Su Ayakizi = Buharlaşan Mavi Su + Ürüne Dahil Olan Mavi Su + Drenaj Miktarı
