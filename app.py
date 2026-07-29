@@ -826,11 +826,9 @@ def show_calculator_page():
         st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi parametre bazlı olarak aşağıya giriniz. İstediğiniz parametreyi silebilir veya yeni parametre ekleyebilirsiniz.")
         
         st.info("""
-        💡 **Bilgilendirme:**
-        * **Analiz Sonucu (mg/L):** Laboratuvar raporundaki parametre değeri.
-        * **Debi (m³/yıl):** Bu parametrenin ölçüldüğü atıksu miktarı.
-        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum deşarj limiti.
-        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal kirlilik seviyesi (Bilinmiyorsa **0** giriniz).
+
+        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum konsantrasyon değeri.
+        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal konsantrasyon değeri (Bilinmiyorsa **0** giriniz).
         """)
 
         # Dinamik parametre listesi için hafıza kontrolü
@@ -840,16 +838,6 @@ def show_calculator_page():
                 {"id": 1, "ad": "BOİ", "analiz": 0.0, "debi": 0.0, "c_max": 50.0, "c_nat": 0.0}
             ]
 
-        # Yeni parametre ekleme butonu
-        if st.button("➕ Yeni Parametre Ekle"):
-            yeni_id = st.session_state['gri_parametreler'][-1]["id"] + 1 if st.session_state['gri_parametreler'] else 0
-            st.session_state['gri_parametreler'].append(
-                {"id": yeni_id, "ad": f"Parametre {yeni_id + 1}", "analiz": 0.0, "debi": 0.0, "c_max": 100.0, "c_nat": 0.0}
-            )
-            st.rerun()
-
-        pollutants_list = []
-        silinecek_indexler = []
 
         # Listelenen parametreler üzerinden döngü
         for idx, p in enumerate(st.session_state['gri_parametreler']):
@@ -881,6 +869,17 @@ def show_calculator_page():
                     "c_nat": c_nat_kg
                 })
                 st.markdown("---")
+
+        # Yeni parametre ekleme butonu
+        if st.button("➕ Yeni Parametre Ekle"):
+            yeni_id = st.session_state['gri_parametreler'][-1]["id"] + 1 if st.session_state['gri_parametreler'] else 0
+            st.session_state['gri_parametreler'].append(
+                {"id": yeni_id, "ad": f"Parametre {yeni_id + 1}", "analiz": 0.0, "debi": 0.0, "c_max": 100.0, "c_nat": 0.0}
+            )
+            st.rerun()
+
+        pollutants_list = []
+        silinecek_indexler = []
 
         # İşaretlenen parametreleri listeden düş ve sayfayı yenile
         if silinecek_indexler:
