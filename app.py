@@ -821,16 +821,27 @@ def show_calculator_page():
             st.success(f"✅ Yeşil Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_yesil:.2f} m³/yıl")
 
     # --- 4. GRİ SU ---
+# --- 4. GRİ SU ---
     with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
-        st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
+        st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi aşağıya giriniz. Sistem kirlilik yükünü ve gri su ayak izini otomatik olarak hesaplayacaktır.")
+        
         st.info("""
-        💡 **Tabloyu Doldururken Dikkat Edilecekler:**
-        * **Yük (kg/yıl):** Analiz sonucu (mg/L) × Debi (m³/yıl) / 1000 formülüyle hesaplayınız.
-        * **C_max (Limit):** Yasal olarak izin verilen maksimum kirlilik konsantrasyonu (kg/m³).
-        * **C_nat (Doğal):** Alıcı ortamın doğal halindeki kirlilik seviyesi (kg/m³). Bilinmiyorsa **0** giriniz.
+        💡 **Bilgilendirme:**
+        * **Analiz Sonucu (mg/L):** Laboratuvar raporundaki parametre değeri.
+        * **Debi (m³/yıl):** Bu parametrenin ölçüldüğü atıksu miktarı.
+        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum deşarj limiti.
+        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal kirlilik seviyesi (Bilinmiyorsa **0** giriniz).
         """)
-        # 1. Editör (Kalıcı hafızayı gösterir)
+
+        # Tabloyu otomatik hesaplamaya uygun sütunlarla güncelliyoruz
+        if 'gri_tablo' not in st.session_state or "Analiz Sonucu (mg/L)" not in st.session_state['gri_tablo'].columns:
+            st.session_state['gri_tablo'] = pd.DataFrame([
+                {"Parametre": "KOİ", "Analiz Sonucu (mg/L)": 0.0, "Debi (m³/yıl)": 0.0, "C_max Limit (mg/L)": 180.0, "C_nat Doğal (mg/L)": 0.0},
+                {"Parametre": "BOİ", "Analiz Sonucu (mg/L)": 0.0, "Debi (m³/yıl)": 0.0, "C_max Limit (mg/L)": 50.0, "C_nat Doğal (mg/L)": 0.0}
+            ])
+
+        # 1. Editör 
         duzenlenmis_df = st.data_editor(
             st.session_state['gri_tablo'], 
             num_rows="dynamic", 
@@ -839,25 +850,36 @@ def show_calculator_page():
         )
         
         st.divider()
-    
-        # 2. Butona basılınca çalışacak "Mühürleme ve Hesaplama" bloğu
-        if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
-            # ÖNEMLİ: Tablodaki en son veriyi anında hafızaya alıyoruz
+
+        # 2. Butona basılınca çalışacak otomatik hesaplama motoru
+        if st.button("⚙️ Gri Su Ayak İzini Otomatik Hesapla"):
             st.session_state['gri_tablo'] = duzenlenmis_df 
             
-            # Eğer tablo boşsa veya veriler None ise uyarı ver
             if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
-                st.warning("Lütfen tabloda boş hücre bırakmayın ve verileri tam girin.")
+                st.warning("Lütfen tabloda boş hücre bırakmayın.")
             else:
                 try:
                     pollutants_list = []
-                    # Burada 'Parametre' gibi isimlerin tablonla tam eşleştiğinden emin ol!
                     for index, row in duzenlenmis_df.iterrows():
+                        analiz = float(row["Analiz Sonucu (mg/L)"])
+                        debi = float(row["Debi (m³/yıl)"])
+                        c_max_mg = float(row["C_max Limit (mg/L)"])
+                        c_nat_mg = float(row["C_nat Doğal (mg/L)"])
+                        
+                        # --- SİSTEMİN KENDİSİNİN YAPTIĞI OTOMATİK HESAPLAMALAR ---
+                        # 1. Yük (kg/yıl) = Analiz (mg/L) * Debi (m3/yıl) / 1000
+                        hesaplanan_yuk = (analiz * debi) / 1000.0
+                        
+                        # 2. mg/L değerlerini kg/m3'e çevirme (1 mg/L = 0.001 kg/m3 ama oran aynıdır, 
+                        # formül kg/m3 istendiği için 1000'e bölüyoruz)
+                        c_max_kg = c_max_mg / 1000.0
+                        c_nat_kg = c_nat_mg / 1000.0
+                        
                         pollutants_list.append({
                             "name": str(row["Parametre"]),
-                            "load": float(row["Yük (kg/yıl)"]),
-                            "c_max": float(row["C_max Limit (kg/m³)"]),
-                            "c_nat": float(row["C_nat Doğal (kg/m³)"])
+                            "load": hesaplanan_yuk,
+                            "c_max": c_max_kg,
+                            "c_nat": c_nat_kg
                         })
                     
                     # Hesaplama motorunu çalıştır
@@ -868,10 +890,10 @@ def show_calculator_page():
                     st.session_state.gri_su_sonuc = res_grey_dict["value_m3"]
                     st.session_state.kritik_kirletici_isim = res_grey_dict["critical_pollutant"]
                     
-                    st.success(f"✅ Hesaplandı! Kritik Kirletici: **{st.session_state.kritik_kirletici_isim}** | Hacim: **{st.session_state.gri_su_sonuc:,.2f} m³/yıl**")
+                    st.success(f"✅ Otomatik Hesaplama Başarılı! Kritik Kirletici: **{st.session_state.kritik_kirletici_isim}** | Gri Su Hacmi: **{st.session_state.gri_su_sonuc:,.2f} m³/yıl**")
                     
                 except Exception as e:
-                    st.error(f"Hesaplama hatası (Veri tiplerini kontrol edin): {str(e)}")
+                    st.error(f"Hesaplama sırasında hata oluştu: {str(e)}")
             
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
