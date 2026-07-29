@@ -821,11 +821,9 @@ def show_calculator_page():
             st.success(f"✅ Yeşil Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_yesil:.2f} m³/yıl")
 
     # --- 4. GRİ SU ---
-# --- 4. GRİ SU ---
-    # --- 4. GRİ SU ---
     with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
-        st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi aşağıya giriniz. Sistem kirlilik yükünü ve gri su ayak izini otomatik olarak hesaplayacaktır.")
+        st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi parametre bazlı olarak aşağıya giriniz.")
         
         st.info("""
         💡 **Bilgilendirme:**
@@ -835,65 +833,73 @@ def show_calculator_page():
         * **C_nat Doğal (mg/L):** Alıcı ortamın doğal kirlilik seviyesi (Bilinmiyorsa **0** giriniz).
         """)
 
-        # Tablo hafıza kontrolü
-        if 'gri_tablo' not in st.session_state:
-            st.session_state['gri_tablo'] = pd.DataFrame([
-                {"Parametre": "KOİ", "Analiz Sonucu (mg/L)": 0.0, "Debi (m³/yıl)": 0.0, "C_max Limit (mg/L)": 180.0, "C_nat Doğal (mg/L)": 0.0},
-                {"Parametre": "BOİ", "Analiz Sonucu (mg/L)": 0.0, "Debi (m³/yıl)": 0.0, "C_max Limit (mg/L)": 50.0, "C_nat Doğal (mg/L)": 0.0}
-            ])
+        # Hafıza kontrolü (Parametre bazlı sayı kutucukları için)
+        if 'gri_params' not in st.session_state:
+            st.session_state['gri_params'] = {
+                "KOİ": {"analiz": 0.0, "debi": 0.0, "c_max": 180.0, "c_nat": 0.0},
+                "BOİ": {"analiz": 0.0, "debi": 0.0, "c_max": 50.0, "c_nat": 0.0}
+            }
 
-        # 1. Editör (Değişiklikleri anlık yakalaması için key atandı)
-        duzenlenmis_df = st.data_editor(
-            st.session_state['gri_tablo'], 
-            num_rows="dynamic", 
-            use_container_width=True,
-            key="gri_editor_key",
-        )
+        pollutants_list = []
         
-        # Tablodaki anlık değişimi doğrudan hafızaya eşitliyoruz (Hücreden çıkma zorunluluğunu kaldırır)
-        st.session_state['gri_tablo'] = duzenlenmis_df
-        
+        # Her parametre için şık birer expander (açılır kutu) veya kart oluşturalım
+        for param_adi, val_dict in st.session_state['gri_params'].items():
+            with st.expander(f"🧪 Parametre: {param_adi}", expanded=True):
+                col1, col2, col3, col4 = st.columns(4)
+                
+                val_dict["analiz"] = col1.number_input(
+                    f"Analiz Sonucu (mg/L)", 
+                    min_value=0.0, 
+                    value=val_dict["analiz"], 
+                    key=f"{param_adi}_analiz"
+                )
+                val_dict["debi"] = col2.number_input(
+                    f"Debi (m³/yıl)", 
+                    min_value=0.0, 
+                    value=val_dict["debi"], 
+                    key=f"{param_adi}_debi"
+                )
+                val_dict["c_max"] = col3.number_input(
+                    f"C_max Limit (mg/L)", 
+                    min_value=0.0, 
+                    value=val_dict["c_max"], 
+                    key=f"{param_adi}_cmax"
+                )
+                val_dict["c_nat"] = col4.number_input(
+                    f"C_nat Doğal (mg/L)", 
+                    min_value=0.0, 
+                    value=val_dict["c_nat"], 
+                    key=f"{param_adi}_cnat"
+                )
+                
+                # Otomatik Hesaplama Hazırlığı (Yük ve kg/m3 dönüşümleri)
+                hesaplanan_yuk = (val_dict["analiz"] * val_dict["debi"]) / 1000.0
+                c_max_kg = val_dict["c_max"] / 1000.0
+                c_nat_kg = val_dict["c_nat"] / 1000.0
+                
+                pollutants_list.append({
+                    "name": param_adi,
+                    "load": hesaplanan_yuk,
+                    "c_max": c_max_kg,
+                    "c_nat": c_nat_kg
+                })
+
         st.divider()
 
-        # 2. Butona basılınca çalışacak otomatik hesaplama motoru
+        # Otomatik Hesaplama Butonu
         if st.button("🫧 Gri Su Ayak İzini Otomatik Hesapla"):
-            if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
-                st.warning("Lütfen tabloda boş hücre bırakmayın.")
-            else:
-                try:
-                    pollutants_list = []
-                    for index, row in duzenlenmis_df.iterrows():
-                        analiz = float(row["Analiz Sonucu (mg/L)"])
-                        debi = float(row["Debi (m³/yıl)"])
-                        c_max_mg = float(row["C_max Limit (mg/L)"])
-                        c_nat_mg = float(row["C_nat Doğal (mg/L)"])
-                        
-                        # Otomatik Yük Hesabı: (mg/L * m3/yıl) / 1000 = kg/yıl
-                        hesaplanan_yuk = (analiz * debi) / 1000.0
-                        
-                        # kg/m3 birim dönüşümü
-                        c_max_kg = c_max_mg / 1000.0
-                        c_nat_kg = c_nat_mg / 1000.0
-                        
-                        pollutants_list.append({
-                            "name": str(row["Parametre"]),
-                            "load": hesaplanan_yuk,
-                            "c_max": c_max_kg,
-                            "c_nat": c_nat_kg
-                        })
-                    
-                    # Hesaplama motorunu çalıştır
-                    calc = WaterFootprintCalculator()
-                    res_grey_dict = calc.calculate_grey_water(pollutants_list)
-                    
-                    # Sonuçları hafızaya yaz
-                    st.session_state.gri_su_sonuc = res_grey_dict["value_m3"]
-                    st.session_state.kritik_kirletici_isim = res_grey_dict["critical_pollutant"]
-                    
-                    st.success(f"✅ Otomatik Hesaplama Başarılı! Kritik Kirletici: **{st.session_state.kritik_kirletici_isim}** | Gri Su Hacmi: **{st.session_state.gri_su_sonuc:,.2f} m³/yıl**")
-                    
-                except Exception as e:
-                    st.error(f"Hesaplama sırasında hata oluştu: {str(e)}")
+            try:
+                calc = WaterFootprintCalculator()
+                res_grey_dict = calc.calculate_grey_water(pollutants_list)
+                
+                # Sonuçları hafızaya yaz
+                st.session_state.gri_su_sonuc = res_grey_dict["value_m3"]
+                st.session_state.kritik_kirletici_isim = res_grey_dict["critical_pollutant"]
+                
+                st.success(f"✅ Otomatik Hesaplama Başarılı! Kritik Kirletici: **{st.session_state.kritik_kirletici_isim}** | Gri Su Hacmi: **{st.session_state.gri_su_sonuc:,.2f} m³/yıl**")
+                
+            except Exception as e:
+                st.error(f"Hesaplama sırasında hata oluştu: {str(e)}")
             
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
