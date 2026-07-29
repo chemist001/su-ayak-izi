@@ -827,7 +827,7 @@ def show_calculator_page():
         st.info("""
         💡 **Tabloyu Doldururken Dikkat Edilecekler:**
         * **Yük (kg/yıl):** Analiz sonucu (mg/L) × Debi (m³/yıl) / 1000 formülüyle hesaplayınız.
-        * **C_max (Limit):** Alıcı ortam için yasal olarak izin verilen maksimum kirletici limiti (kg/m³).
+        * **C_max (Limit):** Yasal olarak izin verilen maksimum kirlilik konsantrasyonu (kg/m³).
         * **C_nat (Doğal):** Alıcı ortamın doğal halindeki kirlilik seviyesi (kg/m³). Bilinmiyorsa **0** giriniz.
         """)
         # 1. Editör (Kalıcı hafızayı gösterir)
