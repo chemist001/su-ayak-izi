@@ -441,14 +441,19 @@ def show_home_page():
     
     st.markdown("### Su Ayak İzinin 3 Rengi")
 
+# Senin 3'lü sütun yapın aynen kalıyor
     col1, col2, col3 = st.columns(3)
     
     with col1:
+        # 1. Başlık Vurgusu (Sadece 'Mavi' kelimesi boyalı)
         st.markdown("""
         <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
+        
         st.write("Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Bu, suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.")
         st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
+        
+        # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
         st.markdown("""
         <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Mavi Su Ayakizi = Buharlaşan Mavi Su + Ürüne Dahil Olan Mavi Su + Drenaj Miktarı
@@ -459,8 +464,10 @@ def show_home_page():
         st.markdown("""
         <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
+        
         st.write("Yeşil su ayak izi, bitkilerin büyümesi için kullanılan yağış suyunu ifade eder. Bu, toprak tarafından emilen ve bitkiler tarafından kullanılan su miktarını kapsar ve suyun doğal döngüsü içinde yer aldığı süreçleri değerlendirir.")
         st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
+        
         st.markdown("""
         <div style='background-color:#28a745; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Yeşil Su Ayakizi = Buharlaşan Yeşil Su + Ürüne Dahil Olan Yeşil Su
@@ -471,8 +478,10 @@ def show_home_page():
         st.markdown("""
         <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
+        
         st.write("Oluşan kirliliği, su kalitesi standartlarına (doğal konsantrasyona) seyreltmek için gereken teorik temiz su miktarıdır. Bu, bir ürün veya süreç nedeniyle kirlenen suyun doğrudan veya dolaylı olarak temizlenmesi gereken su miktarını hesaplar.")
         st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
+        
         st.markdown("""
         <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Gri Su Ayakizi = Kirletici Yükü / (C<sub>max</sub> - C<sub>nat</sub>)
@@ -480,6 +489,7 @@ def show_home_page():
         """, unsafe_allow_html=True)
         
     st.markdown("---")
+
     st.title("📜 Su Verimliliği Yönetmeliği ve Belgelendirme")
     
     st.info("""27 Aralık 2024 tarihli ve 32765 sayılı Resmi Gazete'de yayımlanan 
@@ -488,6 +498,7 @@ def show_home_page():
     """)
 
     st.markdown("### 🏆 Belgelendirme Seviyeleri ve Kriterler")
+    
     tab_mavi, tab_yesil, tab_turkuaz = st.tabs([
         " Mavi Su Belgesi", 
         " Yeşil Su Belgesi", 
@@ -528,6 +539,7 @@ def show_home_page():
         * ✅ NACE koduna uygun su verimliliği rehber dokümanlarında yer alan tekniklerin uygulanması.
         * ✅ TSE tarafından verilen **TS ISO 46001** Su Verimliliği Yönetim Sistemi Belgesine sahip olması.
         """)
+
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -580,7 +592,7 @@ def show_home_page():
             
     st.markdown("---")
     st.info("💡 Hesaplamalar veya tesis verileriyle ilgili yardıma mı ihtiyacınız var?")
-    st.link_button("🎧 Destek danışmanlığı İçin Tıklayın", "https://www.sanayikampusu.com/iletisim")
+    st.link_button("🎧 Destek ve İletişim İçin Tıklayınız", "https://www.sanayikampusu.com/iletisim")
 
 import streamlit as st
 import pandas as pd
