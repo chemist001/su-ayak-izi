@@ -262,11 +262,9 @@ class WaterFootprintCalculator:
         return evap + incorp
 
     def calculate_grey_water(self, pollutants):
-        # Örnek hesaplama mantığı (kendi formülünüze göre düzenleyin)
         max_footprint = 0.0
         critical_pollutant = "Yok"
         for p in pollutants:
-            # Sıfıra bölünmeyi önlemek için küçük bir kontrol ekleyin
             c_diff = p["c_max"] - p["c_nat"]
             if c_diff > 0:
                 val = p["load"] / c_diff
@@ -356,7 +354,6 @@ def generate_full_report(data):
     # 3. MAVİ SU
     pdf.add_section_title("4.1 MAVI SU AYAK IZI HESAPLARI")
     
-    # Mavi Su Tablosu
     cols = ["Bilesen", "Veri Kaynagi", "Miktar (m3)"]
     widths = [80, 60, 50]
     pdf.add_table_row(cols, widths, header=True)
@@ -429,7 +426,6 @@ def create_pie_chart(data_dict, title):
 # 5. SAYFA İÇERİKLERİ 
 # ==========================================
 def show_home_page():
-    """Ana Sayfa - Su Ayak İzi Nedir?"""
     st.title("💧 Su Ayak İzi Nedir?")
     st.markdown("### Görünmeyen Suyun Hikayesi")
     
@@ -441,24 +437,18 @@ def show_home_page():
     """)
     
     st.info("💡 **Biliyor muydunuz?** Bir fincan kahvenin su ayak izi yaklaşık **140 litredir**. 1 kg sığır etinin su ayak izi ise **15.400 litre**.")
-    
     st.info("""💡 Türkiye, kişi başına düşen yıllık yaklaşık 1.313 m³ kullanılabilir su miktarı ile "su stresi çeken" ülkeler statüsündedir. 2030 yılına kadar bu rakamın 1.000 m³'ün altına düşerek **su fakiri** kategorisine geçme riskimiz bulunmaktadır.""")
     
     st.markdown("### Su Ayak İzinin 3 Rengi")
 
-# Senin 3'lü sütun yapın aynen kalıyor
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        # 1. Başlık Vurgusu (Sadece 'Mavi' kelimesi boyalı)
         st.markdown("""
         <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
-        
         st.write("Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Bu, suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.")
         st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
-        
-        # 2. Renkli Formül Bandı (Kartın en altına yapışık gibi duracak)
         st.markdown("""
         <div style='background-color:#17a2b8; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Mavi Su Ayakizi = Buharlaşan Mavi Su + Ürüne Dahil Olan Mavi Su + Drenaj Miktarı
@@ -469,10 +459,8 @@ def show_home_page():
         st.markdown("""
         <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
-        
         st.write("Yeşil su ayak izi, bitkilerin büyümesi için kullanılan yağış suyunu ifade eder. Bu, toprak tarafından emilen ve bitkiler tarafından kullanılan su miktarını kapsar ve suyun doğal döngüsü içinde yer aldığı süreçleri değerlendirir.")
         st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
-        
         st.markdown("""
         <div style='background-color:#28a745; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Yeşil Su Ayakizi = Buharlaşan Yeşil Su + Ürüne Dahil Olan Yeşil Su
@@ -483,10 +471,8 @@ def show_home_page():
         st.markdown("""
         <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
-        
         st.write("Oluşan kirliliği, su kalitesi standartlarına (doğal konsantrasyona) seyreltmek için gereken teorik temiz su miktarıdır. Bu, bir ürün veya süreç nedeniyle kirlenen suyun doğrudan veya dolaylı olarak temizlenmesi gereken su miktarını hesaplar.")
         st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
-        
         st.markdown("""
         <div style='background-color:#6c757d; color:white; padding:10px; border-radius:5px; text-align:center; font-size:14px; margin-top:15px;'>
         Gri Su Ayakizi = Kirletici Yükü / (C<sub>max</sub> - C<sub>nat</sub>)
@@ -494,7 +480,6 @@ def show_home_page():
         """, unsafe_allow_html=True)
         
     st.markdown("---")
-
     st.title("📜 Su Verimliliği Yönetmeliği ve Belgelendirme")
     
     st.info("""27 Aralık 2024 tarihli ve 32765 sayılı Resmi Gazete'de yayımlanan 
@@ -503,7 +488,6 @@ def show_home_page():
     """)
 
     st.markdown("### 🏆 Belgelendirme Seviyeleri ve Kriterler")
-    
     tab_mavi, tab_yesil, tab_turkuaz = st.tabs([
         " Mavi Su Belgesi", 
         " Yeşil Su Belgesi", 
@@ -545,12 +529,7 @@ def show_home_page():
         * ✅ TSE tarafından verilen **TS ISO 46001** Su Verimliliği Yönetim Sistemi Belgesine sahip olması.
         """)
 
-
-# --- ANA SAYFA ZENGİNLEŞTİRME BLOKLARI (KOPYALA - YAPIŞTIR) ---
-        
-    # 1. ÇARPICI İSTATİSTİK KARTLARI (Streamlit Metrikleri)
     col1, col2, col3, col4 = st.columns(4)
-    
     with col1:
         st.metric(label="1 Pamuklu Tişört", value="2.700 L", delta="Sanal Su", delta_color="off")
     with col2:
@@ -560,77 +539,54 @@ def show_home_page():
     with col4:
         st.metric(label="Arıtılmayan Atıksu", value="%80+", delta="Küresel Deşarj", delta_color="inverse")
 
-
- # 2. GRAFİKLER (Şık ve Küçültülmüş Versiyon)
-    
     grafik_col1, grafik_col2 = st.columns(2)
-
     with grafik_col1:
         st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Türkiye Su Tüketimi</p>", unsafe_allow_html=True)
-        
-        # Figsize daha da küçültüldü
         fig1, ax1 = plt.subplots(figsize=(2.5, 2.5))
         labels = ['Tarım', 'Sanayi', 'Evsel']
         sizes = [74, 11, 15]
         colors = ['#7dd3fc', '#bbf7d0', '#e2e8f0']
-        
-        # Yazı boyutları grafiğe uygun olarak (7) küçültüldü
         ax1.pie(
-    sizes, 
-    labels=labels, 
-    colors=colors, 
-    autopct='%1.1f%%', 
-    startangle=90,
-    labeldistance=1.1,   # label'ı dışarı alır
-    pctdistance=0.8,     # yüzdeyi içerde ama merkeze yakın tutar
-    wedgeprops=dict(width=0.4, edgecolor='w'),
-    textprops={'fontsize': 7}
-)
+            sizes, 
+            labels=labels, 
+            colors=colors, 
+            autopct='%1.1f%%', 
+            startangle=90,
+            labeldistance=1.1, 
+            pctdistance=0.8, 
+            wedgeprops=dict(width=0.4, edgecolor='w'),
+            textprops={'fontsize': 7}
+        )
         ax1.axis('equal') 
         fig1.patch.set_alpha(0.0)
-        
-        # Ortadaki sütun oranını daralttık ki grafik ekrana yayılıp büyümesin
         sol, orta, sag = st.columns([1, 1.65, 1])
         with orta:
             st.pyplot(fig1, use_container_width=True) 
 
     with grafik_col2:
         st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Ürün Bazlı 'Gizli Su' Yükü (Litre)</p>", unsafe_allow_html=True)
-        
-        # Figsize bar grafik için kibar bir dikdörtgene (3.5, 2.5) ayarlandı
         fig2, ax2 = plt.subplots(figsize=(2.5, 1.5), dpi=200)
         urunler = ['Kahve', 'Peynir', 'Tişört', 'Sığır Eti']
         su_miktari = [140, 3180, 2700, 15400]
-        
-        # Çubuk kalınlıkları inceltildi (height=0.6)
         ax2.barh(urunler, su_miktari, color='#bae6fd', height=0.6)
         ax2.set_xlabel('Su Tüketimi (Litre)', fontsize=4)
         ax2.tick_params(axis='both', which='major', labelsize=4)
-        
         ax2.spines['top'].set_visible(False)
         ax2.spines['right'].set_visible(False)
         fig2.patch.set_alpha(0.0)
-        
-        # Kenar boşlukları artırılıp grafik alanı daraltıldı
         sol2, orta2, sag2 = st.columns([1, 3, 1]) 
         with orta2:
             st.pyplot(fig2, use_container_width=True)
             
-            # (col3 bloğunun bittiği yerden sonra, girintiye (indentation) dikkat ederek ekleyin)
-    
-    st.markdown("---") # Araya ince bir çizgi çeker, tasarımı ayırır
-    
-    # Destek ve iletişim butonu
+    st.markdown("---")
     st.info("💡 Hesaplamalar veya tesis verileriyle ilgili yardıma mı ihtiyacınız var?")
-    st.link_button("🎧 Destek ve İletişim İçin Tıklayın", "https://www.sanayikampusu.com/iletisim")
-    # --------------------------------------------------------------
+    st.link_button("🎧 Destek danışmanlığı İçin Tıklayın", "https://www.sanayikampusu.com/iletisim")
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
 def show_calculator_page():
-    # --- KALICI HAFIZA (SESSION STATE) REZERVASYONLARI ---
-    # Firma Bilgileri
     if 'firma_adi' not in st.session_state: st.session_state['firma_adi'] = ""
     if 'sektor' not in st.session_state: st.session_state['sektor'] = ""
     if 'adres' not in st.session_state: st.session_state['adres'] = ""
@@ -639,9 +595,7 @@ def show_calculator_page():
     if 'telefon' not in st.session_state: st.session_state['telefon'] = ""
     if 'rapor_yili' not in st.session_state: st.session_state['rapor_yili'] = ""
     if 'rapor_tarihi' not in st.session_state: st.session_state['rapor_tarihi'] = None
-        
 
-    # Mavi Su
     if 'sebeke_suyu' not in st.session_state: st.session_state['sebeke_suyu'] = 0.0
     if 'kuyu_suyu' not in st.session_state: st.session_state['kuyu_suyu'] = 0.0
     if 'diger_su' not in st.session_state: st.session_state['diger_su'] = 0.0
@@ -649,27 +603,17 @@ def show_calculator_page():
     if 'ayni_havza' not in st.session_state: st.session_state['ayni_havza'] = True
     if 'kuru_proses' not in st.session_state: st.session_state['kuru_proses'] = False
 
-    # Yeşil Su
     if 'yesil_evap' not in st.session_state: st.session_state['yesil_evap'] = 0.0
     if 'yesil_incorp' not in st.session_state: st.session_state['yesil_incorp'] = 0.0
 
-    # Gri Su (Dinamik Tablo)
-    if 'gri_tablo' not in st.session_state:
-        st.session_state['gri_tablo'] = pd.DataFrame([
-            {"Parametre": "KOİ", "Yük (kg/yıl)": 0.0, "C_max Limit (kg/m³)": 0.1, "C_nat Doğal (kg/m³)": 0.0},
-            {"Parametre": "BOİ", "Yük (kg/yıl)": 0.0, "C_max Limit (kg/m³)": 0.05, "C_nat Doğal (kg/m³)": 0.0}
-        ])
-    # -----------------------------------------------------
     st.set_page_config(page_title="Su Ayak İzi Hesaplama", layout="wide")
     st.title("💧 Hesaplama Aracı")
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
-    # Sekmeli Yapı (Senin tasarımın)
     tab_firma, tab_mavi, tab_yesil, tab_gri, = st.tabs([
         "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su",
     ])
 
- # --- 1. FIRMA PROFILI ---
     with tab_firma:
         st.header("Firma Bilgileri")
         col1, col2 = st.columns(2)
@@ -683,11 +627,8 @@ def show_calculator_page():
             address = st.text_input("Firma Adresi", value=st.session_state.get('adres', ''))
             st.session_state['adres'] = address
 
-            # YENİ VE ŞIK: Raporlama Yılı (Açılır Menü / Selectbox)
             yillar = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"]
-            varsayilan_yil = st.session_state.get('rapor_yili', "2026") # Hafızada yoksa 2026 seçili gelsin
-            
-            # Eğer hafızadaki yıl bizim listemizde varsa onu bul, yoksa 2026'nın sırasını (2) seç
+            varsayilan_yil = st.session_state.get('rapor_yili', "2026") 
             secili_index = yillar.index(varsayilan_yil) if varsayilan_yil in yillar else 2
             
             rapor_yili = st.selectbox("Raporlama Yılı", options=yillar, index=secili_index)
@@ -703,24 +644,18 @@ def show_calculator_page():
             c_phone = st.text_input("Telefon", value=st.session_state.get('telefon', ''))
             st.session_state['telefon'] = c_phone
 
-            # Rapor Tarihi (Takvim Formatında)
             rapor_tarihi = st.date_input("Rapor Tarihi", value=st.session_state.get('rapor_tarihi', None))
             st.session_state['rapor_tarihi'] = rapor_tarihi
             
-            # Kolonların altına Sorumlular Tablosunu ekliyoruz
         st.divider()
         st.subheader("👥 Su Yönetimi Sorumluları")
         st.write("Raporda yer alacak 'Sorumlu Kişilerin İletişim Bilgileri' tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
         
-          # 739. satırdan itibaren silip şunu yapıştır:
-
-        # 1. Aşama: Veriyi hafızadan çek (eğer yoksa boş bir tablo yarat)
         if 'sorumlu_kisiler_tablosu' not in st.session_state:
             st.session_state['sorumlu_kisiler_tablosu'] = pd.DataFrame(
                 columns=["Sorumlu Kişi", "Görev", "İletişim"]
             )
         
-        # 2. Aşama: Editörü kullanarak geçici bir tablo oluştur
         gecici_sorumlu_df = st.data_editor(
             st.session_state['sorumlu_kisiler_tablosu'],
             column_config={
@@ -733,13 +668,11 @@ def show_calculator_page():
             hide_index=True
         )
         
-        # 3. Aşama: "Kaydet" butonu
         if st.button("Kaydet"):
             st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
             st.success("Sorumlu bilgileri başarıyla güncellendi!")
             st.rerun()
 
-    # --- 2. MAVİ SU (Kütle Denkliği ile Düzeltilmiş Yapı) ---
     with tab_mavi:
         st.header("Mavi Su Verileri (Kütle Denkliği)")
         st.info("Lütfen tesise giren toplam suyu ve tesisten çıkan atıksu deşarj miktarını giriniz.")
@@ -772,33 +705,19 @@ def show_calculator_page():
         ayni_havza_mi = c5.checkbox("Deşarj edilen su, çekildiği havzaya/nehre mi dönüyor?", value=st.session_state['ayni_havza'])
         st.session_state['ayni_havza'] = ayni_havza_mi
         
-        # --- BURADAN İTİBAREN YENİ EKLENECEK KISIM ---
         st.divider()
         if st.button("💧 Mavi Su Ayak İzini Hesapla"):
             hesaplanan_mavi = 0.0
-            
-            # Hesaplama Mantığı (ISO 14046 ve Su Ayak İzi Ağı metodolojisi)
             if ayni_havza_mi:
-                # Aynı havzaya dönüyorsa: Çekilen - Deşarj Edilen
-                # Eksi değer çıkmaması için max(0, ...) kullanıyoruz
                 hesaplanan_mavi = max(0.0, toplam_giren - desarj_miktari) 
             else:
-                # Başka havzaya deşarj ediliyorsa çekilen suyun tamamı Mavi Su tüketimi sayılır
                 hesaplanan_mavi = toplam_giren
             
-            # --- DÜZELTİLEN KISIM: AŞAĞIDAKİ İKİ SATIRI İÇERİ (SAĞA) ALDIK ---
-            
-            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Sadece butona basılınca çalışır)
             st.session_state.mavi_su_sonuc = hesaplanan_mavi
-                
-            # 2. Kullanıcıya ekranda gösteriyoruz
             st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
-    # --- 3. YEŞİL SU ---
     with tab_yesil:
         st.header("Yeşil Su Verileri")
-        
-        # --- YENİ EKLENEN BİLGİ NOTU ---
         st.info("💡 Eğer firmanızın proseste kullandığı bir yağmur suyu tutma sistemi mevcutsa, lütfen sisteme kullanılan toplam yağmur suyu miktarını giriniz.")
         
         c1, c2 = st.columns(2)
@@ -808,30 +727,21 @@ def show_calculator_page():
         green_incorp = c2.number_input("Ürüne Giren Yeşil Su (m³/yıl)", min_value=0.0, value=st.session_state['yesil_incorp'])
         st.session_state['yesil_incorp'] = green_incorp
         
-        # --- YEŞİL SU HESAPLAMA BUTONU ---
         st.divider()
         if st.button("🌱 Yeşil Su Ayak İzini Hesapla"):
-            # Formül: Yağmur Suyu Evaporasyonu + Ürüne Giren Su
             hesaplanan_yesil = green_evap + green_incorp
-            
-            # 1. Çıkan sonucu ANA HAFIZAYA atıyoruz (Kaydet butonu için)
             st.session_state.yesil_su_sonuc = hesaplanan_yesil
-            
-            # 2. Kullanıcıya ekranda gösteriyoruz
             st.success(f"✅ Yeşil Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_yesil:.2f} m³/yıl")
 
-    # --- 4. GRİ SU ---
     with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
         st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi parametre bazlı olarak aşağıya giriniz. İstediğiniz parametreyi silebilir veya yeni parametre ekleyebilirsiniz.")
         
         st.info("""
-
         * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum konsantrasyon değeri.
         * **C_nat Doğal (mg/L):** Alıcı ortamın doğal konsantrasyon değeri (Bilinmiyorsa **0** giriniz).
         """)
 
-        # Dinamik parametre listesi için hafıza kontrolü
         if 'gri_parametreler' not in st.session_state:
             st.session_state['gri_parametreler'] = [
                 {"id": 0, "ad": "KOİ", "analiz": 0.0, "debi": 0.0, "c_max": 180.0, "c_nat": 0.0},
@@ -841,26 +751,19 @@ def show_calculator_page():
         pollutants_list = []
         silinecek_indexler = []
 
-
-        # Listelenen parametreler üzerinden döngü
         for idx, p in enumerate(st.session_state['gri_parametreler']):
             with st.container():
                 col_ad, col1, col2, col3, col4, col_sil = st.columns([2, 2, 2, 2, 2, 1])
                 
-                # Parametre Adını Değiştirme Kutusu
                 p["ad"] = col_ad.text_input("Parametre Adı", value=p["ad"], key=f"param_ad_{p['id']}")
-                
-                # Değer Kutucukları
                 p["analiz"] = col1.number_input("Analiz (mg/L)", min_value=0.0, value=float(p["analiz"]), key=f"param_analiz_{p['id']}")
                 p["debi"] = col2.number_input("Debi (m³/yıl)", min_value=0.0, value=float(p["debi"]), key=f"param_debi_{p['id']}")
                 p["c_max"] = col3.number_input("C_max (mg/L)", min_value=0.0, value=float(p["c_max"]), key=f"param_cmax_{p['id']}")
                 p["c_nat"] = col4.number_input("C_nat (mg/L)", min_value=0.0, value=float(p["c_nat"]), key=f"param_cnat_{p['id']}")
                 
-                # Silme Butonu (Çöp Kutusu)
                 if col_sil.button("🗑️", key=f"sil_{p['id']}", help="Bu parametreyi sil"):
                     silinecek_indexler.append(idx)
 
-                # Otomatik Hesaplama Hazırlığı
                 hesaplanan_yuk = (p["analiz"] * p["debi"]) / 1000.0
                 c_max_kg = p["c_max"] / 1000.0
                 c_nat_kg = p["c_nat"] / 1000.0
@@ -873,7 +776,6 @@ def show_calculator_page():
                 })
                 st.markdown("---")
 
-        # Yeni parametre ekleme butonu
         if st.button("➕ Yeni Parametre Ekle"):
             yeni_id = st.session_state['gri_parametreler'][-1]["id"] + 1 if st.session_state['gri_parametreler'] else 0
             st.session_state['gri_parametreler'].append(
@@ -881,15 +783,11 @@ def show_calculator_page():
             )
             st.rerun()
 
-
-
-        # İşaretlenen parametreleri listeden düş ve sayfayı yenile
         if silinecek_indexler:
             for index in sorted(silinecek_indexler, reverse=True):
                 st.session_state['gri_parametreler'].pop(index)
             st.rerun()
 
-        # Otomatik Hesaplama Butonu
         if st.button("🫧 Gri Su Ayak İzini Hesapla"):
             if not pollutants_list:
                 st.warning("Lütfen en az bir parametre ekleyin.")
@@ -898,7 +796,6 @@ def show_calculator_page():
                     calc = WaterFootprintCalculator()
                     res_grey_dict = calc.calculate_grey_water(pollutants_list)
                     
-                    # Sonuçları hafızaya yaz
                     st.session_state.gri_su_sonuc = res_grey_dict["value_m3"]
                     st.session_state.kritik_kirletici_isim = res_grey_dict["critical_pollutant"]
                     
@@ -910,17 +807,14 @@ def show_calculator_page():
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
     
-    # 1. Aşama: Veriyi hafızadan çek
     if 'sistem_siniri_tablosu' not in st.session_state:
         st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(
             columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]
         )
 
-    # 2. Aşama: Editör (Bu editör direkt session_state'i değiştirmiyor, geçici bir değişken döndürüyor)
     gecici_df = st.data_editor(
         st.session_state['sistem_siniri_tablosu'],
         column_config={
-            # ... (Senin column_config ayarların aynen kalacak) ...
             "Bileşen": st.column_config.SelectboxColumn("Bileşen", options=["Mavi Su", "Gri Su", "Yeşil Su"], required=True),
             "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu"], required=True),
             "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan"], required=True),
@@ -931,20 +825,17 @@ def sayfa_veri_kalitesi():
         hide_index=True 
     )
 
-    # 3. Aşama: "Kaydet" butonu ile hafızaya mühürle
     if st.button("Kaydet"):
         st.session_state['sistem_siniri_tablosu'] = gecici_df
         st.success("Veriler başarıyla kaydedildi!")
-        st.rerun() # Sayfayı yenileyerek kaydın kesinleşmesini sağla
+        st.rerun()
 
-    # --- 6. RAPORLAMA ---
+# --- 6. RAPORLAMA ---
 def sayfa_raporlama():
     st.header("Sonuç ve PDF Çıktısı")
         
-    # Sadece kilidi açmak için butonu kullanıyoruz
     company_name = st.session_state.get('firma_adi', '')
     
-    # 1. Mavi Su Yeşil Su ve Gri Su Girdilerini Çek ve Toplamı Bul
     sebeke = st.session_state.get('sebeke_suyu', 0.0)
     kuyu = st.session_state.get('kuyu_suyu', 0.0)
     diger = st.session_state.get('diger_su', 0.0)
@@ -953,79 +844,60 @@ def sayfa_raporlama():
     ayni_havza_mi = st.session_state.get('ayni_havza', False)
     green_evap = st.session_state.get('yesil_evap', 0.0)
     green_incorp = st.session_state.get('yesil_incorp', 0.0)
-    # --- GRİ SU GİRDİLERİ (Kirlilik Tablosu) ---
-    duzenlenmis_df = st.session_state.get('gri_tablo')
-    pollutants_list = []
-    # Metin verilerini senin 'Firma Profili'nde belirlediğin Türkçe isimlerden çekiyoruz
+
     address = st.session_state.get('adres', 'Belirtilmedi')
     sector = st.session_state.get('sektor', 'Belirtilmedi')
     contact_person = st.session_state.get('yetkili', 'Belirtilmedi')
     email = st.session_state.get('email', 'Belirtilmedi')
     c_phone = st.session_state.get('telefon', 'Belirtilmedi')
     
-    # Rapor tarihi ve yılı
     rapor_yili = st.session_state.get('rapor_yili', '2026')
     rapor_tarihi = st.session_state.get('rapor_tarihi', None)
 
-    # PDF'in içine basılacak olan tabloları çekiyoruz (Boşsalar çökmesin diye yedekli)
     duzenlenmis_sorumlular = st.session_state.get('sorumlu_kisiler_tablosu', pd.DataFrame(columns=["Sorumlu Kişi", "Görev", "İletişim"]))
     sistem_siniri_tablosu = st.session_state.get('sistem_siniri_tablosu', pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]))
     duzenlenmis_hedefler = st.session_state.get('hedef_tablosu', pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"]))
     
-    # Tablo boş değilse, içindeki verileri hesaplama motoru için listeye çeviriyoruz
-    if duzenlenmis_df is not None and not duzenlenmis_df.empty:
-        for index, row in duzenlenmis_df.iterrows():
-            pollutants_list.append({
-                "name": row["Parametre"],
-                "load": float(row["Yük (kg/yıl)"]),
-                "c_max": float(row["C_max Limit (kg/m³)"]),
-                "c_nat": float(row["C_nat Doğal (kg/m³)"])
-            })
-    
-    # 2. Hesaplanan Ayak İzi Sonuçlarını Çek
     mavi = st.session_state.get('mavi_su_sonuc', 0.0)
     yesil = st.session_state.get('yesil_su_sonuc', 0.0)
     gri = st.session_state.get('gri_su_sonuc', 0.0)
     toplam = mavi + yesil + gri
+
     if st.button("HESAPLA VE RAPORU OLUŞTUR", type="primary"):
         if not company_name:
             st.error("Lütfen Firma Adını giriniz (Firma Profili sekmesinden).")
         else:
-            st.session_state['hesaplama_tamam'] = True # Kilidi açtık
+            st.session_state['hesaplama_tamam'] = True 
 
-        # Kilit açıksa (veya açılmışsa) tüm sonuçları ve tabloyu göster
     if st.session_state.get('hesaplama_tamam', False):
             
-        # Motoru Başlat (Buradan itibaren kodların eski haliyle tamamen aynı devam edecek)
             calc = WaterFootprintCalculator()
                 
-            # 1. Mavi Su Hesapla
             res_blue = calc.calculate_blue_water(
                 v_in=toplam_giren, 
                 v_discharge=desarj_miktari, 
                 same_basin=ayni_havza_mi,
             )
                 
-            # 2. Yeşil Su Hesapla
             res_green = calc.calculate_green_water(green_evap, green_incorp)
                 
-            # 3. Gri Su Hesapla (Tablodaki verileri sözlüğe çevirerek gönder)
+            # Dinamik Gri Su Parametrelerinden Listeyi Oluşturuyoruz
             pollutants_list = []
-            for index, row in duzenlenmis_df.iterrows():
+            gri_params = st.session_state.get('gri_parametreler', [])
+            for p in gri_params:
+                hesaplanan_yuk = (float(p["analiz"]) * float(p["debi"])) / 1000.0
                 pollutants_list.append({
-                    "name": row["Parametre"],
-                    "load": row["Yük (kg/yıl)"],
-                    "c_max": row["C_max Limit (kg/m³)"],
-                    "c_nat": row["C_nat Doğal (kg/m³)"]
+                    "name": p["ad"],
+                    "load": hesaplanan_yuk,
+                    "c_max": float(p["c_max"]) / 1000.0,
+                    "c_nat": float(p["c_nat"]) / 1000.0
                 })
                 
             res_grey_dict = calc.calculate_grey_water(pollutants_list)
             res_grey = res_grey_dict["value_m3"]
                 
-            # Toplam
             total_wf = res_blue + res_green + res_grey
                 
-            # --- 1. EKRANA YAZDIRMA VE GRAFİK ---
             st.success(f"Hesaplama Tamamlandı: {company_name}")
             st.markdown("### Su Ayak İzi Sonuçları")
                 
@@ -1036,8 +908,6 @@ def sayfa_raporlama():
                 
             st.info(f"**Toplam Tesis Su Ayak İzi:** {total_wf:,.2f} m³/yıl")
 
-
-        # --- YENİ YERİ: HESAPLAMALARIN EN ALTINA ---
             st.markdown("---")
             st.subheader("🤖 AI Danışman Analizi")
                 
@@ -1047,7 +917,6 @@ def sayfa_raporlama():
                 if kullanici_sorusu:
                     with st.spinner("AI Danışman tesis verilerinizi analiz ediyor..."):
                             
-                        # Verileri buraya "gizli zarf" gibi ekliyoruz
                         tesis_verileri = f"""
                         Tesisin Güncel Su Ayak İzi Verileri:
                         - Mavi Su: {res_blue:.2f} m3/yıl
@@ -1059,25 +928,21 @@ def sayfa_raporlama():
                         sistem_talimati = "Sen kıdemli bir sürdürülebilirlik denetçisisin. Yukarıdaki tesis verilerini analiz et. Vereceğin yanıta 'Merhaba, ben kıdemli yapay zeka asistanınız olarak paylaştığınız verileri derinlemesine analiz ettim.' cümlesi ile başla "
                         tam_soru = f"{sistem_talimati}\n\n{tesis_verileri}\n\nKullanıcı Sorusu: {kullanici_sorusu}"
                         
-                        # --- İŞTE BURAYA GÜVENLİK AĞINI (TRY-EXCEPT) EKLİYORUZ ---
                         try:
                             response = client.models.generate_content(
-                                model='gemini-flash-latest', # Senin orijinal ve çalışan model ismine geri döndük!
+                                model='gemini-flash-latest', 
                                 contents=tam_soru
                             )
-                                
                             st.success("Analiz Tamamlandı!")
                             st.markdown(response.text)
                             
                         except Exception as e:
-                            # Sunucu hatası (503 vb.) verirse kırmızı ekran çıkmaz, bu tatlı uyarı çıkar
                             st.warning("⏳ Yapay zeka sunucularında anlık bir yoğunluk yaşanıyor (High Demand). Lütfen 1-2 dakika sonra tekrar deneyin.")
                             st.info(f"Teknik Detay: {str(e)}")
                             
                 else:
                     st.warning("Lütfen bir soru girin.")
                 
-            # Plotly Pasta Grafik
             st.markdown("### 📊 Su Ayak İzi Dağılımı")
             import plotly.express as px
             chart_data = pd.DataFrame({
@@ -1090,7 +955,6 @@ def sayfa_raporlama():
             fig.update_layout(margin=dict(t=20, b=20, l=20, r=20))
             st.plotly_chart(fig, use_container_width=True)
             
-            # --- YENİ EKLENEN: SÜRDÜRÜLEBİLİRLİK HEDEFLERİ ---
             st.markdown("### 🎯 Sürdürülebilirlik Hedefleri")
             st.info("Raporunuzu oluşturmadan önce, tesisinizin su ayak izini azaltmaya yönelik aksiyon hedeflerinizi aşağıya ekleyebilirsiniz. Yeni hedef eklemek için tablonun en alt satırına tıklayın.")
             
@@ -1098,7 +962,7 @@ def sayfa_raporlama():
                 st.session_state['hedef_tablosu'], 
                 num_rows="dynamic", 
                 use_container_width=True,
-                key="hedefler_tablo_editor" # Odak kaybını engelleyen kilit!
+                key="hedefler_tablo_editor" 
             )
             st.markdown("---")
             st.subheader("📄 Raporu PDF Olarak İndir")
@@ -1145,7 +1009,6 @@ def sayfa_raporlama():
                 else:
                     f_isim = "helvetica"
     
-                # --- KAPAK SAYFASI ---
                 pdf.add_page()
                 pdf.set_font(f_isim, size=24, style='B')
                 pdf.set_fill_color(0, 150, 136) 
@@ -1171,7 +1034,6 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=10, style='')
                 pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Eğitim ve Danışmanlık A.Ş. Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından H2Odenge Platformu Kullanılarak Hazırlanmıştır.", align='C')
     
-                # --- İÇİNDEKİLER ---
                 pdf.add_page()
                 pdf.set_font(f_isim, size=16, style='B')
                 pdf.cell(190, 10, txt="İÇİNDEKİLER", ln=True, align='C')
@@ -1206,7 +1068,7 @@ def sayfa_raporlama():
                 pdf.cell(190, 8, txt="4. HESAPLAMALAR", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
                 pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.1. Mavi Su Ayak İzi Hesaplamaları", ln=True)
-                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.2. Yesil Su Ayak İzi Hesaplamaları", ln=True)
+                pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.2. Yeşil Su Ayak İzi Hesaplamaları", ln=True)
                 pdf.cell(10, 6, txt=""); pdf.cell(180, 6, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
                 pdf.ln(4)
                 
@@ -1214,7 +1076,6 @@ def sayfa_raporlama():
                 pdf.cell(190, 8, txt="5. SONUÇ", ln=True)
                 pdf.cell(190, 8, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True)
                 
-                # --- BÖLÜM 1 ---
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1227,8 +1088,7 @@ def sayfa_raporlama():
                 pdf.cell(190, 8, txt="1.1. Kuruluş Bilgileri", ln=True)
                 pdf.set_font(f_isim, size=10, style='')
     
-                rapor_yili = st.session_state.get('rapor_yili', '2026')
-                rapor_tarihi_str = datetime.datetime.now().strftime("%d.%m.%Y")
+                rapor_tarihi_str = rapor_tarihi.strftime("%d.%m.%Y") if rapor_tarihi else "Belirtilmedi"
                 
                 pdf.set_fill_color(240, 240, 240) 
                 pdf.cell(60, 8, txt="Kuruluş Adı", border=1, fill=True)
@@ -1284,7 +1144,6 @@ def sayfa_raporlama():
                 except:
                     pass
                     
-                # --- BÖLÜM 1 DEVAMI VE BÖLÜM 2 ---
                 pdf.add_page()
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="1.4. Amaç ve Kapsam", ln=True)
@@ -1320,9 +1179,8 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="2.2. Operasyonel Sınırlar", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalısmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
+                pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalışmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
     
-                # --- BÖLÜM 3 ---
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1370,7 +1228,6 @@ def sayfa_raporlama():
                 except:
                     pass
     
-                # --- BÖLÜM 4 ---
                 pdf.ln(6)
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1412,7 +1269,7 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken teorik tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
+                pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
                 
                 pdf.ln(3)
                 pdf.set_font(f_isim, size=10, style='B')
@@ -1423,7 +1280,6 @@ def sayfa_raporlama():
                 pdf.cell(95, 8, txt="Endüstriyel Atıksu (Kritik Kirletici)", border=1, align='C')
                 pdf.cell(95, 8, txt=f"{format_num_anlik(res_grey)}", border=1, ln=True, align='C')
     
-                # --- BÖLÜM 5 ---
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1477,12 +1333,12 @@ def sayfa_raporlama():
                 if sum(degerler) > 0:
                     fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
                     wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', 
-                                                     shadow=False, 
-                                                     startangle=90, 
-                                                     colors=renkler, 
-                                                     textprops={'fontsize': 10, 'weight': 'bold'}, 
-                                                     pctdistance=0.85, 
-                                                     wedgeprops=dict(width=0.3, edgecolor='w')) 
+                                                       shadow=False, 
+                                                       startangle=90, 
+                                                       colors=renkler, 
+                                                       textprops={'fontsize': 10, 'weight': 'bold'}, 
+                                                       pctdistance=0.85, 
+                                                       wedgeprops=dict(width=0.3, edgecolor='w')) 
                     
                     ax.axis('equal') 
                     ax.set_title("Toplam Su Ayak Izi Bileşimi", fontsize=12, fontweight='bold', pad=20)
@@ -1538,12 +1394,9 @@ def sayfa_raporlama():
             st.subheader("Raporu Veritabanına Kaydet")
             st.info("Hesaplamalarınızı ve tesis verilerinizi güvenli bulut sistemine kaydetmek için aşağıdaki butonu kullanın.")
             
-            # Kullanıcıya rapor ismini değiştirebilme imkanı sunuyoruz
             kayit_adi = st.text_input("Rapor Başlığı (Veritabanında bu isimle görünecek):", value=f"{company_name} - 2026 Raporu")
             
-            # Kaydet butonu (Diğer butonlarla karışmasın diye özel key atadık)
             if st.button("Raporu Kaydet", type="primary", key="btn_bulut_kayit_son"):
-                # En tepeye yazdığımız fonksiyonu çağırıp motorun sonuçlarını içine atıyoruz
                 raporu_kaydet(
                     tesis_adi=kayit_adi,
                     mavi=res_blue,
@@ -1553,9 +1406,6 @@ def sayfa_raporlama():
                     ai_analizi="AI Analizi ve Sürdürülebilirlik Hedefleri sisteme girildi." 
                 )
 
-            # ------------------------------------------------
-    
-   # --- 7. GEÇMİŞ RAPORLAR SEKME İÇERİĞİ ---
 def sayfa_gecmis_raporlar():
     st.header("🗄️ Geçmiş Raporlarım")
     
@@ -1567,12 +1417,10 @@ def sayfa_gecmis_raporlar():
     if veriler and len(veriler) > 0:
         df_gecmis = pd.DataFrame(veriler)
         
-        # Görüntüleme için tabloyu hazırlıyoruz
         df_gosterim = df_gecmis[["tesis_adi", "mavi_su", "yesil_su", "gri_su", "toplam_su", "olusturma_tarihi"]].copy()
         df_gosterim.columns = ["Rapor Adı", "Mavi Su (m³)", "Yeşil Su (m³)", "Gri Su (m³)", "Toplam Su (m³)", "Kayıt Tarihi"]
         df_gosterim["Kayıt Tarihi"] = pd.to_datetime(df_gosterim["Kayıt Tarihi"]).dt.strftime("%d-%m-%Y %H:%M")
         
-        # Ana tabloyu ekrana basıyoruz
         st.dataframe(df_gosterim, use_container_width=True, hide_index=True)
         
         rapor_secenekleri = [f"{row['tesis_adi']} ({row['olusturma_tarihi'][:10]})" for index, row in df_gecmis.iterrows()]
@@ -1582,20 +1430,13 @@ def sayfa_gecmis_raporlar():
             secilen_isim = secilen_rapor_etiketi.rsplit(" (", 1)[0]
             secilen_veri = df_gecmis[df_gecmis["tesis_adi"] == secilen_isim].iloc[0]
 
-            # ==========================================
-            # KRİTİK VERİ EŞLEŞTİRME (Supabase'den gelen geçmiş verileri PDF motoruna bağlıyoruz)
-            # ==========================================
             company_name = secilen_veri['tesis_adi']
             res_blue = float(secilen_veri['mavi_su'])
             res_green = float(secilen_veri['yesil_su'])
             res_grey = float(secilen_veri['gri_su'])
             total_wf = float(secilen_veri['toplam_su'])
 
-            # ==========================================
-            # YENİ SİSTEM: VERİLERİ HAFIZADAN DEĞİL, DOĞRUDAN SUPABASE'DEN ÇEKİYORUZ
-            # ==========================================
             def guvenli_metin(kolon_adi):
-                # Eğer eski rapor olduğu için bu sütunlar henüz yoksa çökmeyi önler
                 if kolon_adi in secilen_veri and pd.notna(secilen_veri[kolon_adi]) and secilen_veri[kolon_adi] != "":
                     return str(secilen_veri[kolon_adi])
                 return "Belirtilmedi"
@@ -1606,8 +1447,6 @@ def sayfa_gecmis_raporlar():
             email = guvenli_metin('iletisim_email')
             c_phone = guvenli_metin('iletisim_telefon')
 
-            # JSON (Liste) formatında gelen tabloları PDF'in okuyabileceği formata çeviriyoruz
-            # Eski raporlarda bu tablolar boş geleceği için hata vermesin diye yedek şablonlar ekledik
             sorumlular_db = secilen_veri.get('sorumlular_tablosu')
             if isinstance(sorumlular_db, list) and len(sorumlular_db) > 0:
                 duzenlenmis_sorumlular = pd.DataFrame(sorumlular_db)
@@ -1626,24 +1465,18 @@ def sayfa_gecmis_raporlar():
             else:
                 duzenlenmis_hedefler = pd.DataFrame(columns=["Hedef Yılı", "Hedef Açıklaması"])
 
-            # ==========================================
-            # --- 2. PROFESYONEL PDF İNDİRME MOTORU ---
-            # ==========================================
-                
             def format_num(value):
                     return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
             try:
-            
                 import datetime
                 import os
-                    
+                
                 logo_firma = "logos/firma_logo.png" 
                 logo_adaso = "logos/adaso_logo.png"
-                    
+                
                 class ProfessionalPDF(FPDF):
                     def header(self):
-                        # Sayfa numarası 1'den büyükse (yani kapak değilse) logoları ve çizgiyi ekle
                         if self.page_no() > 1:
                             self.set_line_width(1)
                             self.set_draw_color(0, 150, 136)
@@ -1652,8 +1485,6 @@ def sayfa_gecmis_raporlar():
                             except: pass
                             try: self.image(logo_adaso, x=165, y=10, w=25)
                             except: pass
-                            
-                        # Kapak dahil her sayfada üstten boşluk bırak ki metinler yukarı yapışmasın
                         self.ln(20)
 
                     def footer(self):
@@ -1665,23 +1496,16 @@ def sayfa_gecmis_raporlar():
                 pdf = ProfessionalPDF()
                 pdf.alias_nb_pages()
 
-                # ---------------------------------------------------------
-                # KRİTİK NOKTA: TÜRKÇE FONTU SİSTEME 'uni=True' İLE GÖMME
-                # ---------------------------------------------------------
                 font_regular = "fonts/arial.ttf"
                 font_bold = "fonts/arialbd.ttf"
                 
                 if os.path.exists(font_regular) and os.path.exists(font_bold):
-                    # uni=True parametresi Türkçe karakterlerin silinmesini %100 engeller!
                     pdf.add_font("ArialTR", style="", fname=font_regular, uni=True)
                     pdf.add_font("ArialTR", style="B", fname=font_bold, uni=True)
                     f_isim = "ArialTR"
                 else:
-                    st.error("DİKKAT: C:\\Windows\\Fonts\\arial.ttf bulunamadı!")
-                    f_isim = "helvetica" # Hata almamak için acil durum yedeği
-                # ---------------------------------------------------------
+                    f_isim = "helvetica"
 
-                # --- KAPAK SAYFASI ---
                 pdf.add_page()
                 pdf.set_font(f_isim, size=24, style='B')
                 pdf.set_fill_color(0, 150, 136) 
@@ -1707,12 +1531,6 @@ def sayfa_gecmis_raporlar():
                 pdf.set_font(f_isim, size=10, style='')
                 pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından MaviRota Platformu Kullanılarak Hazırlanmıştır.", align='C')
 
-                # ==========================================
-                # --- BÖLÜM 1: GİRİŞ VE KAPSAM ---
-                # ==========================================
-                # ==========================================
-                # --- İÇİNDEKİLER SAYFASI ---
-                # ==========================================
                 pdf.add_page()
                 pdf.set_font(f_isim, size=16, style='B')
                 pdf.cell(190, 10, txt="İÇİNDEKİLER", ln=True, align='C')
@@ -1755,9 +1573,6 @@ def sayfa_gecmis_raporlar():
                 pdf.cell(190, 8, txt="5. SONUÇ", ln=True)
                 pdf.cell(190, 8, txt="6. SÜRDÜRÜLEBİLİRLİK HEDEFLERİ", ln=True)
                 
-                # ==========================================
-                # --- BÖLÜM 1: GİRİŞ ---
-                # ==========================================
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1773,12 +1588,8 @@ def sayfa_gecmis_raporlar():
                 rapor_yili = st.session_state.get('rapor_yili', '2026')
                 rapor_tarihi = st.session_state.get('rapor_tarihi', None)
 
-                if rapor_tarihi:
-                    rapor_tarihi_str = rapor_tarihi.strftime("%d.%m.%Y")
-                else:
-                    rapor_tarihi_str = "Belirtilmedi"
+                rapor_tarihi_str = rapor_tarihi.strftime("%d.%m.%Y") if rapor_tarihi else "Belirtilmedi"
                 
-                # Detaylı Kuruluş Tablosu
                 pdf.set_fill_color(240, 240, 240) 
                 pdf.cell(60, 8, txt="Kuruluş Adı", border=1, fill=True)
                 pdf.cell(130, 8, txt=f"{str(company_name)}", border=1, ln=True)
@@ -1820,11 +1631,9 @@ def sayfa_gecmis_raporlar():
                 
                 pdf.set_text_color(0, 0, 0)
                 pdf.set_font(f_isim, size=10, style='')
-                # Arayüzden gelen tablo verilerini PDF'e yazdıran dinamik döngü
                 gecerli_sorumlular = [row for index, row in duzenlenmis_sorumlular.iterrows() if str(row["Görev"]).strip() != ""]
                 
                 for row in gecerli_sorumlular:
-                    # Tabloya sığması için metinleri biraz tıraşlıyoruz (taşıp PDF'i bozmaması için)
                     sorumlu = str(row["Sorumlu Kişi"])[:30] 
                     gorev = str(row["Görev"])[:45]
                     iletisim = str(row["İletişim"])[:25]
@@ -1833,9 +1642,6 @@ def sayfa_gecmis_raporlar():
                     pdf.cell(80, 8, txt=gorev, border=1, align='C')
                     pdf.cell(50, 8, txt=iletisim, border=1, ln=True, align='C')
                     
-                # ==========================================
-                # --- BÖLÜM 1 DEVAMI VE BÖLÜM 2 ---
-                # ==========================================
                 pdf.add_page()
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="1.4. Amaç ve Kapsam", ln=True)
@@ -1873,9 +1679,6 @@ def sayfa_gecmis_raporlar():
                 pdf.set_font(f_isim, size=11, style='')
                 pdf.multi_cell(190, 6, txt=f"Raporun Kuruluş bilgilerinde belirtilmiş olan adresimizdeki tüm operasyonlar sistem sınırlarına dahil edilmiştir. {str(company_name)} faaliyetlerinden kaynaklanan su kullanım ve su deşarjının %100'ü hesaplamalara dahil edilmiştir.\nBu çalışmada kapıdan kapıya (Gate-to-Gate) yaklaşımı uygulanmıştır.")
 
-                # ==========================================
-                # --- BÖLÜM 3: METODOLOJİ ---
-                # ==========================================
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1900,7 +1703,7 @@ def sayfa_gecmis_raporlar():
                 pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
                 
                 pdf.set_font(f_isim, size=10, style='B')
-                pdf.set_fill_color(255, 192, 0) # Sarımtırak başlık
+                pdf.set_fill_color(255, 192, 0) 
                 pdf.cell(40, 8, txt="Bileşen", border=1, fill=True, align='C')
                 pdf.cell(50, 8, txt="Kaynak", border=1, fill=True, align='C')
                 pdf.cell(50, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
@@ -1908,24 +1711,18 @@ def sayfa_gecmis_raporlar():
                 
                 pdf.set_font(f_isim, size=10, style='')
 
-                # Arayüzdeki dinamik tablonun her bir satırını okuyup PDF'e basan döngü
                 for index, row in sistem_siniri_tablosu.iterrows():
-                    # Eğer kullanıcı hücreyi boş bıraktıysa hata vermemesi için "-" yazdırıyoruz
                     bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
                     kaynak = str(row["Kaynak"]) if pd.notna(row["Kaynak"]) else "-"
                     veri_kaynagi = str(row["Veri Kaynağı"]) if pd.notna(row["Veri Kaynağı"]) else "-"
                     veri_dogrulama = str(row["Veri Doğrulama"]) if pd.notna(row["Veri Doğrulama"]) else "-"
                     
-                    # Sadece içi tamamen boş olmayan satırları PDF'e ekle
                     if bilesen != "-" or kaynak != "-":
                         pdf.cell(40, 8, txt=bilesen, border=1, align='C')
                         pdf.cell(50, 8, txt=kaynak, border=1, align='C')
                         pdf.cell(50, 8, txt=veri_kaynagi, border=1, align='C')
                         pdf.cell(50, 8, txt=veri_dogrulama, border=1, ln=True, align='C')
 
-                # ==========================================
-                # --- BÖLÜM 4: HESAPLAMALAR ---
-                # ==========================================
                 pdf.ln(6)
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1967,7 +1764,7 @@ def sayfa_gecmis_raporlar():
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="4.3. Gri Su Ayak İzi Hesaplamaları", ln=True)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken teorik tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
+                pdf.multi_cell(190, 6, txt="Tesisten çıkan atıksudaki kirlilik yükünün, doğal alıcı ortam standartlarına kadar seyreltilmesi için gereken tatlı su miktarını temsil eder. En kritik kirletici parametresi baz alınmıştır.")
                 
                 pdf.ln(3)
                 pdf.set_font(f_isim, size=10, style='B')
@@ -1978,9 +1775,6 @@ def sayfa_gecmis_raporlar():
                 pdf.cell(95, 8, txt=f"Endüstriyel Atıksu (Kritik Kirletici)", border=1, align='C')
                 pdf.cell(95, 8, txt=f"{format_num(res_grey)}", border=1, ln=True, align='C')
 
-                # ==========================================
-                # --- BÖLÜM 5: SONUÇ VE TAVSİYELER ---
-                # ==========================================
                 pdf.add_page()
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
@@ -1995,7 +1789,6 @@ def sayfa_gecmis_raporlar():
                 pdf.cell(190, 8, txt=f"Toplam Tesis Su Ayak İzi: {format_num(total_vol)} m³/yıl", ln=True)
                 pdf.ln(3)
 
-                # Genel Dağılım Tablosu
                 pdf.set_fill_color(0, 0, 128)
                 pdf.set_text_color(255, 255, 255)
                 pdf.cell(70, 8, txt="Bileşen", border=1, align='C', fill=True)
@@ -2026,44 +1819,36 @@ def sayfa_gecmis_raporlar():
                 pdf.cell(70, 8, txt=f"{format_num(total_vol)}", border=1, align='C', fill=True)
                 pdf.cell(50, 8, txt="% 100", border=1, ln=True, align='C', fill=True)
 
-                pdf.ln(6) # Tablo ile grafik arasına biraz boşluk bırakalım
+                pdf.ln(6) 
 
-                           # --- PDF İÇİN TEMİZ VE MODERN DONUT GRAFİĞİ OLUŞTURMA ---
                 etiketler = ['Mavi Su', 'Yesil Su', 'Gri Su'] 
                 degerler = [res_blue, res_green, res_grey] 
-                renkler = ['#678B99', '#8A9A70', '#C25946'] # Puslu Çini Mavisi, Mat Zeytin Yeşili, Klasik Kiremit
+                renkler = ['#678B99', '#8A9A70', '#C25946'] 
         
-                # Eğer herhangi bir veri girilmişse grafiği çiz
                 if sum(degerler) > 0:
-                    # Temiz, düz zemin. shadow=False yaparak beğenmediğiniz efekti kaldırıyoruz.
                     fig, ax = plt.subplots(figsize=(6, 4), dpi=100)
                     
-                    # width=0.3 ile ortasını boşaltıp "Halka" yapıyoruz
                     wedges, texts, autotexts = ax.pie(degerler, labels=etiketler, autopct='%1.1f%%', 
-                                                     shadow=False, # Gölge yok, düz tasarım
-                                                     startangle=90, 
-                                                     colors=renkler, 
-                                                     textprops={'fontsize': 10, 'weight': 'bold'}, 
-                                                     pctdistance=0.85, 
-                                                     wedgeprops=dict(width=0.3, edgecolor='w')) 
+                                                       shadow=False, 
+                                                       startangle=90, 
+                                                       colors=renkler, 
+                                                       textprops={'fontsize': 10, 'weight': 'bold'}, 
+                                                       pctdistance=0.85, 
+                                                       wedgeprops=dict(width=0.3, edgecolor='w')) 
         
-                    ax.axis('equal') # Grafiğin tam yuvarlak olmasını sağlar
+                    ax.axis('equal') 
                     ax.set_title("Toplam Tesis Su Ayak Izi Bilesimi", fontsize=12, fontweight='bold', pad=20)
                     
                     total = sum(degerler)
-                    # Rakamı en basit ve garantili yöntemle tam ortaya yerleştiriyoruz
                     ax.text(0, 0, f"TOPLAM:\n{total:,.0f} m³", ha='center', va='center', fontsize=12, fontweight='bold')
         
-                    # Grafik dosyası olarak kaydetme (Hafıza hatasını çözer)
                     grafik_yolu = "temp_grafik.png"
                     plt.savefig(grafik_yolu, format='png', dpi=300, bbox_inches='tight') 
                     plt.close(fig)
                     
-                    # FPDF'e doğrudan dosya yolunu veriyoruz ki rfind hatası vermesin
                     pdf.image(grafik_yolu, x=35, y=pdf.get_y(), w=140) 
-                    pdf.ln(100) # Grafiğin boyu kadar aşağı in
+                    pdf.ln(100) 
                 
-                # --- PDF İÇİNE HEDEFLERİ EKLEME BÖLÜMÜ ---
                 gecerli_hedefler = [row for index, row in duzenlenmis_hedefler.iterrows() if str(row["Hedef Açıklaması"]).strip() != ""]
                 
                 if len(gecerli_hedefler) > 0:
@@ -2080,9 +1865,6 @@ def sayfa_gecmis_raporlar():
                         hedef_metni = f"• {hedef['Hedef Yılı']} Yılı Hedefi: {hedef['Hedef Açıklaması']}"
                         pdf.multi_cell(190, 6, txt=hedef_metni)
 
-                # ==========================================
-                # --- FİZİKSEL DOSYA KAYDI VE İNDİRME ---
-                # ==========================================
                 gecici_dosya_adi = "gecici_rapor.pdf"
                 pdf.output(gecici_dosya_adi)
                 
@@ -2099,7 +1881,6 @@ def sayfa_gecmis_raporlar():
             except Exception as e:
                 st.error(f"Profesyonel PDF Oluşturma Hatası: {str(e)}")
 
-                
     else:
         st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
 
@@ -2107,7 +1888,6 @@ def sayfa_performans_kpi():
     st.header("📈 Tesis Performans Göstergeleri (KPI)")
     st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini hesaplayabilirsiniz.")
 
-    # --- EKSİK OLAN 1. KISIM: ÜRETİM VE PERSONEL VERİLERİ EKLENDİ ---
     st.subheader("1. Üretim ve Personel Verileri")
     col1, col2, col3, col4 = st.columns([2, 1, 2, 2]) 
     uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=0.0, value=st.session_state.get('uretim_miktari', 0.0))
@@ -2120,7 +1900,6 @@ def sayfa_performans_kpi():
     calisma_gunu = col3.number_input("Yıllık Çalışma Günü", min_value=0.0, value=st.session_state.get('calisma_gunu', 0.0))
     personel_sayisi = col4.number_input("Personel Sayısı", min_value=0.0, value=st.session_state.get('personel_sayisi', 0.0))
 
-    # --- 2. KISIM: SENİN HARİKA EKLENTİLERİN ---
     st.subheader("2. Evsel Su ve Diğer Su Tüketimleri")
     
     col5, col6, col7 = st.columns(3)
@@ -2133,7 +1912,6 @@ def sayfa_performans_kpi():
     gerikazanim_suyu = col9.number_input("Geri Kazanım Suyu (m³/yıl)", min_value=0.0, value=st.session_state.get('gerikazanim_suyu', 0.0))
     evsel_atiksu = col10.number_input("Evsel Atıksu Miktarı (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_atiksu', 0.0))
 
-    # Ana hafızadan proses (endüstriyel) su verilerini otomatik çekiyoruz
     sebeke = st.session_state.get('sebeke_suyu', 0.0)
     kuyu = st.session_state.get('kuyu_suyu', 0.0)
     diger = st.session_state.get('diger_su', 0.0)
@@ -2143,7 +1921,6 @@ def sayfa_performans_kpi():
     st.divider()
 
     if st.button("📊 KPI Göstergelerini Hesapla", type="primary"):
-        # Hafızaya Mühürleme İşlemleri
         st.session_state['uretim_miktari'] = uretim_miktari
         st.session_state['uretim_birimi'] = uretim_birimi
         st.session_state['calisma_gunu'] = calisma_gunu
@@ -2155,10 +1932,8 @@ def sayfa_performans_kpi():
         st.session_state['gerikazanim_suyu'] = gerikazanim_suyu
         st.session_state['evsel_atiksu'] = evsel_atiksu
 
-        # --- SENİN YENİ HESAPLAMA MANTIĞIN ---
         net_proses_suyu = max(0.0, toplam_giren_su - (evsel_su + sulama_suyu + yangin_suyu + arac_yikama + gerikazanim_suyu))
 
-        # KPI Hesaplamaları
         spesifik_su = net_proses_suyu / uretim_miktari if uretim_miktari > 0 else 0
         spesifik_atiksu = toplam_proses_atiksu / uretim_miktari if uretim_miktari > 0 else 0
         
@@ -2166,7 +1941,6 @@ def sayfa_performans_kpi():
         spesifik_evsel_su = (evsel_su * 1000) / payda_kisi_gun if payda_kisi_gun > 0 else 0
         spesifik_evsel_atiksu = (evsel_atiksu * 1000) / payda_kisi_gun if payda_kisi_gun > 0 else 0
 
-        # Hafızaya alma
         st.session_state['kpi_net_proses'] = net_proses_suyu
         st.session_state['kpi_spesifik_su'] = spesifik_su
         st.session_state['kpi_spesifik_atiksu'] = spesifik_atiksu
@@ -2192,16 +1966,10 @@ def sayfa_performans_kpi():
         c3.metric(label="Spesifik Evsel Su Tüketimi", value=f"{st.session_state['kpi_evsel_su']:,.2f} L/kişi.gün")
         c4.metric(label="Spesifik Evsel Atıksu Miktarı", value=f"{st.session_state['kpi_evsel_atiksu']:,.2f} L/kişi.gün")
         
-# ==========================================
-# 7. ANA KONTROL (ROUTER)
-# ==========================================
 def main():
     st.set_page_config(page_title="Su Ayak İzi Pro", page_icon="💧", layout="wide")
     add_bg_from_url()
 
-    # ========================================================
-    # --- 1. SİHİRLİ BAĞLANTI (URL) KONTROLÜ ---
-    # ========================================================
     try:
         url_yetki = st.query_params.get("yetki", "")
         if url_yetki == "adaso_patron":
@@ -2211,22 +1979,15 @@ def main():
     except:
         st.session_state['admin_mi'] = False
 
-    # ========================================================
-    # --- 2. DİNAMİK SOL MENÜ OLUŞTURMA ---
-    # ========================================================
     st.sidebar.title("Menü")
     
     sayfalar = ["🏠 Ana Sayfa", "🧮 Hesaplama", "📊 Veri Kalitesi","📈 Performans (KPI)", "📄 Raporlama", "🗄️ Geçmiş Raporlar", ]
     
-    # Sadece linkte sihirli şifre varsa 3. seçeneği ekle
     if st.session_state.get('admin_mi', False):
         sayfalar.append("👑 Admin Paneli")
         
     page = st.sidebar.radio("Sayfa Seçiniz:", sayfalar)
 
-    # ========================================================
-    # --- 3. SAYFA YÖNLENDİRMELERİ (ROUTER) ---
-    # ========================================================
     if page == "🏠 Ana Sayfa":
         show_home_page()
     elif page == "🧮 Hesaplama":
@@ -2240,20 +2001,15 @@ def main():
     elif page == "🗄️ Geçmiş Raporlar":
         sayfa_gecmis_raporlar()
         
-    # --- YENİ: GİZLİ ADMİN SAYFASI İÇERİĞİ ---
     elif page == "👑 Admin Paneli":
-        
         st.subheader("📊 Sistemdeki Tüm Raporlar")
-        
         try:
-            # Supabase'den TÜM kayıtları çekiyoruz
             admin_response = supabase.from_("tesis_raporlari").select("*").order("olusturma_tarihi", desc=True).execute()
             
             if admin_response.data and len(admin_response.data) > 0:
                 import pandas as pd
                 df_admin = pd.DataFrame(admin_response.data)
                 
-                # 'id' sütununu gizleyip daha şık yapalım
                 if "id" in df_admin.columns:
                     df_admin = df_admin.drop(columns=["id"])
                     
