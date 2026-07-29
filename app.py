@@ -828,8 +828,8 @@ def show_calculator_page():
         
         st.info("""
 
-        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum deşarj limiti.
-        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal kirlilik seviyesi (Bilinmiyorsa **0** giriniz).
+        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum konsantrasyon değeri.
+        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal konsantrasyon değeri (Bilinmiyorsa **0** giriniz).
         """)
 
         # Tabloyu otomatik hesaplamaya uygun sütunlarla güncelliyoruz
