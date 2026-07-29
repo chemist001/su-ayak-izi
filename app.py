@@ -795,14 +795,19 @@ def show_calculator_page():
             st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
     # --- 3. YEŞİL SU ---
-    with tab_yesil:
+   with tab_yesil:
         st.header("Yeşil Su Verileri")
+        
+        # --- YENİ EKLENEN BİLGİ NOTU ---
+        st.info("💡 Eğer firmanızın proseste kullandığı bir yağmur suyu tutma sistemi mevcutsa, lütfen sisteme kullanılan toplam yağmur suyu miktarını giriniz.")
+        
         c1, c2 = st.columns(2)
         green_evap = c1.number_input("Yağmur Suyu (m³/yıl)", min_value=0.0, value=st.session_state['yesil_evap'])
         st.session_state['yesil_evap'] = green_evap
         
         green_incorp = c2.number_input("Ürüne Giren Yeşil Su (m³/yıl)", min_value=0.0, value=st.session_state['yesil_incorp'])
         st.session_state['yesil_incorp'] = green_incorp
+        
         # --- YEŞİL SU HESAPLAMA BUTONU ---
         st.divider()
         if st.button("🌱 Yeşil Su Ayak İzini Hesapla"):
