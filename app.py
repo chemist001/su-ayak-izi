@@ -644,7 +644,7 @@ def show_calculator_page():
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     tab_firma, tab_mavi, tab_yesil, tab_gri, = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "⬛ Gri Su",
+        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "🔲 Gri Su",
     ])
 
     with tab_firma:
