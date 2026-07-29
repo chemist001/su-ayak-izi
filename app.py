@@ -838,6 +838,9 @@ def show_calculator_page():
                 {"id": 1, "ad": "BOİ", "analiz": 0.0, "debi": 0.0, "c_max": 50.0, "c_nat": 0.0}
             ]
 
+        pollutants_list = []
+        silinecek_indexler = []
+
 
         # Listelenen parametreler üzerinden döngü
         for idx, p in enumerate(st.session_state['gri_parametreler']):
@@ -878,8 +881,7 @@ def show_calculator_page():
             )
             st.rerun()
 
-        pollutants_list = []
-        silinecek_indexler = []
+
 
         # İşaretlenen parametreleri listeden düş ve sayfayı yenile
         if silinecek_indexler:
