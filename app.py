@@ -819,7 +819,12 @@ def show_calculator_page():
     with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
         st.write("Laboratuvar analizlerinizdeki kirlilik parametrelerini aşağıya ekleyiniz.")
-        st.info("💡 **Nasıl Hesaplanır?** Analiz sonuçları (mg/L) ile debiyi (m³/yıl) çarpıp, sonucu 1000'e bölünüz. Çıkan sonucu (kg/yıl) tabloda 'Yük' sütununa yazınız.")
+        st.info("""
+        💡 **Tabloyu Doldururken Dikkat Edilecekler:**
+        * **Yük (kg/yıl):** Analiz sonucu (mg/L) × Debi (m³/yıl) / 1000 formülüyle hesaplayınız.
+        * **C_max (Limit):** Alıcı ortam için yasal olarak izin verilen maksimum kirletici limiti (kg/m³).
+        * **C_nat (Doğal):** Alıcı ortamın doğal halindeki kirlilik seviyesi (kg/m³). Bilinmiyorsa **0** giriniz.
+        """)
         # 1. Editör (Kalıcı hafızayı gösterir)
         duzenlenmis_df = st.data_editor(
             st.session_state['gri_tablo'], 
