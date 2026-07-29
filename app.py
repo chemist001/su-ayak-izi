@@ -795,7 +795,7 @@ def show_calculator_page():
             st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
     # --- 3. YEŞİL SU ---
-        with tab_yesil:
+     with tab_yesil:
         st.header("Yeşil Su Verileri")
         
         # --- YENİ EKLENEN BİLGİ NOTU ---
