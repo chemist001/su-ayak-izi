@@ -500,7 +500,7 @@ def show_home_page():
         <h4><span style='background-color:#6c757d; color:white; padding:4px 10px; border-radius:5px;'>Gri</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
         
-        st.write("Oluşan kirliliği, su kalitesi standartlarına (doğal konsantrasyona) seyreltmek için gereken teorik temiz su miktarıdır.")
+        st.write("Gri su ayak izi, oluşan kirliliği su kalitesi standartlarına (doğal konsantrasyona) seyreltmek için gereken teorik temiz su miktarıdır. Bir ürün veya süreç nedeniyle kirlenen suyun doğrudan veya dolaylı olarak temizlenmesi gereken su miktarını hesaplar.")
         st.markdown("- 🧪 Kimyasal atıklar\n- 🚿 Atıksu deşarjı\n- 🏭 Termal kirlilik")
         
         st.markdown("""
