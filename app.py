@@ -890,7 +890,7 @@ def show_calculator_page():
             st.rerun()
 
         # Otomatik Hesaplama Butonu
-        if st.button("🫧 Gri Su Ayak İzini Otomatik Hesapla"):
+        if st.button("🫧 Gri Su Ayak İzini Hesapla"):
             if not pollutants_list:
                 st.warning("Lütfen en az bir parametre ekleyin.")
             else:
