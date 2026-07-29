@@ -822,24 +822,27 @@ def show_calculator_page():
 
     # --- 4. GRİ SU ---
 # --- 4. GRİ SU ---
+    # --- 4. GRİ SU ---
     with tab_gri:
         st.header("Gri Su Verileri (Kritik Kirletici)")
         st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi aşağıya giriniz. Sistem kirlilik yükünü ve gri su ayak izini otomatik olarak hesaplayacaktır.")
         
         st.info("""
-
-        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum konsantrasyon değeri.
-        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal konsantrasyon değeri (Bilinmiyorsa **0** giriniz).
+        💡 **Bilgilendirme:**
+        * **Analiz Sonucu (mg/L):** Laboratuvar raporundaki parametre değeri.
+        * **Debi (m³/yıl):** Bu parametrenin ölçüldüğü atıksu miktarı.
+        * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum deşarj limiti.
+        * **C_nat Doğal (mg/L):** Alıcı ortamın doğal kirlilik seviyesi (Bilinmiyorsa **0** giriniz).
         """)
 
-        # Tabloyu otomatik hesaplamaya uygun sütunlarla güncelliyoruz
-        if 'gri_tablo' not in st.session_state or "Analiz Sonucu (mg/L)" not in st.session_state['gri_tablo'].columns:
+        # Tablo hafıza kontrolü
+        if 'gri_tablo' not in st.session_state:
             st.session_state['gri_tablo'] = pd.DataFrame([
                 {"Parametre": "KOİ", "Analiz Sonucu (mg/L)": 0.0, "Debi (m³/yıl)": 0.0, "C_max Limit (mg/L)": 180.0, "C_nat Doğal (mg/L)": 0.0},
                 {"Parametre": "BOİ", "Analiz Sonucu (mg/L)": 0.0, "Debi (m³/yıl)": 0.0, "C_max Limit (mg/L)": 50.0, "C_nat Doğal (mg/L)": 0.0}
             ])
 
-        # 1. Editör 
+        # 1. Editör (Değişiklikleri anlık yakalaması için key atandı)
         duzenlenmis_df = st.data_editor(
             st.session_state['gri_tablo'], 
             num_rows="dynamic", 
@@ -847,12 +850,13 @@ def show_calculator_page():
             key="gri_editor_key",
         )
         
+        # Tablodaki anlık değişimi doğrudan hafızaya eşitliyoruz (Hücreden çıkma zorunluluğunu kaldırır)
+        st.session_state['gri_tablo'] = duzenlenmis_df
+        
         st.divider()
 
         # 2. Butona basılınca çalışacak otomatik hesaplama motoru
-        if st.button("🫧 Gri Su Ayak İzini Hesapla"):
-            st.session_state['gri_tablo'] = duzenlenmis_df 
-            
+        if st.button("🫧 Gri Su Ayak İzini Otomatik Hesapla"):
             if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
                 st.warning("Lütfen tabloda boş hücre bırakmayın.")
             else:
@@ -864,12 +868,10 @@ def show_calculator_page():
                         c_max_mg = float(row["C_max Limit (mg/L)"])
                         c_nat_mg = float(row["C_nat Doğal (mg/L)"])
                         
-                        # --- SİSTEMİN KENDİSİNİN YAPTIĞI OTOMATİK HESAPLAMALAR ---
-                        # 1. Yük (kg/yıl) = Analiz (mg/L) * Debi (m3/yıl) / 1000
+                        # Otomatik Yük Hesabı: (mg/L * m3/yıl) / 1000 = kg/yıl
                         hesaplanan_yuk = (analiz * debi) / 1000.0
                         
-                        # 2. mg/L değerlerini kg/m3'e çevirme (1 mg/L = 0.001 kg/m3 ama oran aynıdır, 
-                        # formül kg/m3 istendiği için 1000'e bölüyoruz)
+                        # kg/m3 birim dönüşümü
                         c_max_kg = c_max_mg / 1000.0
                         c_nat_kg = c_nat_mg / 1000.0
                         
