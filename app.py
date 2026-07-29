@@ -471,7 +471,7 @@ def show_home_page():
         <h4><span style='background-color:#17a2b8; color:white; padding:4px 10px; border-radius:5px;'>Mavi</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
         
-        st.write("Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Bu, suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.")
+        st.write("Mavi su ayak izi, doğrudan su kaynaklarından (akarsular, göller, yer altı suyu) kullanılan su miktarını ifade eder. Suyun bir ürüne, hizmete veya süreçlere dahil edilmesi sırasında yapılan su çekimini temsil eder.")
         st.markdown("- 🏭 Sanayi üretimi\n- 🚰 Evsel kullanım\n- 🌾 Tarımsal sulama")
         
         # 2. Renkli Formül Bandı (Kartın en altına yapışık duracak)
@@ -486,7 +486,7 @@ def show_home_page():
         <h4><span style='background-color:#28a745; color:white; padding:4px 10px; border-radius:5px;'>Yeşil</span> Su Ayak İzi</h4>
         """, unsafe_allow_html=True)
         
-        st.write("Yeşil su ayak izi, bitkilerin büyümesi için kullanılan yağış suyunu ifade eder. Bu, toprak tarafından emilen ve bitkiler tarafından kullanılan su miktarını kapsar ve suyun doğal döngüsü içinde yer aldığı süreçleri değerlendirir.")
+        st.write("Yeşil su ayak izi, bitkilerin büyümesi için kullanılan yağış suyunu ifade eder. Toprak tarafından emilen ve bitkiler tarafından kullanılan su miktarını kapsar ve suyun doğal döngüsü içinde yer aldığı süreçleri değerlendirir.")
         st.markdown("- 🌲 Orman ürünleri\n- 🚜 Yağmurla beslenen tarım\n- 🌧️ Yağmur hasadı")
         
         st.markdown("""
