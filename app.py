@@ -850,7 +850,7 @@ def show_calculator_page():
         st.divider()
 
         # 2. Butona basılınca çalışacak otomatik hesaplama motoru
-        if st.button("⚙️ Gri Su Ayak İzini Hesapla"):
+        if st.button("🫧 Gri Su Ayak İzini Hesapla"):
             st.session_state['gri_tablo'] = duzenlenmis_df 
             
             if duzenlenmis_df.empty or duzenlenmis_df.isnull().values.any():
