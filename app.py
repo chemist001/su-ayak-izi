@@ -827,9 +827,7 @@ def show_calculator_page():
         st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi aşağıya giriniz. Sistem kirlilik yükünü ve gri su ayak izini otomatik olarak hesaplayacaktır.")
         
         st.info("""
-        💡 **Bilgilendirme:**
-        * **Analiz Sonucu (mg/L):** Laboratuvar raporundaki parametre değeri.
-        * **Debi (m³/yıl):** Bu parametrenin ölçüldüğü atıksu miktarı.
+
         * **C_max Limit (mg/L):** Yasal olarak izin verilen maksimum deşarj limiti.
         * **C_nat Doğal (mg/L):** Alıcı ortamın doğal kirlilik seviyesi (Bilinmiyorsa **0** giriniz).
         """)
