@@ -885,7 +885,7 @@ def sayfa_veri_kalitesi():
         yeni_eklenecekler = girilen_bilesenler - mevcut_bilesenler
         
         if yeni_eklenecekler:
-            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (max 250 karakter)": ""} for b in yeni_eklenecekler]
+            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (Diğer)": ""} for b in yeni_eklenecekler]
             yeni_df = pd.DataFrame(yeni_satirlar)
             st.session_state['sistem_siniri_tablosu'] = pd.concat([mevcut_df, yeni_df], ignore_index=True)
 
