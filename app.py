@@ -839,7 +839,7 @@ def show_calculator_page():
             
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
-    st.info("💡 Hesaplama sekmesinde girdiğiniz verilere göre (Mavi, Yeşil, Gri Su) aşağıdaki tablo otomatik olarak doldurulmuştur. Lütfen ilgili kaynak ve doğrulama yöntemlerini seçiniz.")
+    st.info("💡 Hesaplama sekmesinde girdiğiniz verilere göre (Mavi, Yeşil, Gri Su) aşağıdaki tablo otomatik olarak doldurulmuştur. Herhangi bir alanda **'Diğer'** seçeneğini işaretlerseniz, lütfen yanındaki **'Açıklama'** sütununa detayını yazınız.")
     
     # 1. Hangi verilerin girildiğini (0'dan büyük olduğunu) tespit et
     girilen_bilesenler = set()
@@ -866,22 +866,26 @@ def sayfa_veri_kalitesi():
         # Tablo hiç yoksa veya boşsa, tespit edilen bileşenlerle sıfırdan oluştur
         baslangic_verisi = []
         for b in girilen_bilesenler:
-            baslangic_verisi.append({"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None})
+            baslangic_verisi.append({"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (Diğer)": ""})
         
         if not baslangic_verisi: # Hiçbir veri girilmemişse boş tablo göster
-            st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"])
+            st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama", "Açıklama (Diğer)"])
         else:
             st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(baslangic_verisi)
             
     else:
-        # Tablo zaten varsa, sadece EKSİK olan (yeni girilmiş) bileşenleri tabloya ekle (kullanıcının eski ayarları silinmesin)
+        # Tablo zaten varsa
         mevcut_df = st.session_state['sistem_siniri_tablosu']
-        mevcut_bilesenler = set(mevcut_df["Bileşen"].dropna().unique())
         
+        # ESKİ VERSİYONDAN KALMA VERİ VARSA ÇÖKMESİN DİYE GÜVENLİK KONTROLÜ
+        if "Açıklama (Diğer)" not in mevcut_df.columns:
+            mevcut_df["Açıklama (Diğer)"] = ""
+
+        mevcut_bilesenler = set(mevcut_df["Bileşen"].dropna().unique())
         yeni_eklenecekler = girilen_bilesenler - mevcut_bilesenler
         
         if yeni_eklenecekler:
-            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None} for b in yeni_eklenecekler]
+            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (Diğer)": ""} for b in yeni_eklenecekler]
             yeni_df = pd.DataFrame(yeni_satirlar)
             st.session_state['sistem_siniri_tablosu'] = pd.concat([mevcut_df, yeni_df], ignore_index=True)
 
@@ -890,9 +894,10 @@ def sayfa_veri_kalitesi():
         st.session_state['sistem_siniri_tablosu'],
         column_config={
             "Bileşen": st.column_config.SelectboxColumn("Bileşen", options=["Mavi Su", "Gri Su", "Yeşil Su"], required=True),
-            "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu", "Yağmur Suyu", "Proses Suyu"], required=True),
-            "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan", "Meteorolojik Veri"], required=True),
-            "Veri Doğrulama": st.column_config.SelectboxColumn("Veri Doğrulama", options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar"], required=True)
+            "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Endüstriyel Atıksu", "Yağmur Suyu", "Proses Suyu", "Diğer"], required=True),
+            "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan", "Meteorolojik Veri", "Diğer"], required=True),
+            "Veri Doğrulama": st.column_config.SelectboxColumn("Veri Doğrulama", options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar", "Diğer"], required=True),
+            "Açıklama (Diğer)": st.column_config.TextColumn("Açıklama (Diğer)", help="Menülerde 'Diğer' seçeneğini işaretlediyseniz buraya detay yazabilirsiniz.", max_chars=150)
         },
         num_rows="dynamic", 
         use_container_width=True, 
