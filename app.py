@@ -1816,28 +1816,66 @@ def sayfa_gecmis_raporlar():
                 pdf.ln(4)
                 pdf.set_font(f_isim, size=11, style='B')
                 pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
-                
-                pdf.set_font(f_isim, size=10, style='B')
-                pdf.set_fill_color(255, 192, 0) 
-                pdf.cell(40, 8, txt="Bileşen", border=1, fill=True, align='C')
-                pdf.cell(50, 8, txt="Kaynak", border=1, fill=True, align='C')
-                pdf.cell(50, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
-                pdf.cell(50, 8, txt="Veri Doğrulama", border=1, ln=True, fill=True, align='C')
-                
-                pdf.set_font(f_isim, size=10, style='')
 
-                for index, row in sistem_siniri_tablosu.iterrows():
-                    bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
-                    kaynak = str(row["Kaynak"]) if pd.notna(row["Kaynak"]) else "-"
-                    veri_kaynagi = str(row["Veri Kaynağı"]) if pd.notna(row["Veri Kaynağı"]) else "-"
-                    veri_dogrulama = str(row["Veri Doğrulama"]) if pd.notna(row["Veri Doğrulama"]) else "-"
-                    
-                    if bilesen != "-" or kaynak != "-":
-                        pdf.cell(40, 8, txt=bilesen, border=1, align='C')
-                        pdf.cell(50, 8, txt=kaynak, border=1, align='C')
-                        pdf.cell(50, 8, txt=veri_kaynagi, border=1, align='C')
-                        pdf.cell(50, 8, txt=veri_dogrulama, border=1, ln=True, align='C')
+                # YENİ MANTIK: "Diğer" sütununda gerçek bir veri var mı kontrol et
+                diger_sutunu_gerekli_mi = False
+                try:
+                    for index, row in sistem_siniri_tablosu.iterrows():
+                        aciklama = str(row.get("Açıklama (Diğer)", "")).strip()
+                        # Eğer boş, tire (-) veya nan değilse, demek ki kullanıcı bir şey yazmış
+                        if aciklama != "" and aciklama != "-" and aciklama != "nan":
+                            diger_sutunu_gerekli_mi = True
+                            break
+                except:
+                    pass
+                
+                # Sütun başlıklarını ve fontları duruma göre (4 veya 5 sütun) ayarla
+                if diger_sutunu_gerekli_mi:
+                    pdf.set_font(f_isim, size=9, style='B') # 5 sütun için küçük font
+                    pdf.set_fill_color(255, 192, 0) 
+                    pdf.cell(30, 8, txt="Bileşen", border=1, fill=True, align='C')
+                    pdf.cell(35, 8, txt="Kaynak", border=1, fill=True, align='C')
+                    pdf.cell(40, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                    pdf.cell(40, 8, txt="Veri Doğrulama", border=1, fill=True, align='C')
+                    pdf.cell(45, 8, txt="Açıklama (Diğer)", border=1, ln=True, fill=True, align='C')
+                    pdf.set_font(f_isim, size=9, style='')
+                else:
+                    pdf.set_font(f_isim, size=10, style='B') # Orijinal 4 sütun için normal font
+                    pdf.set_fill_color(255, 192, 0) 
+                    pdf.cell(40, 8, txt="Bileşen", border=1, fill=True, align='C')
+                    pdf.cell(50, 8, txt="Kaynak", border=1, fill=True, align='C')
+                    pdf.cell(50, 8, txt="Veri Kaynağı", border=1, fill=True, align='C')
+                    pdf.cell(50, 8, txt="Veri Doğrulama", border=1, ln=True, fill=True, align='C')
+                    pdf.set_font(f_isim, size=10, style='')
 
+                # Veri satırlarını duruma göre 4 veya 5 parçaya bölerek yazdır
+                try:
+                    for index, row in sistem_siniri_tablosu.iterrows():
+                        bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
+                        kaynak = str(row["Kaynak"]) if pd.notna(row["Kaynak"]) else "-"
+                        veri_kaynagi = str(row["Veri Kaynağı"]) if pd.notna(row["Veri Kaynağı"]) else "-"
+                        veri_dogrulama = str(row["Veri Doğrulama"]) if pd.notna(row["Veri Doğrulama"]) else "-"
+                        
+                        aciklama = str(row.get("Açıklama (Diğer)", "-")).strip()
+                        if aciklama == "" or aciklama == "nan":
+                            aciklama = "-"
+                        
+                        if bilesen != "-" or kaynak != "-":
+                            if diger_sutunu_gerekli_mi:
+                                # 5 Sütunlu görünüm (Metinleri taşmasın diye bir tık daha kısa kestik)
+                                pdf.cell(30, 8, txt=bilesen[:15], border=1, align='C')
+                                pdf.cell(35, 8, txt=kaynak[:20], border=1, align='C')
+                                pdf.cell(40, 8, txt=veri_kaynagi[:22], border=1, align='C')
+                                pdf.cell(40, 8, txt=veri_dogrulama[:22], border=1, align='C')
+                                pdf.cell(45, 8, txt=aciklama[:25], border=1, ln=True, align='C')
+                            else:
+                                # 4 Sütunlu orijinal görünüm
+                                pdf.cell(40, 8, txt=bilesen[:20], border=1, align='C')
+                                pdf.cell(50, 8, txt=kaynak[:25], border=1, align='C')
+                                pdf.cell(50, 8, txt=veri_kaynagi[:25], border=1, align='C')
+                                pdf.cell(50, 8, txt=veri_dogrulama[:25], border=1, ln=True, align='C')
+                except:
+                    pass
                 pdf.ln(6)
                 pdf.set_fill_color(0, 150, 136) 
                 pdf.set_text_color(255, 255, 255) 
