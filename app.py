@@ -842,12 +842,11 @@ def sayfa_veri_kalitesi():
 
     # Veri Kalitesi Metin Girişi
     st.markdown("---")
-    st.subheader("3.1. Veri Kalitesi Metodoloji Açıklaması")
-    st.info("💡 Bu alana girdiğiniz metin, PDF raporundaki '3.1. Veri Kalitesi' bölümünde doğrudan yer alacaktır.")
+    st.subheader("Veri Kalitesi Metodoloji Açıklaması")
     
     # Eğer daha önce kaydedilmiş bir metin varsa onu getir, yoksa standart bir taslak sun
     if 'veri_kalitesi_aciklama' not in st.session_state:
-        st.session_state['veri_kalitesi_aciklama'] = "Hesaplamalarda kullanılan veriler tesisin sayaç tüketim kayıtlarından ve faturalardan alınmış olduğundan veri kalitesi yüksektir."
+        st.session_state['veri_kalitesi_aciklama'] = "Örnek metin: Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir."
 
     veri_kalitesi_metni = st.text_area(
         "Rapor Metni (Veri Kalitesi)",
