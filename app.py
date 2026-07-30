@@ -1279,7 +1279,7 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=11, style='')
                 pdf.multi_cell(190, 6, txt="Gri Su Ayak izi hesaplarında, üretim sonucu oluşan atıksuları hesaplarken laboratuvar analiz sonuçlarına göre en yüksek hacmi talep eden 'Kritik Kirletici' baz alınarak birincil veri kullanılmıştır.")
     
-               pdf.ln(4)
+                pdf.ln(4)
                 pdf.set_font(f_isim, size=11, style='B')
                 pdf.cell(190, 8, txt="Tablo 2: Genel Akış - Sistem Sınırı", ln=True)
 
