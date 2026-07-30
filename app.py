@@ -839,6 +839,8 @@ def show_calculator_page():
             
 def sayfa_veri_kalitesi():
     st.subheader("Veri Kalitesi Metodoloji Açıklaması")
+
+    st.info("💡 Firmanın veri kaynaklarına ve kalitesine yönelik metodoloji açıklamasını buraya yazabilirsiniz. Boş bırakmanız durumunda raporda **standart metin** yer alacaktır."
     
     if 'veri_kalitesi_aciklama' not in st.session_state:
         st.session_state['veri_kalitesi_aciklama'] = ""
@@ -848,7 +850,6 @@ def sayfa_veri_kalitesi():
         value=st.session_state['veri_kalitesi_aciklama'],
         placeholder="Örnek metin: Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir. Boş bırakmanız halinde raporda yer alacak *standart metin*: Hesaplamalarda kullanılan su tüketim ve temin verileri, tesisin resmi kayıtları, sayaç okumaları ve fatura verilerinden derlenmiş olup, veri izlenebilirliği ve kalitesi ulusal/uluslararası standartlara uygundur.",
         height=120,
-        help="Firmanın veri kaynaklarına ve kalitesine yönelik metodoloji açıklamasını buraya yazabilirsiniz. Boş bırakmanız durumunda raporda **standart metin** yer alacaktır."
     )
     
     st.session_state['veri_kalitesi_aciklama'] = veri_kalitesi_metni
