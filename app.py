@@ -1289,7 +1289,7 @@ def sayfa_raporlama():
                 # YENİ: Kullanıcının metin kutusuna yazdığını kontrol et, boşsa standart metni bas
                 v_kalite_metin = st.session_state.get('veri_kalitesi_aciklama', '').strip()
                 if not v_kalite_metin:
-                    v_kalite_metin = "Hesaplamalarda kullanılan şebeke ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir."
+                    v_kalite_metin = "Hesaplamalarda kullanılan su tüketim ve temin verileri, tesisin resmi kayıtları, sayaç okumaları ve fatura verilerinden derlenmiş olup, veri izlenebilirliği ve kalitesi ulusal/uluslararası standartlara uygundur."
                 
                 pdf.multi_cell(190, 6, txt=v_kalite_metin)
                 pdf.ln(3)
@@ -1862,7 +1862,7 @@ def sayfa_gecmis_raporlar():
                 # YENİ: Kullanıcının metin kutusuna yazdığını kontrol et, boşsa standart metni bas
                 v_kalite_metin = st.session_state.get('veri_kalitesi_aciklama', '').strip()
                 if not v_kalite_metin:
-                    v_kalite_metin = "Hesaplamalarda kullanılan şebeke ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir."
+                    v_kalite_metin = "Hesaplamalarda kullanılan su tüketim ve temin verileri, tesisin resmi kayıtları, sayaç okumaları ve fatura verilerinden derlenmiş olup, veri izlenebilirliği ve kalitesi ulusal/uluslararası standartlara uygundur."
                 
                 pdf.multi_cell(190, 6, txt=v_kalite_metin)
                 pdf.ln(3)
