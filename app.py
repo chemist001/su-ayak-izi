@@ -112,7 +112,7 @@ def register_user(email, password):
 
 # Kullanıcı giriş yapmamışsa Giriş Ekranını göster ve UYGULAMAYI DURDUR
 if st.session_state.user is None:
-    st.title("💧 H2O Denge - Su Ayak İzi Platformu")
+    st.title("💧 vodaX - Su Ayak İzi Platformu")
     st.markdown("Lütfen devam etmek için giriş yapın veya yeni bir tesis hesabı oluşturun.")
     
     tab1, tab2 = st.tabs(["Giriş Yap", "Yeni Kayıt"])
