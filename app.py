@@ -839,18 +839,59 @@ def show_calculator_page():
             
 def sayfa_veri_kalitesi():
     st.header("Veri Kalitesi ve Sistem Sınırı")
+    st.info("💡 Hesaplama sekmesinde girdiğiniz verilere göre (Mavi, Yeşil, Gri Su) aşağıdaki tablo otomatik olarak doldurulmuştur. Lütfen ilgili kaynak ve doğrulama yöntemlerini seçiniz.")
     
-    if 'sistem_siniri_tablosu' not in st.session_state:
-        st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(
-            columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"]
-        )
+    # 1. Hangi verilerin girildiğini (0'dan büyük olduğunu) tespit et
+    girilen_bilesenler = set()
+    
+    # Mavi Su Kontrolü
+    toplam_mavi = st.session_state.get('sebeke_suyu', 0.0) + st.session_state.get('kuyu_suyu', 0.0) + st.session_state.get('diger_su', 0.0)
+    if toplam_mavi > 0:
+        girilen_bilesenler.add("Mavi Su")
+        
+    # Yeşil Su Kontrolü
+    toplam_yesil = st.session_state.get('yesil_evap', 0.0) + st.session_state.get('yesil_incorp', 0.0)
+    if toplam_yesil > 0:
+        girilen_bilesenler.add("Yeşil Su")
+        
+    # Gri Su Kontrolü
+    gri_params = st.session_state.get('gri_parametreler', [])
+    for p in gri_params:
+        if float(p.get("analiz", 0)) > 0 and float(p.get("debi", 0)) > 0:
+            girilen_bilesenler.add("Gri Su")
+            break
 
+    # 2. Tabloyu session_state içinde kontrol et ve gerekirse dinamik güncelle
+    if 'sistem_siniri_tablosu' not in st.session_state or st.session_state['sistem_siniri_tablosu'].empty:
+        # Tablo hiç yoksa veya boşsa, tespit edilen bileşenlerle sıfırdan oluştur
+        baslangic_verisi = []
+        for b in girilen_bilesenler:
+            baslangic_verisi.append({"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None})
+        
+        if not baslangic_verisi: # Hiçbir veri girilmemişse boş tablo göster
+            st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama"])
+        else:
+            st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(baslangic_verisi)
+            
+    else:
+        # Tablo zaten varsa, sadece EKSİK olan (yeni girilmiş) bileşenleri tabloya ekle (kullanıcının eski ayarları silinmesin)
+        mevcut_df = st.session_state['sistem_siniri_tablosu']
+        mevcut_bilesenler = set(mevcut_df["Bileşen"].dropna().unique())
+        
+        yeni_eklenecekler = girilen_bilesenler - mevcut_bilesenler
+        
+        if yeni_eklenecekler:
+            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None} for b in yeni_eklenecekler]
+            yeni_df = pd.DataFrame(yeni_satirlar)
+            st.session_state['sistem_siniri_tablosu'] = pd.concat([mevcut_df, yeni_df], ignore_index=True)
+
+    # 3. Data Editor ile tabloyu ekrana bas
     gecici_df = st.data_editor(
         st.session_state['sistem_siniri_tablosu'],
         column_config={
             "Bileşen": st.column_config.SelectboxColumn("Bileşen", options=["Mavi Su", "Gri Su", "Yeşil Su"], required=True),
-            "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu"], required=True),
-            "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan"], required=True),
+            "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Diğer", "Endüstriyel Atıksu", "Yağmur Suyu", "Proses Suyu"], required=True),
+            "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan", "Meteorolojik Veri"], required=True),
             "Veri Doğrulama": st.column_config.SelectboxColumn("Veri Doğrulama", options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar"], required=True)
         },
         num_rows="dynamic", 
@@ -858,9 +899,9 @@ def sayfa_veri_kalitesi():
         hide_index=True 
     )
 
-    if st.button("Kaydet"):
+    if st.button("Kaydet", key="btn_kaydet_veri_kalitesi"):
         st.session_state['sistem_siniri_tablosu'] = gecici_df
-        st.success("Veriler başarıyla kaydedildi!")
+        st.success("Veri kalitesi tablosu başarıyla kaydedildi!")
         st.rerun()
 
 # --- 6. RAPORLAMA ---
