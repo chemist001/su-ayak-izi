@@ -840,7 +840,7 @@ def show_calculator_page():
 def sayfa_veri_kalitesi():
     st.subheader("Veri Kalitesi Metodoloji Açıklaması")
 
-    st.info("💡 Firmanın veri kaynaklarına ve kalitesine yönelik metodoloji açıklamasını buraya yazabilirsiniz. Boş bırakmanız durumunda raporda **standart metin** yer alacaktır."
+    st.info("💡 Firmanın veri kaynaklarına ve kalitesine yönelik metodoloji açıklamasını buraya yazabilirsiniz. Boş bırakmanız durumunda raporda **standart metin** yer alacaktır.")
     
     if 'veri_kalitesi_aciklama' not in st.session_state:
         st.session_state['veri_kalitesi_aciklama'] = ""
