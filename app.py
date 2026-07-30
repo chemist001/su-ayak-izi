@@ -838,24 +838,18 @@ def show_calculator_page():
                     st.error(f"Hesaplama sırasında hata oluştu: {str(e)}")
             
 def sayfa_veri_kalitesi():
-    st.header("Veri Kalitesi ve Sistem Sınırı")
-
-    # Veri Kalitesi Metin Girişi
-    st.markdown("---")
     st.subheader("Veri Kalitesi Metodoloji Açıklaması")
     
-    # Eğer daha önce kaydedilmiş bir metin varsa onu getir, yoksa standart bir taslak sun
     if 'veri_kalitesi_aciklama' not in st.session_state:
-        st.session_state['veri_kalitesi_aciklama'] = "Örnek metin: Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir."
+        st.session_state['veri_kalitesi_aciklama'] = ""
 
     veri_kalitesi_metni = st.text_area(
         "Rapor Metni (Veri Kalitesi)",
         value=st.session_state['veri_kalitesi_aciklama'],
-        height=100,
-        help="Firmanın veri kaynaklarına ve kalitesine yönelik metodoloji açıklamasını buraya yazabilirsiniz."
+        placeholder="Örnek metin: Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.",
+        height=120
     )
     
-    # Session state'e anlık kaydet
     st.session_state['veri_kalitesi_aciklama'] = veri_kalitesi_metni
     
     st.info("💡 Hesaplama sekmesinde girdiğiniz verilere göre (Mavi, Yeşil, Gri Su) aşağıdaki tablo otomatik olarak doldurulmuştur. Herhangi bir alanda **'Diğer'** seçeneğini işaretlerseniz, lütfen yanındaki **'Açıklama'** sütununa detayını yazınız.")
