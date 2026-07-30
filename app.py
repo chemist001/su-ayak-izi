@@ -682,7 +682,7 @@ def show_calculator_page():
             
         st.divider()
         st.subheader("👥 Su Yönetimi Sorumluları")
-        st.write("Raporda yer alacak 'Sorumlu Kişilerin İletişim Bilgileri' tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
+        st.write("Raporda yer alacak **Sorumlu Kişilerin İletişim Bilgileri** tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
         
         if 'sorumlu_kisiler_tablosu' not in st.session_state:
             st.session_state['sorumlu_kisiler_tablosu'] = pd.DataFrame(
