@@ -869,7 +869,7 @@ def sayfa_veri_kalitesi():
             baslangic_verisi.append({"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (Diğer)": ""})
         
         if not baslangic_verisi: # Hiçbir veri girilmemişse boş tablo göster
-            st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama", "**Diğer** seçeneğini seçtiyseniz lütfen açıklayınız."])
+            st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(columns=["Bileşen", "Kaynak", "Veri Kaynağı", "Veri Doğrulama", "Açıklama (Diğer)"])
         else:
             st.session_state['sistem_siniri_tablosu'] = pd.DataFrame(baslangic_verisi)
             
