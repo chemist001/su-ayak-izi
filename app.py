@@ -885,7 +885,7 @@ def sayfa_veri_kalitesi():
         yeni_eklenecekler = girilen_bilesenler - mevcut_bilesenler
         
         if yeni_eklenecekler:
-            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (Diğer)": ""} for b in yeni_eklenecekler]
+            yeni_satirlar = [{"Bileşen": b, "Kaynak": None, "Veri Kaynağı": None, "Veri Doğrulama": None, "Açıklama (max 250 karakter)": ""} for b in yeni_eklenecekler]
             yeni_df = pd.DataFrame(yeni_satirlar)
             st.session_state['sistem_siniri_tablosu'] = pd.concat([mevcut_df, yeni_df], ignore_index=True)
 
@@ -897,7 +897,7 @@ def sayfa_veri_kalitesi():
             "Kaynak": st.column_config.SelectboxColumn("Kaynak", options=["Şebeke", "Kuyu", "Endüstriyel Atıksu", "Yağmur Suyu", "Proses Suyu", "Diğer"], required=True),
             "Veri Kaynağı": st.column_config.SelectboxColumn("Veri Kaynağı", options=["Sayaç ve Fatura", "Analiz Raporları", "Sayaç", "Tahmin/Beyan", "Meteorolojik Veri", "Diğer"], required=True),
             "Veri Doğrulama": st.column_config.SelectboxColumn("Veri Doğrulama", options=["Tüketim Kayıtları", "Fatura Kontrolü", "Laboratuvar Beyanı", "İç Kayıtlar", "Diğer"], required=True),
-            "Açıklama (Diğer)": st.column_config.TextColumn("Açıklama (Diğer)", help="Menülerde 'Diğer' seçeneğini işaretlediyseniz buraya detay yazabilirsiniz.", max_chars=150)
+            "Açıklama (Diğer)": st.column_config.TextColumn("Açıklama (Diğer)", help="Menülerde 'Diğer' seçeneğini işaretlediyseniz buraya detay yazabilirsiniz.", max_chars=250)
         },
         num_rows="dynamic", 
         use_container_width=True, 
