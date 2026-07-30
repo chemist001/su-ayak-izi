@@ -1882,6 +1882,9 @@ def sayfa_gecmis_raporlar():
                     pdf.set_font(f_isim, size=10, style='')
 
                 # Veri satırlarını duruma göre 4 veya 5 parçaya bölerek yazdır
+                import textwrap # Uzun metinleri alt alta bölmek için yerleşik kütüphane
+
+                # Veri satırlarını duruma göre 4 veya 5 parçaya bölerek yazdır
                 try:
                     for index, row in sistem_siniri_tablosu.iterrows():
                         bilesen = str(row["Bileşen"]) if pd.notna(row["Bileşen"]) else "-"
@@ -1895,19 +1898,49 @@ def sayfa_gecmis_raporlar():
                         
                         if bilesen != "-" or kaynak != "-":
                             if diger_sutunu_gerekli_mi:
-                                # 5 Sütunlu görünüm (Metinleri taşmasın diye bir tık daha kısa kestik)
-                                pdf.cell(30, 8, txt=bilesen[:15], border=1, align='C')
-                                pdf.cell(35, 8, txt=kaynak[:20], border=1, align='C')
-                                pdf.cell(40, 8, txt=veri_kaynagi[:22], border=1, align='C')
-                                pdf.cell(40, 8, txt=veri_dogrulama[:22], border=1, align='C')
-                                pdf.cell(45, 8, txt=aciklama[:25], border=1, ln=True, align='C')
+                                # YENİ: Metni 25 karakterlik satırlara bölüyoruz
+                                aciklama_satirlari = textwrap.wrap(aciklama, width=25)
+                                if not aciklama_satirlari:
+                                    aciklama_satirlari = ["-"]
+                                
+                                # Satır sayısına göre çerçevenin yüksekliğini hesapla (Min 8mm)
+                                satir_yuksekligi = max(8, len(aciklama_satirlari) * 4)
+                                
+                                # Sayfa sonuna gelindiyse yeni sayfa aç (Taşmayı önler)
+                                if pdf.get_y() + satir_yuksekligi > 270:
+                                    pdf.add_page()
+                                
+                                baslangic_x = pdf.get_x()
+                                baslangic_y = pdf.get_y()
+                                
+                                # İlk 4 hücreyi dinamik yüksekliğe göre çiz
+                                pdf.cell(30, satir_yuksekligi, txt=bilesen[:15], border=1, align='C')
+                                pdf.cell(35, satir_yuksekligi, txt=kaynak[:20], border=1, align='C')
+                                pdf.cell(40, satir_yuksekligi, txt=veri_kaynagi[:22], border=1, align='C')
+                                pdf.cell(40, satir_yuksekligi, txt=veri_dogrulama[:22], border=1, align='C')
+                                
+                                # 5. hücrenin sadece boş DIŞ ÇERÇEVESİNİ çiz
+                                aciklama_x = pdf.get_x()
+                                pdf.cell(45, satir_yuksekligi, txt="", border=1, ln=True)
+                                
+                                # Çerçevenin içine geri dön ve metin satırlarını alt alta bas
+                                y_offset = baslangic_y + (satir_yuksekligi - (len(aciklama_satirlari) * 4)) / 2
+                                pdf.set_xy(aciklama_x, y_offset)
+                                
+                                for satir in aciklama_satirlari:
+                                    pdf.set_x(aciklama_x)
+                                    pdf.cell(45, 4, txt=satir, border=0, align='C', ln=True)
+                                
+                                # Bir sonraki satıra geçmek için imleci en başa sıfırla
+                                pdf.set_xy(baslangic_x, baslangic_y + satir_yuksekligi)
+                                
                             else:
                                 # 4 Sütunlu orijinal görünüm
                                 pdf.cell(40, 8, txt=bilesen[:20], border=1, align='C')
                                 pdf.cell(50, 8, txt=kaynak[:25], border=1, align='C')
                                 pdf.cell(50, 8, txt=veri_kaynagi[:25], border=1, align='C')
                                 pdf.cell(50, 8, txt=veri_dogrulama[:25], border=1, ln=True, align='C')
-                except:
+                except Exception as e:
                     pass
                 pdf.ln(6)
                 pdf.set_fill_color(0, 150, 136) 
