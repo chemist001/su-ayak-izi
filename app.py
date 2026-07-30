@@ -847,7 +847,8 @@ def sayfa_veri_kalitesi():
         "**Veri Kalitesi**",
         value=st.session_state['veri_kalitesi_aciklama'],
         placeholder="Örnek metin: Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.",
-        height=120
+        height=120,
+        help="Firmanın veri kaynaklarına ve kalitesine yönelik metodoloji açıklamasını buraya yazabilirsiniz. Boş bırakmanız durumunda raporda standart metin yer alacaktır. Lütfen raporda kontrol ediniz."
     )
     
     st.session_state['veri_kalitesi_aciklama'] = veri_kalitesi_metni
