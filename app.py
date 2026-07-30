@@ -844,7 +844,7 @@ def sayfa_veri_kalitesi():
         st.session_state['veri_kalitesi_aciklama'] = ""
 
     veri_kalitesi_metni = st.text_area(
-        "Veri Kalitesi",
+        "**Veri Kalitesi**",
         value=st.session_state['veri_kalitesi_aciklama'],
         placeholder="Örnek metin: Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.",
         height=120
