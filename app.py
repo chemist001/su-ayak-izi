@@ -1284,7 +1284,13 @@ def sayfa_raporlama():
                 pdf.set_font(f_isim, size=12, style='B')
                 pdf.cell(190, 8, txt="3.1. Veri Kalitesi", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
-                pdf.multi_cell(190, 6, txt="Hesaplamalarda kullanılan şebeke suyu ve kuyu suyu verisi sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir.")
+                
+                # YENİ: Kullanıcının metin kutusuna yazdığını kontrol et, boşsa standart metni bas
+                v_kalite_metin = st.session_state.get('veri_kalitesi_aciklama', '').strip()
+                if not v_kalite_metin:
+                    v_kalite_metin = "Hesaplamalarda kullanılan şebeke ve kuyu suyu verileri sayaç tüketim kayıtlarından, diğer tatlı sular ise faturalardan alınmış olduğundan veri kalitesi yüksektir."
+                
+                pdf.multi_cell(190, 6, txt=v_kalite_metin)
                 pdf.ln(3)
                 
                 pdf.set_font(f_isim, size=12, style='B')
