@@ -428,7 +428,7 @@ def create_pie_chart(data_dict, title):
 # 5. SAYFA İÇERİKLERİ 
 # ==========================================
 def show_home_page():
-    st.header("💧 Su Ayak İzi Nedir?")
+    st.subheader("💧 Su Ayak İzi Nedir?")
     st.markdown("### Görünmeyen Suyun Hikayesi")
     
     st.write("""
@@ -1578,7 +1578,7 @@ def sayfa_raporlama():
                 )
 
 def sayfa_gecmis_raporlar():
-    st.header("🗄️ Geçmiş Raporlarım")
+    st.header("Geçmiş Raporlarım")
     
     if st.button("🔄 Tabloyu Yenile", key="btn_yenile_gecmis"):
         st.rerun()
