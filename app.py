@@ -683,10 +683,16 @@ def sayfa_firma_profili():
         use_container_width=True,
         hide_index=True
     )
-    
+
     if st.button("Firma Bilgilerini Kaydet", key="btn_firma_kaydet"):
         st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
-        st.success("Sorumlu bilgileri başarıyla güncellendi!")
+        
+        # Ekrana yeşil onay mesajını bas
+        st.success("✅ Firma ve Sorumlu bilgileri başarıyla kaydedildi!")
+        
+        # Sayfayı yenilemeden önce mesajın okunabilmesi için 1.5 saniye bekle
+        time.sleep(1.5) 
+        
         st.rerun()
 
 def show_calculator_page():
