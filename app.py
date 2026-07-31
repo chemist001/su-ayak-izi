@@ -2176,8 +2176,6 @@ def sayfa_performans_kpi():
     toplam_giren_su = sebeke + kuyu + diger
     toplam_proses_atiksu = st.session_state.get('desarj', 0.0)
 
-    st.divider()
-
     if st.button("📊 KPI Göstergelerini Hesapla", type="primary"):
         st.session_state['uretim_miktari'] = uretim_miktari
         st.session_state['uretim_birimi'] = uretim_birimi
