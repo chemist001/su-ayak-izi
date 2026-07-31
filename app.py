@@ -632,7 +632,6 @@ def sayfa_firma_profili():
     if 'rapor_tarihi' not in st.session_state: st.session_state['rapor_tarihi'] = None
 
     st.subheader("Firma Profili")
-    st.caption("Raporlama için tesis ve sorumlu bilgilerini buradan yönetebilirsiniz.")
     
     col1, col2 = st.columns(2)
     with col1:
