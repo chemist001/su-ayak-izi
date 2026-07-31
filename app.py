@@ -411,13 +411,15 @@ def create_pie_chart(data_dict, title):
     labels = list(data_dict.keys())
     sizes = list(data_dict.values())
     
-    fig, ax = plt.subplots(figsize=(6, 4))
+    # YENİ: dpi=300 eklendi, çözünürlük 3 katına çıkarıldı
+    fig, ax = plt.subplots(figsize=(6, 4), dpi=300)
     ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['#4a90e2', '#50e3c2', '#f5a623'])
     ax.axis('equal')
     plt.title(title)
     
     buf = io.BytesIO()
-    plt.savefig(buf, format='png')
+    # YENİ: bbox_inches='tight' ile etraftaki gereksiz beyaz boşluklar kesildi
+    plt.savefig(buf, format='png', bbox_inches='tight')
     buf.seek(0)
     plt.close(fig)
     return buf
@@ -573,43 +575,44 @@ def show_home_page():
         st.metric(label="Arıtılmayan Atıksu", value="%80+", delta="Küresel Deşarj", delta_color="inverse")
 
     grafik_col1, grafik_col2 = st.columns(2)
+    
     with grafik_col1:
         st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Türkiye Su Tüketimi</p>", unsafe_allow_html=True)
-        fig1, ax1 = plt.subplots(figsize=(2.5, 2.5))
-        labels = ['Tarım', 'Sanayi', 'Evsel']
-        sizes = [74, 11, 15]
-        colors = ['#7dd3fc', '#bbf7d0', '#e2e8f0']
-        ax1.pie(
-            sizes, 
-            labels=labels, 
-            colors=colors, 
-            autopct='%1.1f%%', 
-            startangle=90,
-            labeldistance=1.1, 
-            pctdistance=0.8, 
-            wedgeprops=dict(width=0.4, edgecolor='w'),
-            textprops={'fontsize': 7}
+        
+        # Plotly ile interaktif, vektörel ve cam gibi net pasta grafiği
+        fig1 = px.pie(
+            names=['Tarım', 'Evsel', 'Sanayi'], 
+            values=[74, 15, 11],
+            hole=0.55,
+            color_discrete_sequence=['#7dd3fc', '#e2e8f0', '#bbf7d0']
         )
-        ax1.axis('equal') 
-        fig1.patch.set_alpha(0.0)
-        sol, orta, sag = st.columns([1, 1.65, 1])
-        with orta:
-            st.pyplot(fig1, use_container_width=True) 
+        fig1.update_traces(textposition='outside', textinfo='percent+label', textfont_size=13)
+        fig1.update_layout(
+            showlegend=False, 
+            margin=dict(t=10, b=10, l=10, r=10), 
+            height=300, 
+            paper_bgcolor="rgba(0,0,0,0)"
+        )
+        st.plotly_chart(fig1, use_container_width=True)
 
     with grafik_col2:
         st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Ürün Bazlı 'Gizli Su' Yükü (Litre)</p>", unsafe_allow_html=True)
-        fig2, ax2 = plt.subplots(figsize=(2.5, 1.5), dpi=200)
-        urunler = ['Kahve', 'Peynir', 'Tişört', 'Sığır Eti']
-        su_miktari = [140, 3180, 2700, 15400]
-        ax2.barh(urunler, su_miktari, color='#bae6fd', height=0.6)
-        ax2.set_xlabel('Su Tüketimi (Litre)', fontsize=4)
-        ax2.tick_params(axis='both', which='major', labelsize=4)
-        ax2.spines['top'].set_visible(False)
-        ax2.spines['right'].set_visible(False)
-        fig2.patch.set_alpha(0.0)
-        sol2, orta2, sag2 = st.columns([1, 3, 1]) 
-        with orta2:
-            st.pyplot(fig2, use_container_width=True)
+        
+        # Plotly ile vektörel çubuk grafiği (Üzerine gelindiğinde değerleri gösterir)
+        urunler = ['Kahve', 'Tişört', 'Peynir', 'Sığır Eti']
+        su_miktari = [140, 2700, 3180, 15400]
+        
+        fig2 = px.bar(x=su_miktari, y=urunler, orientation='h')
+        fig2.update_traces(marker_color='#bae6fd')
+        fig2.update_layout(
+            xaxis_title="Su Tüketimi (Litre)", 
+            yaxis_title="",
+            margin=dict(t=10, b=10, l=10, r=10),
+            height=300,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)"
+        )
+        st.plotly_chart(fig2, use_container_width=True)
             
     st.markdown("---")
     st.info("💡 Hesaplamalar veya tesis verileriyle ilgili yardıma mı ihtiyacınız var?")
