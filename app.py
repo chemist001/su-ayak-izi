@@ -642,7 +642,7 @@ def show_calculator_page():
     if 'yesil_incorp' not in st.session_state: st.session_state['yesil_incorp'] = 0.0
 
     st.set_page_config(page_title="Su Ayak İzi Hesaplama", layout="wide")
-    st.header("💧 Hesaplama Aracı")
+    st.subheader("💧 Hesaplama Aracı")
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     tab_firma, tab_mavi, tab_yesil, tab_gri, = st.tabs([
@@ -650,7 +650,7 @@ def show_calculator_page():
     ])
 
     with tab_firma:
-        st.header("Firma Bilgileri")
+        st.subheader("Firma Bilgileri")
         col1, col2 = st.columns(2)
         with col1:
             company_name = st.text_input("Firma Ünvanı", value=st.session_state.get('firma_adi', ''))
@@ -840,7 +840,7 @@ def show_calculator_page():
                     st.error(f"Hesaplama sırasında hata oluştu: {str(e)}")
             
 def sayfa_veri_kalitesi():
-    st.header("Veri Kalitesi Metodoloji Açıklaması")
+    st.subheader("Veri Kalitesi Metodoloji Açıklaması")
 
     st.info("💡 Firmanızın veri kaynakları ve veri kalitesine ilişkin metodolojik açıklamaları **Veri Kalitesi** bölümünde detaylandırabilirsiniz. Bu alanın boş bırakılması durumunda, raporda **standart metin** geçerli olacaktır.")
     
@@ -928,7 +928,7 @@ def sayfa_veri_kalitesi():
 
 # --- 6. RAPORLAMA ---
 def sayfa_raporlama():
-    st.header("Sonuç ve PDF Çıktısı")
+    st.subheader("Sonuç ve PDF Çıktısı")
         
     company_name = st.session_state.get('firma_adi', '')
     
@@ -1578,7 +1578,7 @@ def sayfa_raporlama():
                 )
 
 def sayfa_gecmis_raporlar():
-    st.header("Geçmiş Raporlarım")
+    st.subheader("Geçmiş Raporlarım")
     
     if st.button("🔄 Tabloyu Yenile", key="btn_yenile_gecmis"):
         st.rerun()
