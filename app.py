@@ -2136,7 +2136,7 @@ def sayfa_performans_kpi():
     st.subheader("📈 Tesis Performans Göstergeleri (KPI)")
     st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini hesaplayabilirsiniz.")
 
-    st.subheader(1. Üretim ve Personel Verileri)
+    st.subheader("1. Üretim ve Personel Verileri")
     col1, col2, col3, col4 = st.columns([2, 1, 2, 2]) 
     uretim_miktari = col1.number_input("Yıllık Üretim Miktarı", min_value=0.0, value=st.session_state.get('uretim_miktari', 0.0))
     
@@ -2148,7 +2148,7 @@ def sayfa_performans_kpi():
     calisma_gunu = col3.number_input("Yıllık Çalışma Günü", min_value=0.0, value=st.session_state.get('calisma_gunu', 0.0))
     personel_sayisi = col4.number_input("Personel Sayısı", min_value=0.0, value=st.session_state.get('personel_sayisi', 0.0))
 
-    st.subheader(2. Evsel Su ve Diğer Su Tüketimleri)
+    st.subheader("2. Evsel Su ve Diğer Su Tüketimleri")
     
     col5, col6, col7 = st.columns(3)
     evsel_su = col5.number_input("Evsel Su (m³/yıl)", min_value=0.0, value=st.session_state.get('evsel_su', 0.0))
