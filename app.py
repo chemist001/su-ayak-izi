@@ -840,7 +840,7 @@ def show_calculator_page():
                     st.error(f"Hesaplama sırasında hata oluştu: {str(e)}")
             
 def sayfa_veri_kalitesi():
-    st.subheader("Veri Kalitesi Metodoloji Açıklaması")
+    st.header("Veri Kalitesi Metodoloji Açıklaması")
 
     st.info("💡 Firmanızın veri kaynakları ve veri kalitesine ilişkin metodolojik açıklamaları **Veri Kalitesi** bölümünde detaylandırabilirsiniz. Bu alanın boş bırakılması durumunda, raporda **standart metin** geçerli olacaktır.")
     
