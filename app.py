@@ -428,7 +428,7 @@ def create_pie_chart(data_dict, title):
 # 5. SAYFA İÇERİKLERİ 
 # ==========================================
 def show_home_page():
-    st.title("💧 Su Ayak İzi Nedir?")
+    st.header("💧 Su Ayak İzi Nedir?")
     st.markdown("### Görünmeyen Suyun Hikayesi")
     
     st.write("""
@@ -513,7 +513,7 @@ def show_home_page():
         
     st.markdown("---")
 
-    st.title("📜 Su Verimliliği Yönetmeliği ve Belgelendirme")
+    st.header("📜 Su Verimliliği Yönetmeliği ve Belgelendirme")
     
     st.info("""27 Aralık 2024 tarihli ve 32765 sayılı Resmi Gazete'de yayımlanan 
     **Su Verimliliği Yönetmeliği** kapsamında, endüstriyel tesisler için 3 seviyeli bir 
@@ -579,7 +579,6 @@ def show_home_page():
     with grafik_col1:
         st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Türkiye Su Tüketimi</p>", unsafe_allow_html=True)
         
-        # Plotly ile interaktif, vektörel ve cam gibi net pasta grafiği
         fig1 = px.pie(
             names=['Tarım', 'Evsel', 'Sanayi'], 
             values=[74, 15, 11],
@@ -588,7 +587,6 @@ def show_home_page():
         )
         fig1.update_traces(textposition='outside', textinfo='percent+label', textfont_size=13)
         
-        # YENİ: margin (boşluk) değerleri artırıldı (t: üst, b: alt, l: sol, r: sağ)
         fig1.update_layout(
             showlegend=False, 
             margin=dict(t=40, b=20, l=20, r=20), 
@@ -600,7 +598,6 @@ def show_home_page():
     with grafik_col2:
         st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Ürün Bazlı 'Gizli Su' Yükü</p>", unsafe_allow_html=True)
         
-        # Plotly ile vektörel çubuk grafiği (Üzerine gelindiğinde değerleri gösterir)
         urunler = ['Kahve', 'Tişört', 'Peynir', 'Sığır Eti']
         su_miktari = [140, 2700, 3180, 15400]
         
@@ -618,7 +615,7 @@ def show_home_page():
             
     st.markdown("---")
     st.info("💡 Hesaplamalar veya tesis verileriyle ilgili yardıma mı ihtiyacınız var?")
-    st.link_button("🎧 Destek ve İletişim İçin Tıklayınız", "https://www.sanayikampusu.com/iletisim")
+    st.link_button("🎧 Destek & İletişim", "https://www.sanayikampusu.com/iletisim")
 
 import streamlit as st
 import pandas as pd
