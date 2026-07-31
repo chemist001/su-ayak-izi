@@ -642,7 +642,7 @@ def show_calculator_page():
     if 'yesil_incorp' not in st.session_state: st.session_state['yesil_incorp'] = 0.0
 
     st.set_page_config(page_title="Su Ayak İzi Hesaplama", layout="wide")
-    st.subheader("💧 Hesaplama Aracı")
+    st.subheader("Hesaplama Aracı")
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     tab_firma, tab_mavi, tab_yesil, tab_gri, = st.tabs([
@@ -2133,7 +2133,7 @@ def sayfa_gecmis_raporlar():
         st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
 
 def sayfa_performans_kpi():
-    st.subheader("📈 Tesis Performans Göstergeleri (KPI)")
+    st.subheader("Tesis Performans Göstergeleri (KPI)")
     st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini hesaplayabilirsiniz.")
 
     st.subheader("1. Üretim ve Personel Verileri")
