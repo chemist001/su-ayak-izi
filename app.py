@@ -664,7 +664,6 @@ def sayfa_firma_profili():
         rapor_tarihi = st.date_input("Rapor Tarihi", value=st.session_state.get('rapor_tarihi', None))
         st.session_state['rapor_tarihi'] = rapor_tarihi
         
-    st.divider()
     st.subheader("👥 Su Yönetimi Sorumluları")
     st.write("Raporda yer alacak **Sorumlu Kişilerin İletişim Bilgileri** tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
     
