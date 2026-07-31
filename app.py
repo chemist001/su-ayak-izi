@@ -2133,7 +2133,7 @@ def sayfa_gecmis_raporlar():
         st.info("💡 Henüz kaydedilmiş bir raporunuz bulunmuyor.")
 
 def sayfa_performans_kpi():
-    st.header("📈 Tesis Performans Göstergeleri (KPI)")
+    st.subheader("📈 Tesis Performans Göstergeleri (KPI)")
     st.info("Bu bölümde tesisinizin proses ve evsel bazda spesifik su verimliliğini hesaplayabilirsiniz.")
 
     st.subheader("1. Üretim ve Personel Verileri")
