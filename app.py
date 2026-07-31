@@ -1124,7 +1124,7 @@ def sayfa_raporlama():
                 pdf.set_text_color(0, 0, 0) 
                 pdf.ln(10)
                 pdf.set_font(f_isim, size=14, style='B')
-                current_year = datetime.datetime.now().year - 1
+                current_year = rapor_yili
                 pdf.cell(190, 10, txt=f"{current_year} Dönemi", ln=True, align='C')
                 
                 pdf.ln(20)
@@ -1696,7 +1696,7 @@ def sayfa_gecmis_raporlar():
                 pdf.set_text_color(0, 0, 0) 
                 pdf.ln(10)
                 pdf.set_font(f_isim, size=14, style='B')
-                current_year = datetime.datetime.now().year - 1
+                current_year = rapor_yili
                 pdf.cell(190, 10, txt=f"{current_year} Dönemi", ln=True, align='C')
                 
                 pdf.ln(20)
