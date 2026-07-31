@@ -631,7 +631,7 @@ def sayfa_firma_profili():
     if 'rapor_yili' not in st.session_state: st.session_state['rapor_yili'] = ""
     if 'rapor_tarihi' not in st.session_state: st.session_state['rapor_tarihi'] = None
 
-    st.header("🏢 Firma Profili")
+    st.subheader("Firma Profili")
     st.caption("Raporlama için tesis ve sorumlu bilgilerini buradan yönetebilirsiniz.")
     
     col1, col2 = st.columns(2)
@@ -706,7 +706,7 @@ def show_calculator_page():
     # NOT: st.set_page_config aslında main() fonksiyonunda da var. Çift kullanım hata verebileceği için buradakini yoruma alabilirsin, yine de orijinal halinde durduğu için bırakıyorum.
     # st.set_page_config(page_title="Su Ayak İzi Hesaplama", layout="wide") 
     
-    st.header("💧 Hesaplama Aracı")
+    st.subheader("Hesaplama Aracı")
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
     # tab_firma kaldırıldı, sadece su türleri sekmeleri kaldı
