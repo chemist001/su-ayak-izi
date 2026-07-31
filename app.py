@@ -587,9 +587,11 @@ def show_home_page():
             color_discrete_sequence=['#7dd3fc', '#e2e8f0', '#bbf7d0']
         )
         fig1.update_traces(textposition='outside', textinfo='percent+label', textfont_size=13)
+        
+        # YENİ: margin (boşluk) değerleri artırıldı (t: üst, b: alt, l: sol, r: sağ)
         fig1.update_layout(
             showlegend=False, 
-            margin=dict(t=10, b=10, l=10, r=10), 
+            margin=dict(t=40, b=20, l=20, r=20), 
             height=300, 
             paper_bgcolor="rgba(0,0,0,0)"
         )
