@@ -2235,15 +2235,19 @@ def main():
 
     st.sidebar.title("Menü")
     
-    sayfalar = ["🏠 Ana Sayfa", "🧮 Hesaplama", "📊 Veri Kalitesi","📈 Performans (KPI)", "📄 Raporlama", "🗄️ Geçmiş Raporlar", ]
+    # YENİ SAYFAYI LİSTEYE EKLEDİK ("🏢 Firma Profili")
+    sayfalar = ["🏠 Ana Sayfa", "🏢 Firma Profili", "🧮 Hesaplama", "📊 Veri Kalitesi","📈 Performans (KPI)", "📄 Raporlama", "🗄️ Geçmiş Raporlar"]
     
     if st.session_state.get('admin_mi', False):
         sayfalar.append("👑 Admin Paneli")
         
     page = st.sidebar.radio("Sayfa Seçiniz:", sayfalar)
 
+    # SAYFA YÖNLENDİRMELERİNE YENİ SAYFAYI TANITTIK
     if page == "🏠 Ana Sayfa":
         show_home_page()
+    elif page == "🏢 Firma Profili":
+        sayfa_firma_profili()
     elif page == "🧮 Hesaplama":
         show_calculator_page()
     elif page == "📊 Veri Kalitesi":
