@@ -709,7 +709,7 @@ def show_calculator_page():
             st.rerun()
 
     with tab_mavi:
-        st.header("Mavi Su Verileri (Kütle Denkliği)")
+        st.subheader("Mavi Su Verileri (Kütle Denkliği)")
         st.info("Lütfen tesise giren toplam suyu ve tesisten çıkan atıksu deşarj miktarını giriniz.")
         
         st.subheader("1. Tesise Giren Su (Su Çekimi)")
@@ -752,7 +752,7 @@ def show_calculator_page():
             st.success(f"✅ Mavi Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_mavi:.2f} m³/yıl")
 
     with tab_yesil:
-        st.header("Yeşil Su Verileri")
+        st.subheader("Yeşil Su Verileri")
         st.info("💡 Eğer firmanızın proseste kullandığı bir yağmur suyu tutma sistemi mevcutsa, lütfen sisteme kullanılan toplam yağmur suyu miktarını giriniz.")
         
         c1, c2 = st.columns(2)
@@ -769,7 +769,7 @@ def show_calculator_page():
             st.success(f"✅ Yeşil Su Ayak İzi Başarıyla Hesaplandı: {hesaplanan_yesil:.2f} m³/yıl")
 
     with tab_gri:
-        st.header("Gri Su Verileri (Kritik Kirletici)")
+        st.subheader("Gri Su Verileri (Kritik Kirletici)")
         st.write("Laboratuvar analiz sonuçlarınızı ve yıllık atıksu debinizi parametre bazlı olarak aşağıya giriniz. İstediğiniz parametreyi silebilir veya yeni parametre ekleyebilirsiniz.")
         
         st.info("""
