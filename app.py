@@ -529,7 +529,7 @@ def show_home_page():
     ])
 
     with tab_mavi:
-        st.header("Mavi Su Verimliliği Belgesi")
+        st.subheader("Mavi Su Verimliliği Belgesi")
         st.write("Su verimliliği yönetim sistemini kuran tesislere verilir.")
         st.markdown("""
         **Gerekli Kriterler**
@@ -542,7 +542,7 @@ def show_home_page():
         """)
 
     with tab_yesil:
-        st.header("Yeşil Su Verimliliği Belgesi")
+        st.subheader("Yeşil Su Verimliliği Belgesi")
         st.write("Suyu verimli kullanan tesislere verilir.")
         st.markdown("""
         **Endüstriyel Tesisler İçin Kriterler**
@@ -553,7 +553,7 @@ def show_home_page():
         st.warning("*Bu kriter ilk yeşil belge başvurusunda aranmayacak, yeşil belge yenileme başvurusunda zorunlu olacaktır.")
 
     with tab_turkuaz:
-        st.header("Turkuaz Su Verimliliği Belgesi")
+        st.subheader("Turkuaz Su Verimliliği Belgesi")
         st.write("Atık su geri kazanımı yapan tesislere verilir.")
         st.markdown("""
         **Endüstriyel Tesisler İçin Kriterler**
