@@ -741,7 +741,6 @@ def show_calculator_page():
         toplam_giren = sebeke_suyu + kuyu_suyu + diger_su
         st.write(f"**Toplam Giren Su ($V_{{in}}$):** {toplam_giren} m³/yıl")
         
-        st.divider()
         st.subheader("2. Tesisten Çıkan Su (Deşarj)")
         c4, c5 = st.columns(2)
         desarj_miktari = c4.number_input("Toplam Atıksu Deşarjı (m³/yıl)", min_value=0.0, value=st.session_state['desarj'])
@@ -750,7 +749,6 @@ def show_calculator_page():
         ayni_havza_mi = c5.checkbox("Deşarj edilen su, çekildiği havzaya/nehre mi dönüyor?", value=st.session_state['ayni_havza'])
         st.session_state['ayni_havza'] = ayni_havza_mi
         
-        st.divider()
         if st.button("💧 Mavi Su Ayak İzini Hesapla"):
             hesaplanan_mavi = 0.0
             if ayni_havza_mi:
@@ -772,7 +770,6 @@ def show_calculator_page():
         green_incorp = c2.number_input("Ürüne Giren Yeşil Su (m³/yıl)", min_value=0.0, value=st.session_state['yesil_incorp'])
         st.session_state['yesil_incorp'] = green_incorp
         
-        st.divider()
         if st.button("🌱 Yeşil Su Ayak İzini Hesapla"):
             hesaplanan_yesil = green_evap + green_incorp
             st.session_state.yesil_su_sonuc = hesaplanan_yesil
@@ -819,7 +816,6 @@ def show_calculator_page():
                     "c_max": c_max_kg,
                     "c_nat": c_nat_kg
                 })
-                st.markdown("---")
 
         if st.button("➕ Yeni Parametre Ekle"):
             yeni_id = st.session_state['gri_parametreler'][-1]["id"] + 1 if st.session_state['gri_parametreler'] else 0
