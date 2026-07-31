@@ -1127,7 +1127,7 @@ def sayfa_raporlama():
                 
                 pdf.set_text_color(0, 0, 0)
                 pdf.set_font(f_isim, size=10, style='')
-                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Eğitim ve Danışmanlık A.Ş. Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından H2Odenge Platformu Kullanılarak Hazırlanmıştır.", align='C')
+                pdf.multi_cell(190, 6, txt=f"Bu Raporun Altyapısı Adana Sanayi Odası Eğitim ve Danışmanlık A.Ş. Tarafından Sağlanmıştır. Bu Rapor, {str(company_name)} Tarafından vodaX Platformu Kullanılarak Hazırlanmıştır.", align='C')
     
                 pdf.add_page()
                 pdf.set_font(f_isim, size=16, style='B')
