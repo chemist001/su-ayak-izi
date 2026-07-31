@@ -620,7 +620,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-def show_calculator_page():
+def sayfa_firma_profili():
+    # Session state tanımlamalarını hesaplama sayfasından buraya taşıdık
     if 'firma_adi' not in st.session_state: st.session_state['firma_adi'] = ""
     if 'sektor' not in st.session_state: st.session_state['sektor'] = ""
     if 'adres' not in st.session_state: st.session_state['adres'] = ""
@@ -630,6 +631,68 @@ def show_calculator_page():
     if 'rapor_yili' not in st.session_state: st.session_state['rapor_yili'] = ""
     if 'rapor_tarihi' not in st.session_state: st.session_state['rapor_tarihi'] = None
 
+    st.header("🏢 Firma Profili")
+    st.caption("Raporlama için tesis ve sorumlu bilgilerini buradan yönetebilirsiniz.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        company_name = st.text_input("Firma Ünvanı", value=st.session_state.get('firma_adi', ''))
+        st.session_state['firma_adi'] = company_name
+        
+        sector = st.text_input("Firma Sektörü", value=st.session_state.get('sektor', ''))
+        st.session_state['sektor'] = sector
+        
+        address = st.text_input("Firma Adresi", value=st.session_state.get('adres', ''))
+        st.session_state['adres'] = address
+
+        yillar = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"]
+        varsayilan_yil = st.session_state.get('rapor_yili', "2026") 
+        secili_index = yillar.index(varsayilan_yil) if varsayilan_yil in yillar else 2
+        
+        rapor_yili = st.selectbox("Raporlama Yılı", options=yillar, index=secili_index)
+        st.session_state['rapor_yili'] = rapor_yili
+
+    with col2:
+        contact_person = st.text_input("Yetkili Kişi Adı Soyadı", value=st.session_state.get('yetkili', ''))
+        st.session_state['yetkili'] = contact_person
+        
+        email = st.text_input("Yetkili E-posta", value=st.session_state.get('email', ''))
+        st.session_state['email'] = email
+        
+        c_phone = st.text_input("Telefon", value=st.session_state.get('telefon', ''))
+        st.session_state['telefon'] = c_phone
+
+        rapor_tarihi = st.date_input("Rapor Tarihi", value=st.session_state.get('rapor_tarihi', None))
+        st.session_state['rapor_tarihi'] = rapor_tarihi
+        
+    st.divider()
+    st.subheader("👥 Su Yönetimi Sorumluları")
+    st.write("Raporda yer alacak **Sorumlu Kişilerin İletişim Bilgileri** tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
+    
+    if 'sorumlu_kisiler_tablosu' not in st.session_state:
+        st.session_state['sorumlu_kisiler_tablosu'] = pd.DataFrame(
+            columns=["Sorumlu Kişi", "Görev", "İletişim"]
+        )
+    
+    gecici_sorumlu_df = st.data_editor(
+        st.session_state['sorumlu_kisiler_tablosu'],
+        column_config={
+            "Sorumlu Kişi": st.column_config.TextColumn("Sorumlu Kişi", required=True),
+            "Görev": st.column_config.TextColumn("Görev"),
+            "İletişim": st.column_config.TextColumn("İletişim")
+        },
+        num_rows="dynamic",
+        use_container_width=True,
+        hide_index=True
+    )
+    
+    if st.button("Firma Bilgilerini Kaydet", key="btn_firma_kaydet"):
+        st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
+        st.success("Sorumlu bilgileri başarıyla güncellendi!")
+        st.rerun()
+
+def show_calculator_page():
+    # Sadece hesaplama için gereken session_state'ler bırakıldı
     if 'sebeke_suyu' not in st.session_state: st.session_state['sebeke_suyu'] = 0.0
     if 'kuyu_suyu' not in st.session_state: st.session_state['kuyu_suyu'] = 0.0
     if 'diger_su' not in st.session_state: st.session_state['diger_su'] = 0.0
@@ -640,72 +703,16 @@ def show_calculator_page():
     if 'yesil_evap' not in st.session_state: st.session_state['yesil_evap'] = 0.0
     if 'yesil_incorp' not in st.session_state: st.session_state['yesil_incorp'] = 0.0
 
-    st.set_page_config(page_title="Su Ayak İzi Hesaplama", layout="wide")
-    st.subheader("Hesaplama Aracı")
+    # NOT: st.set_page_config aslında main() fonksiyonunda da var. Çift kullanım hata verebileceği için buradakini yoruma alabilirsin, yine de orijinal halinde durduğu için bırakıyorum.
+    # st.set_page_config(page_title="Su Ayak İzi Hesaplama", layout="wide") 
+    
+    st.header("💧 Hesaplama Aracı")
     st.caption("ISO 14046 ve WFN Metodolojisine Uygun Gate-to-Gate Analizi")
 
-    tab_firma, tab_mavi, tab_yesil, tab_gri, = st.tabs([
-        "🏢 Firma Profili", "🟦 Mavi Su", "🟩 Yeşil Su", "🔲 Gri Su",
+    # tab_firma kaldırıldı, sadece su türleri sekmeleri kaldı
+    tab_mavi, tab_yesil, tab_gri, = st.tabs([
+        "🟦 Mavi Su", "🟩 Yeşil Su", "🔲 Gri Su",
     ])
-
-    with tab_firma:
-        st.subheader("Firma Bilgileri")
-        col1, col2 = st.columns(2)
-        with col1:
-            company_name = st.text_input("Firma Ünvanı", value=st.session_state.get('firma_adi', ''))
-            st.session_state['firma_adi'] = company_name
-            
-            sector = st.text_input("Firma Sektörü", value=st.session_state.get('sektor', ''))
-            st.session_state['sektor'] = sector
-            
-            address = st.text_input("Firma Adresi", value=st.session_state.get('adres', ''))
-            st.session_state['adres'] = address
-
-            yillar = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"]
-            varsayilan_yil = st.session_state.get('rapor_yili', "2026") 
-            secili_index = yillar.index(varsayilan_yil) if varsayilan_yil in yillar else 2
-            
-            rapor_yili = st.selectbox("Raporlama Yılı", options=yillar, index=secili_index)
-            st.session_state['rapor_yili'] = rapor_yili
-
-        with col2:
-            contact_person = st.text_input("Yetkili Kişi Adı Soyadı", value=st.session_state.get('yetkili', ''))
-            st.session_state['yetkili'] = contact_person
-            
-            email = st.text_input("Yetkili E-posta", value=st.session_state.get('email', ''))
-            st.session_state['email'] = email
-            
-            c_phone = st.text_input("Telefon", value=st.session_state.get('telefon', ''))
-            st.session_state['telefon'] = c_phone
-
-            rapor_tarihi = st.date_input("Rapor Tarihi", value=st.session_state.get('rapor_tarihi', None))
-            st.session_state['rapor_tarihi'] = rapor_tarihi
-            
-        st.divider()
-        st.subheader("👥 Su Yönetimi Sorumluları")
-        st.write("Raporda yer alacak **Sorumlu Kişilerin İletişim Bilgileri** tablosunu buradan düzenleyebilirsiniz. Yeni satır eklemek için tablonun altına tıklayın.")
-        
-        if 'sorumlu_kisiler_tablosu' not in st.session_state:
-            st.session_state['sorumlu_kisiler_tablosu'] = pd.DataFrame(
-                columns=["Sorumlu Kişi", "Görev", "İletişim"]
-            )
-        
-        gecici_sorumlu_df = st.data_editor(
-            st.session_state['sorumlu_kisiler_tablosu'],
-            column_config={
-                "Sorumlu Kişi": st.column_config.TextColumn("Sorumlu Kişi", required=True),
-                "Görev": st.column_config.TextColumn("Görev"),
-                "İletişim": st.column_config.TextColumn("İletişim")
-            },
-            num_rows="dynamic",
-            use_container_width=True,
-            hide_index=True
-        )
-        
-        if st.button("Kaydet"):
-            st.session_state['sorumlu_kisiler_tablosu'] = gecici_sorumlu_df
-            st.success("Sorumlu bilgileri başarıyla güncellendi!")
-            st.rerun()
 
     with tab_mavi:
         st.subheader("Mavi Su Verileri (Kütle Denkliği)")
