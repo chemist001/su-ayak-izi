@@ -1210,7 +1210,7 @@ def sayfa_raporlama():
     
                 pdf.ln(8)
                 pdf.set_font(f_isim, size=12, style='B')
-                pdf.cell(190, 8, txt="1.3. Kurulus Su Yonetimi ve Sorumlular", ln=True)
+                pdf.cell(190, 8, txt="1.3. Kuruluş Su Yönetimi ve Sorumlular", ln=True)
                 pdf.set_font(f_isim, size=11, style='')
                 pdf.multi_cell(190, 6, txt=f"{str(company_name)} olarak raporlama yılında Mavi su olarak; insani kullanım ve üretim amacıyla şebeke suyu, kuyu suyu ve diger tatli su kaynakları temin edilmektedir. Mavi su ayak izi hesabında sayaç tüketimleri ve faturalar kabul edilerek hesap yapılmaktadır.\n\nGri su olarak; üretim amacıyla proseste kullanılan suyun endüstriyel nitelikli atıksu faaliyeti sonucunda arıtma tesislerine veya kanalizasyona deşarjı baz alınmaktadır.")
                 
