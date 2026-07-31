@@ -598,7 +598,7 @@ def show_home_page():
         st.plotly_chart(fig1, use_container_width=True)
 
     with grafik_col2:
-        st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Ürün Bazlı 'Gizli Su' Yükü (Litre)</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; font-size: 18px; color:#1b6f8a;'>Ürün Bazlı 'Gizli Su' Yükü</p>", unsafe_allow_html=True)
         
         # Plotly ile vektörel çubuk grafiği (Üzerine gelindiğinde değerleri gösterir)
         urunler = ['Kahve', 'Tişört', 'Peynir', 'Sığır Eti']
