@@ -429,7 +429,6 @@ def create_pie_chart(data_dict, title):
 # ==========================================
 def show_home_page():
     st.subheader("💧 Su Ayak İzi Nedir?")
-    st.markdown("### Görünmeyen Suyun Hikayesi")
     
     st.write("""
     Su ayak izi, bir kişinin, ürünün veya sektörün birim zamanda harcadığı ve kirlettiği 
